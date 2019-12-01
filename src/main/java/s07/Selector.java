@@ -1,4 +1,4 @@
-package s125;
+package s07;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
