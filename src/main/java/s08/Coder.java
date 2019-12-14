@@ -1,4 +1,4 @@
-package s07;
+package s08;
 
 public class Coder {
     private String firstName;
