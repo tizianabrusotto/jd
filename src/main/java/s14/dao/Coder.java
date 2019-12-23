@@ -1,24 +1,30 @@
 package s14.dao;
 
+import java.time.LocalDate;
+
 public class Coder {
     private long id;
     private String firstName;
     private String lastName;
+    private LocalDate hireDate;
     private double salary;
 
     public Coder() {
     }
 
     public Coder(String firstName, String lastName, double salary) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.salary = salary;
+        this(0, firstName, lastName, null, salary);
     }
 
     public Coder(long id, String firstName, String lastName, double salary) {
+        this(id, firstName, lastName, LocalDate.now(), salary);
+    }
+
+    public Coder(long id, String firstName, String lastName, LocalDate hireDate, double salary) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.hireDate = hireDate;
         this.salary = salary;
     }
 
@@ -46,6 +52,14 @@ public class Coder {
         this.lastName = lastName;
     }
 
+    public LocalDate getHireDate() {
+        return hireDate;
+    }
+
+    public void setHireDate(LocalDate hireDate) {
+        this.hireDate = hireDate;
+    }
+
     public double getSalary() {
         return salary;
     }
@@ -56,6 +70,7 @@ public class Coder {
 
     @Override
     public String toString() {
-        return "[firstName=" + firstName + ", lastName=" + lastName + ", salary=" + salary + "]";
+        return "Coder [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", hireDate=" + hireDate
+                + ", salary=" + salary + "]";
     }
 }

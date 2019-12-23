@@ -10,14 +10,41 @@ public class Main {
     public static void main(String[] args) {
         CoderDao cd = new CoderDao();
 
-        Optional<Coder> opt = cd.get(103);
+        // create a new coder
+        Coder tom = new Coder(501, "Tom", "Jones", 2000);
+        cd.save(tom);
+
+        // get a coder
+        Optional<Coder> opt = cd.get(501);
         if (opt.isPresent()) {
-            System.out.println("Coder 103: " + opt.get());
+            System.out.println("Coder 501: " + opt.get());
         } else {
-            System.out.println("Can't get coder 103");
+            System.out.println("Unexpected! Can't get coder 501");
         }
         
+        // rename a coder
+        tom.setLastName("Bombadil");
+        cd.update(tom);
+        
+        opt = cd.get(501);
+        if (opt.isPresent()) {
+            System.out.println("Coder 501: " + opt.get());
+        } else {
+            System.out.println("Unexpected! Can't get coder 501");
+        }
+        
+        // delete a coder
+        cd.delete(501);
+                
+        opt = cd.get(501);
+        if (opt.isPresent()) {
+            System.out.println("Unexpected! Coder 501 still alive: " + opt.get());
+        } else {
+            System.out.println("Coder 501 is no more");
+        }
+
+        // get all coders
         List<Coder> coders = cd.getAll();
-        System.out.println("Coders: " + coders);
+        System.out.println("Coders: " + coders);        
     }
 }
