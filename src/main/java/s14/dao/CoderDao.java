@@ -21,9 +21,9 @@ public class CoderDao implements Dao<Coder> {
 
     @Override
     public Optional<Coder> get(long id) {
-        Connection conn = Connector.getConnection();
 
-        try (PreparedStatement ps = conn.prepareStatement(GET_BY_PK)) {
+        try (Connection conn = Connector.getConnection(); //
+                PreparedStatement ps = conn.prepareStatement(GET_BY_PK)) {
             ps.setLong(1, id);
             ResultSet rs = ps.executeQuery();
             if (rs.next()) {
