@@ -19,17 +19,17 @@ public class PreparedSelector {
             + "WHERE salary >= ? ORDER BY 3 DESC";
 
     public List<Coder> getCodersBySalary(double lower) throws SQLException {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); //
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                 PreparedStatement prepStmt = conn.prepareStatement(CODERS_BY_SALARY)) {
             prepStmt.setDouble(1, lower);
 
             System.out.println("I'm about to execute " + prepStmt);
-
-            ResultSet rs = prepStmt.executeQuery();
-
             List<Coder> results = new ArrayList<>();
-            while (rs.next()) {
-                results.add(new Coder(rs.getString(1), rs.getString(2), rs.getInt(3)));
+
+            try (ResultSet rs = prepStmt.executeQuery()) {
+                while (rs.next()) {
+                    results.add(new Coder(rs.getString(1), rs.getString(2), rs.getInt(3)));
+                }
             }
 
             return results;
