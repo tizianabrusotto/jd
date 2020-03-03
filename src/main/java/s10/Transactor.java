@@ -12,20 +12,21 @@ public class Transactor {
     private static final String PASSWORD = "password";
 
     public static void selectAllAndPrint(Statement stmt) throws SQLException {
-        ResultSet rs = stmt.executeQuery("SELECT coder_id, first_name, last_name FROM coders");
-
         System.out.print("[");
-        while (rs.next()) {
-            System.out.print(String.format("(%d: %s %s)", //
-                    rs.getInt("coder_id"), //
-                    rs.getString("first_name"), //
-                    rs.getString("last_name")));
+        try (ResultSet rs = stmt.executeQuery("SELECT coder_id, first_name, last_name FROM coders")) {
+            while (rs.next()) {
+                System.out.print(String.format("(%d: %s %s)", //
+                        rs.getInt("coder_id"), //
+                        rs.getString("first_name"), //
+                        rs.getString("last_name")));
+            }
+        } finally {
+            System.out.println("]");
         }
-        System.out.println("]");
     }
 
     public static void main(String[] args) {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD); //
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                 Statement stmt = conn.createStatement()) {
             System.out.print("By default, autocommit is " + conn.getAutoCommit());
             conn.setAutoCommit(false);

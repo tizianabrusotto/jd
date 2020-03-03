@@ -20,33 +20,12 @@ public class CoderDao implements Dao<Coder> {
     private static final String DELETE = "DELETE FROM coders WHERE coder_id = ?";
 
     @Override
-    public Optional<Coder> get(long id) {
-
-        try (Connection conn = Connector.getConnection(); //
-                PreparedStatement ps = conn.prepareStatement(GET_BY_PK)) {
-            ps.setLong(1, id);
-            ResultSet rs = ps.executeQuery();
-            if (rs.next()) {
-                LocalDate hireDate = rs.getDate(4).toLocalDate();
-                return Optional
-                        .of(new Coder(rs.getLong(1), rs.getString(2), rs.getString(3), hireDate, rs.getDouble(5)));
-            }
-        } catch (SQLException se) {
-            se.printStackTrace();
-        }
-
-        return Optional.empty();
-    }
-
-    @Override
     public List<Coder> getAll() {
-        Connection conn = Connector.getConnection();
-
         List<Coder> results = new ArrayList<>();
 
-        try (Statement stmt = conn.createStatement()) {
-            ResultSet rs = stmt.executeQuery(GET_ALL);
-
+        try (Connection conn = Connector.getConnection();
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(GET_ALL)) {
             while (rs.next()) {
                 LocalDate hireDate = rs.getDate(4).toLocalDate();
                 Coder coder = new Coder(rs.getLong(1), rs.getString(2), rs.getString(3), hireDate, rs.getDouble(5));
@@ -60,9 +39,28 @@ public class CoderDao implements Dao<Coder> {
     }
 
     @Override
+    public Optional<Coder> get(long id) {
+        try (Connection conn = Connector.getConnection(); //
+                PreparedStatement ps = conn.prepareStatement(GET_BY_PK)) {
+            ps.setLong(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    LocalDate hireDate = rs.getDate(4).toLocalDate();
+                    Coder my = new Coder(rs.getLong(1), rs.getString(2), rs.getString(3), hireDate, rs.getDouble(5));
+                    return Optional.of(my);
+                }
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+
+        return Optional.empty();
+    }
+
+    @Override
     public void save(Coder coder) {
-        Connection conn = Connector.getConnection();
-        try (PreparedStatement ps = conn.prepareStatement(INSERT)) {
+        try (Connection conn = Connector.getConnection(); //
+                PreparedStatement ps = conn.prepareStatement(INSERT)) {
             ps.setLong(1, coder.getId());
             ps.setString(2, coder.getFirstName());
             ps.setString(3, coder.getLastName());
@@ -76,8 +74,8 @@ public class CoderDao implements Dao<Coder> {
 
     @Override
     public void update(Coder coder) {
-        Connection conn = Connector.getConnection();
-        try (PreparedStatement ps = conn.prepareStatement(UPDATE)) {
+        try (Connection conn = Connector.getConnection(); //
+                PreparedStatement ps = conn.prepareStatement(UPDATE)) {
             ps.setString(1, coder.getFirstName());
             ps.setString(2, coder.getLastName());
             ps.setDate(3, Date.valueOf(coder.getHireDate()));
@@ -94,8 +92,8 @@ public class CoderDao implements Dao<Coder> {
 
     @Override
     public void delete(long id) {
-        Connection conn = Connector.getConnection();
-        try (PreparedStatement ps = conn.prepareStatement(DELETE)) {
+        try (Connection conn = Connector.getConnection(); //
+                PreparedStatement ps = conn.prepareStatement(DELETE)) {
             ps.setLong(1, id);
             int count = ps.executeUpdate();
             if (count != 1) {

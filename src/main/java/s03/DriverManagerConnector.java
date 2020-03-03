@@ -22,9 +22,7 @@ public class DriverManagerConnector {
 //    }
 
     public static void main(String[] args) {
-        try {
-            Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
             String user = conn.getCatalog();
             if (user == null) {
                 user = conn.getSchema();
