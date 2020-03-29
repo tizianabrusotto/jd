@@ -21,7 +21,7 @@ public class Main {
 
             Coder coder = opt.get();
             coder.setSalary(coder.getSalary() * 2);
-            cd.save(coder);
+            cd.update(coder);
         } else {
             System.out.println("Unexpected! Can't get coder 501");
         }
