@@ -57,6 +57,23 @@ public class CoderDao implements Dao<Coder> {
         return Optional.empty();
     }
 
+    public Coder legacyGet(long id) {
+        try (Connection conn = Connector.getConnection(); //
+                PreparedStatement ps = conn.prepareStatement(GET_BY_PK)) {
+            ps.setLong(1, id);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) {
+                    LocalDate hireDate = rs.getDate(4).toLocalDate();
+                    return new Coder(rs.getLong(1), rs.getString(2), rs.getString(3), hireDate, rs.getDouble(5));
+                }
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+
+        return null;
+    }
+
     @Override
     public void save(Coder coder) {
         try (Connection conn = Connector.getConnection(); //
