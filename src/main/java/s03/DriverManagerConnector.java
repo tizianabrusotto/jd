@@ -22,15 +22,19 @@ public class DriverManagerConnector {
 //    }
 
     public static void main(String[] args) {
+        System.out.println("Connected as " + getSchemaName());
+    }
+
+    public static String getSchemaName() {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
             String user = conn.getCatalog();
             if (user == null) {
                 user = conn.getSchema();
             }
 
-            System.out.println("Connected as " + user);
+            return user;
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new IllegalAccessError("Failure accessing DB: " + e.getMessage());
         }
     }
 }
