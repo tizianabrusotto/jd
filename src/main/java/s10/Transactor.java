@@ -16,9 +16,9 @@ public class Transactor {
         try (ResultSet rs = stmt.executeQuery("SELECT coder_id, first_name, last_name FROM coders")) {
             while (rs.next()) {
                 System.out.print(String.format("(%d: %s %s)", //
-                        rs.getInt("coder_id"), //
-                        rs.getString("first_name"), //
-                        rs.getString("last_name")));
+                        rs.getInt("coder_id"), // 1
+                        rs.getString("first_name"), // 2
+                        rs.getString("last_name"))); // 3
             }
         } finally {
             System.out.println("]");
