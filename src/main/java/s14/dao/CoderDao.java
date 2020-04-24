@@ -10,13 +10,16 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class CoderDao implements Dao<Coder> {
+    private static Logger logger = LoggerFactory.getLogger(CoderDao.class);
+
     private static final String GET_BY_PK = "SELECT coder_id, first_name, last_name, hire_date, salary FROM coders WHERE coder_id = ?";
     private static final String GET_ALL = "SELECT coder_id, first_name, last_name, hire_date, salary FROM coders";
     private static final String INSERT = "INSERT INTO coders(coder_id, first_name, last_name, hire_date, salary) VALUES (?, ?, ?, ?, ?)";
-    private static final String UPDATE = "UPDATE coders SET first_name = ?, last_name = ?, hire_date = ?, salary = ? "
-            + "WHERE coder_id = ?";
+    private static final String UPDATE = "UPDATE coders SET first_name = ?, last_name = ?, hire_date = ?, salary = ? WHERE coder_id = ?";
     private static final String DELETE = "DELETE FROM coders WHERE coder_id = ?";
 
     @Override
@@ -32,7 +35,7 @@ public class CoderDao implements Dao<Coder> {
                 results.add(coder);
             }
         } catch (SQLException se) {
-            se.printStackTrace();
+            logger.error("Can't get all coders", se);
         }
 
         return results;
@@ -51,7 +54,7 @@ public class CoderDao implements Dao<Coder> {
                 }
             }
         } catch (SQLException se) {
-            se.printStackTrace();
+            logger.error("Can't get coder " + id, se);
         }
 
         return Optional.empty();
@@ -68,7 +71,7 @@ public class CoderDao implements Dao<Coder> {
                 }
             }
         } catch (SQLException se) {
-            se.printStackTrace();
+            logger.error("Can't get coder " + id, se);
         }
 
         return null;
@@ -85,7 +88,7 @@ public class CoderDao implements Dao<Coder> {
             ps.setDouble(5, coder.getSalary());
             ps.executeUpdate();
         } catch (SQLException se) {
-            se.printStackTrace();
+            logger.error("Can't save coder " + coder.getId(), se);
         }
     }
 
@@ -100,10 +103,10 @@ public class CoderDao implements Dao<Coder> {
             ps.setLong(5, coder.getId());
             int count = ps.executeUpdate();
             if (count != 1) {
-                System.out.println("Warning! Updated " + count + " lines for " + coder);
+                logger.warn("Updated " + count + " lines for " + coder);
             }
         } catch (SQLException se) {
-            se.printStackTrace();
+            logger.error("Can't update coder " + coder.getId(), se);
         }
     }
 
@@ -114,10 +117,10 @@ public class CoderDao implements Dao<Coder> {
             ps.setLong(1, id);
             int count = ps.executeUpdate();
             if (count != 1) {
-                System.out.println("Warning! Deleted " + count + " lines for " + id);
+                logger.warn("Deleted " + count + " lines for " + id);
             }
         } catch (SQLException se) {
-            se.printStackTrace();
+            logger.error("Can't delete coder " + id, se);
         }
     }
 }

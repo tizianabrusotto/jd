@@ -5,8 +5,12 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Transactor {
+    private static Logger logger = LoggerFactory.getLogger(Transactor.class);
+
     private static final String URL = "jdbc:mysql://localhost:3306/me?serverTimezone=Europe/Rome";
     private static final String USER = "me";
     private static final String PASSWORD = "password";
@@ -39,7 +43,7 @@ public class Transactor {
             conn.rollback();
             selectAllAndPrint(stmt);
         } catch (SQLException se) {
-            se.printStackTrace();
+            logger.error("DBMS error", se);
         }
     }
 }

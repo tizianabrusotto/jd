@@ -3,8 +3,12 @@ package s03;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DriverManagerConnector {
+    private static Logger logger = LoggerFactory.getLogger(DriverManagerConnector.class);
+    
     private static final String URL = "jdbc:mysql://localhost:3306/me?serverTimezone=Europe/Rome";
     private static final String USER = "me";
     private static final String PASSWORD = "password";
@@ -34,7 +38,8 @@ public class DriverManagerConnector {
 
             return user;
         } catch (SQLException e) {
-            throw new IllegalAccessError("Failure accessing DB: " + e.getMessage());
+            logger.error("Failure accessing DB" , e);
+            throw new IllegalStateException("Can't get schema name");
         }
     }
 }

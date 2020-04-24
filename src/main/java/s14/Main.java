@@ -2,11 +2,14 @@ package s14;
 
 import java.util.List;
 import java.util.Optional;
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import s14.dao.Coder;
 import s14.dao.CoderDao;
 
 public class Main {
+    private static Logger logger = LoggerFactory.getLogger(Main.class);
+
     public static void main(String[] args) {
         CoderDao cd = new CoderDao();
 
@@ -23,7 +26,7 @@ public class Main {
             coder.setSalary(coder.getSalary() * 2);
             cd.update(coder);
         } else {
-            System.out.println("Unexpected! Can't get coder 501");
+            logger.error("Unexpected! Can't get coder 501");
         }
 
         // rename a coder
@@ -34,7 +37,7 @@ public class Main {
         if (opt.isPresent()) {
             System.out.println("Coder 501: " + opt.get());
         } else {
-            System.out.println("Unexpected! Can't get coder 501");
+            logger.error("Unexpected! Can't get coder 501");
         }
 
         // delete a coder
@@ -42,7 +45,7 @@ public class Main {
 
         opt = cd.get(501);
         if (opt.isPresent()) {
-            System.out.println("Unexpected! Coder 501 still alive: " + opt.get());
+            logger.error("Unexpected! Coder 501 still alive: " + opt.get());
         } else {
             System.out.println("Coder 501 is no more");
         }
