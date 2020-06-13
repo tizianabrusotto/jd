@@ -31,12 +31,12 @@ public class DriverManagerConnector {
 
     public static String getSchemaName() {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            String user = conn.getCatalog();
-            if (user == null) {
-                user = conn.getSchema();
+            String schema = conn.getCatalog();
+            if (schema == null) {
+                schema = conn.getSchema();
             }
 
-            return user;
+            return schema;
         } catch (SQLException e) {
             logger.error("Failure accessing DB" , e);
             throw new IllegalStateException("Can't get schema name");
