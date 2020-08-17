@@ -1,4 +1,4 @@
-package sxx;
+package s06;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
@@ -9,7 +9,7 @@ import java.sql.Types;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import s09.PreparedSelector;
+import s10.PreparedSelector;
 
 public class StoredProcedure {
     private static Logger logger = LoggerFactory.getLogger(PreparedSelector.class);
