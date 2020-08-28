@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class DriverManagerConnector {
-    private static Logger logger = LoggerFactory.getLogger(DriverManagerConnector.class);
+    private static final Logger LOG = LoggerFactory.getLogger(DriverManagerConnector.class);
 
     private static final String URL = "jdbc:mysql://localhost:3306/me?serverTimezone=Europe/Rome";
     private static final String USER = "me";
@@ -26,19 +26,19 @@ public class DriverManagerConnector {
 //    }
 
     public static void main(String[] args) {
-        System.out.println("Connected as " + getSchemaName());
+        System.out.println("Connected on schema " + getSchemaName());
     }
 
     public static String getSchemaName() {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            String schema = conn.getCatalog();
+            String schema = conn.getCatalog(); // MySQL
             if (schema == null) {
-                schema = conn.getSchema();
+                schema = conn.getSchema(); // Oracle
             }
 
             return schema;
         } catch (SQLException e) {
-            logger.error("Failure accessing DB", e);
+            LOG.error("Failure accessing DB", e);
             throw new IllegalStateException("Can't get schema name");
         }
     }
