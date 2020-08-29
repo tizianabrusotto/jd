@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import s10.PreparedSelector;
 
 public class StoredProcedure {
-    private static Logger logger = LoggerFactory.getLogger(PreparedSelector.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PreparedSelector.class);
 
     private static final String URL = "jdbc:mysql://localhost:3306/me?serverTimezone=Europe/Rome";
     private static final String USER = "me";
@@ -20,24 +20,39 @@ public class StoredProcedure {
 
     private static final String GET_CODER_SALARY = "{call get_coder_salary(?, ?)}";
 
+    /**
+     * Coder salary
+     * 
+     * @param id the coder id
+     * @return coder salary, 0 if the specified coder id is not available
+     * @throws SQLException
+     */
     public double getCoderSalary(int id) throws SQLException {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                 CallableStatement callStmt = conn.prepareCall(GET_CODER_SALARY)) {
             callStmt.setInt(1, id);
             callStmt.registerOutParameter(2, Types.DECIMAL);
 
-            logger.debug(callStmt.toString());
+            LOG.debug(callStmt.toString());
             callStmt.executeUpdate();
+            LOG.debug(callStmt.toString());
+
             return callStmt.getDouble(2);
         }
     }
 
+    /*
+     * Exercise:
+     * 
+     * Implement main to run this functionality from command line.
+     * 
+     * if args.length is 1 then use the passed parameter (integer!) as coder id (in
+     * case of wrong call, the user should get adequate feedback) otherwise use
+     * Scanner to get a viable input
+     */
     public static void main(String[] args) {
-        try {
-            StoredProcedure sample = new StoredProcedure();
-            System.out.println("Coder salary: " + sample.getCoderSalary(107));
-        } catch (SQLException e) {
-            logger.error("Can't get coder salary", e);
+        if (args.length != 1) {
+            System.out.println("Usage: StoredProcedure coderId");
             return;
         }
     }
