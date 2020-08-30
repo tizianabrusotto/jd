@@ -11,9 +11,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import s09.Coder;
+import s09.Coder2;
 
 public class PreparedSelector {
-    private static Logger logger = LoggerFactory.getLogger(PreparedSelector.class);
+    private static final Logger LOG = LoggerFactory.getLogger(PreparedSelector.class);
 
     private static final String URL = "jdbc:mysql://localhost:3306/me?serverTimezone=Europe/Rome";
     private static final String USER = "me";
@@ -26,7 +27,7 @@ public class PreparedSelector {
                 PreparedStatement prepStmt = conn.prepareStatement(CODERS_BY_SALARY)) {
             prepStmt.setDouble(1, lower);
 
-            logger.debug("I'm about to execute " + prepStmt);
+            LOG.debug(prepStmt.toString());
             List<Coder> results = new ArrayList<>();
 
             try (ResultSet rs = prepStmt.executeQuery()) {
@@ -39,13 +40,27 @@ public class PreparedSelector {
         }
     }
 
-    public static void main(String[] args) {
-        try {
-            PreparedSelector sample = new PreparedSelector();
-            System.out.println("Rich coders are: " + sample.getCodersBySalary(6000));
-        } catch (SQLException e) {
-            logger.error("Can't get coders", e);
-            return;
+    public List<Coder2> getCodersWithLetterIn(char letter) throws SQLException {
+        // quotation in string is managed by PreparedStatement
+        final String psq = "select first_name, last_name, salary " + "from coders "
+                + "where first_name like ? or last_name like ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                PreparedStatement prepStmt = conn.prepareStatement(psq)) {
+
+            prepStmt.setString(1, "%" + letter + "%");
+            prepStmt.setString(2, "%" + letter + "%");
+
+            LOG.debug(prepStmt.toString());
+            List<Coder2> results = new ArrayList<>();
+
+            try (ResultSet rs = prepStmt.executeQuery()) {
+                while (rs.next()) {
+                    results.add(new Coder2(rs.getString(1), rs.getString(2), rs.getDouble(3)));
+                }
+            }
+
+            return results;
         }
     }
 }

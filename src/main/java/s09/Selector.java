@@ -8,9 +8,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,7 +27,6 @@ public class Selector {
     private static final String SELECT_CODERS_BY_SALARY_STRING = "SELECT first_name, last_name, salary FROM coders WHERE salary >= %s ORDER BY 3 DESC";
 
     public List<String> getCoderNames() throws SQLException {
-
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(SELECT_NAMES)) {
@@ -47,9 +46,8 @@ public class Selector {
                 ResultSet rs = stmt.executeQuery(SELECT_CODERS)) {
             List<Coder> results = new ArrayList<>();
             while (rs.next()) {
-//                Coder coder = new Coder(rs.getString(1), rs.getString(2), rs.getInt(3));
-//                results.add(coder);
-                results.add(new Coder(rs.getString(1), rs.getString(2), rs.getInt(3)));
+                Coder coder = new Coder(rs.getString(1), rs.getString(2), rs.getInt(3));
+                results.add(coder);
             }
 
             return results;
@@ -58,6 +56,8 @@ public class Selector {
 
     public List<Coder> getCodersBySalary(int lower) throws SQLException {
         String query = String.format(SELECT_CODERS_BY_SALARY_DOUBLE, lower);
+        LOG.debug(query);
+
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
@@ -75,6 +75,8 @@ public class Selector {
      */
     public List<Coder> getCodersBySalary(String lower) throws SQLException {
         String query = String.format(SELECT_CODERS_BY_SALARY_STRING, lower);
+        LOG.debug(query);
+
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
@@ -94,7 +96,7 @@ public class Selector {
                 PreparedStatement prepStmt = conn.prepareStatement(query)) {
             prepStmt.setDate(1, Date.valueOf(limit));
 
-            LOG.debug("I'm about to execute " + prepStmt);
+            LOG.debug(prepStmt.toString());
             List<Coder> results = new ArrayList<>();
 
             try (ResultSet rs = prepStmt.executeQuery()) {
@@ -107,36 +109,13 @@ public class Selector {
         }
     }
 
-    public List<Coder2> getCodersWithLetterInPrepared(char letter) throws SQLException {
-        final String psq = "select first_name, last_name, salary " + "from coders "
-                + "where first_name like ? or last_name like ?";
-
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-                PreparedStatement prepStmt = conn.prepareStatement(psq)) {
-
-            // quotation in string managed by PreparedStatement
-            prepStmt.setString(1, "%" + letter + "%");
-            prepStmt.setString(2, "%" + letter + "%");
-
-            LOG.debug("I'm about to execute " + prepStmt);
-            List<Coder2> results = new ArrayList<>();
-
-            try (ResultSet rs = prepStmt.executeQuery()) {
-                while (rs.next()) {
-                    results.add(new Coder2(rs.getString(1), rs.getString(2), rs.getDouble(3)));
-                }
-            }
-
-            return results;
-        }
-    }
-
     public List<Coder2> getCodersWithLetterIn(char letter) throws SQLException {
-        final String sql = "select first_name, last_name, salary " + "from coders "
-                + "where first_name like '%%%c%%' or last_name like '%%%c%%'";
-
+        final String sql = "SELECT first_name, last_name, salary " + //
+                "FROM coders " + //
+                "WHERE first_name LIKE '%%%c%%' or last_name LIKE '%%%c%%'";
         String query = String.format(sql, letter, letter);
-        LOG.debug("I'm about to execute " + query);
+        LOG.debug(query.toString());
+
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
@@ -146,25 +125,7 @@ public class Selector {
                 results.add(new Coder2(rs.getString(1), rs.getString(2), rs.getDouble(3)));
             }
 
-            LOG.debug("Resulting " + results);
             return results;
-        }
-    }
-
-    public static void main(String[] args) {
-        try {
-            Selector sample = new Selector();
-
-            System.out.println("Coder names are: " + sample.getCoderNames());
-            System.out.println("Coders are: " + sample.getCoders());
-            System.out.println("Rich coders are: " + sample.getCodersBySalary(6000));
-
-            LocalDate date = LocalDate.of(2007, Month.JANUARY, 1);
-            List<Coder> results = Selector.getCodersHiredBefore(date);
-            System.out.println("Most senior coders are: " + results);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return;
         }
     }
 }
