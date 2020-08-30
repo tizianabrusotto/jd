@@ -9,7 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Transactor {
-    private static Logger logger = LoggerFactory.getLogger(Transactor.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Transactor.class);
 
     private static final String URL = "jdbc:mysql://localhost:3306/me?serverTimezone=Europe/Rome";
     private static final String USER = "me";
@@ -36,14 +36,25 @@ public class Transactor {
             conn.setAutoCommit(false);
             System.out.println(". Here is set it to " + conn.getAutoCommit() + ".");
 
-            System.out.println("Inserting new coder ...");
-            stmt.executeUpdate("INSERT INTO coders VALUES(301, 'John', 'Coltrane', CURDATE(), 6000)");
-            selectAllAndPrint(stmt);
-            System.out.println("Rollback");
-            conn.rollback();
-            selectAllAndPrint(stmt);
+            try {
+                System.out.println("Inserting new coder ...");
+                stmt.executeUpdate("INSERT INTO coders VALUES(301, 'John', 'Coltrane', CURDATE(), 6000)");
+                selectAllAndPrint(stmt);
+
+                doSomethingDangerous();
+
+                conn.commit();
+            } catch (Exception ex) {
+                System.out.println("Rollback");
+                conn.rollback();
+                selectAllAndPrint(stmt);
+            }
         } catch (SQLException se) {
-            logger.error("DBMS error", se);
+            LOG.error("DBMS error", se);
         }
+    }
+
+    private static void doSomethingDangerous() {
+        throw new IllegalStateException("Something bad happened");
     }
 }
