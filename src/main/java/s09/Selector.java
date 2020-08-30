@@ -15,7 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class Selector {
-    private static Logger logger = LoggerFactory.getLogger(Selector.class);
+    private static final Logger LOG = LoggerFactory.getLogger(Selector.class);
 
     private static final String URL = "jdbc:mysql://localhost:3306/me?serverTimezone=Europe/Rome";
     private static final String USER = "me";
@@ -23,7 +23,7 @@ public class Selector {
 
     private static final String SELECT_NAMES = "SELECT first_name FROM coders ORDER BY 1";
     private static final String SELECT_CODERS = "SELECT first_name, last_name, salary FROM coders ORDER BY 1";
-    private static final String SELECT_CODERS_BY_SALARY_DOUBLE = "SELECT first_name, last_name, salary FROM coders WHERE salary >= %.0f ORDER BY 3 DESC";
+    private static final String SELECT_CODERS_BY_SALARY_DOUBLE = "SELECT first_name, last_name, salary FROM coders WHERE salary >= %d ORDER BY 3 DESC";
     private static final String SELECT_CODERS_BY_SALARY_STRING = "SELECT first_name, last_name, salary FROM coders WHERE salary >= %s ORDER BY 3 DESC";
 
     public List<String> getCoderNames() throws SQLException {
@@ -47,15 +47,16 @@ public class Selector {
                 ResultSet rs = stmt.executeQuery(SELECT_CODERS)) {
             List<Coder> results = new ArrayList<>();
             while (rs.next()) {
-                Coder coder = new Coder(rs.getString(1), rs.getString(2), rs.getInt(3));
-                results.add(coder);
+//                Coder coder = new Coder(rs.getString(1), rs.getString(2), rs.getInt(3));
+//                results.add(coder);
+                results.add(new Coder(rs.getString(1), rs.getString(2), rs.getInt(3)));
             }
 
             return results;
         }
     }
 
-    public List<Coder> getCodersBySalary(double lower) throws SQLException {
+    public List<Coder> getCodersBySalary(int lower) throws SQLException {
         String query = String.format(SELECT_CODERS_BY_SALARY_DOUBLE, lower);
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                 Statement stmt = conn.createStatement();
@@ -69,6 +70,9 @@ public class Selector {
         }
     }
 
+    /*
+     * DANGER! SQL Injection!
+     */
     public List<Coder> getCodersBySalary(String lower) throws SQLException {
         String query = String.format(SELECT_CODERS_BY_SALARY_STRING, lower);
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -90,7 +94,7 @@ public class Selector {
                 PreparedStatement prepStmt = conn.prepareStatement(query)) {
             prepStmt.setDate(1, Date.valueOf(limit));
 
-            logger.debug("I'm about to execute " + prepStmt);
+            LOG.debug("I'm about to execute " + prepStmt);
             List<Coder> results = new ArrayList<>();
 
             try (ResultSet rs = prepStmt.executeQuery()) {
@@ -99,6 +103,50 @@ public class Selector {
                 }
             }
 
+            return results;
+        }
+    }
+
+    public List<Coder2> getCodersWithLetterInPrepared(char letter) throws SQLException {
+        final String psq = "select first_name, last_name, salary " + "from coders "
+                + "where first_name like ? or last_name like ?";
+
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                PreparedStatement prepStmt = conn.prepareStatement(psq)) {
+
+            // quotation in string managed by PreparedStatement
+            prepStmt.setString(1, "%" + letter + "%");
+            prepStmt.setString(2, "%" + letter + "%");
+
+            LOG.debug("I'm about to execute " + prepStmt);
+            List<Coder2> results = new ArrayList<>();
+
+            try (ResultSet rs = prepStmt.executeQuery()) {
+                while (rs.next()) {
+                    results.add(new Coder2(rs.getString(1), rs.getString(2), rs.getDouble(3)));
+                }
+            }
+
+            return results;
+        }
+    }
+
+    public List<Coder2> getCodersWithLetterIn(char letter) throws SQLException {
+        final String sql = "select first_name, last_name, salary " + "from coders "
+                + "where first_name like '%%%c%%' or last_name like '%%%c%%'";
+
+        String query = String.format(sql, letter, letter);
+        LOG.debug("I'm about to execute " + query);
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                Statement stmt = conn.createStatement();
+                ResultSet rs = stmt.executeQuery(query)) {
+
+            List<Coder2> results = new ArrayList<>();
+            while (rs.next()) {
+                results.add(new Coder2(rs.getString(1), rs.getString(2), rs.getDouble(3)));
+            }
+
+            LOG.debug("Resulting " + results);
             return results;
         }
     }
