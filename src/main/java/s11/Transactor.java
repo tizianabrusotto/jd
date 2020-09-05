@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 public class Transactor {
     private static final Logger LOG = LoggerFactory.getLogger(Transactor.class);
 
-    private static final String URL = "jdbc:mysql://localhost:3306/me?serverTimezone=Europe/Rome";
+    private static final String URL = "jdbc:mysql://localhost:3306/me";
     private static final String USER = "me";
     private static final String PASSWORD = "password";
 

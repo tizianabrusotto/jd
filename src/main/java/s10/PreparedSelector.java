@@ -16,7 +16,7 @@ import s09.Coder2;
 public class PreparedSelector {
     private static final Logger LOG = LoggerFactory.getLogger(PreparedSelector.class);
 
-    private static final String URL = "jdbc:mysql://localhost:3306/me?serverTimezone=Europe/Rome";
+    private static final String URL = "jdbc:mysql://localhost:3306/me";
     private static final String USER = "me";
     private static final String PASSWORD = "password";
 

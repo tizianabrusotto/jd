@@ -9,7 +9,11 @@ import org.slf4j.LoggerFactory;
 public class DriverManagerConnector {
     private static final Logger LOG = LoggerFactory.getLogger(DriverManagerConnector.class);
 
-    private static final String URL = "jdbc:mysql://localhost:3306/me?serverTimezone=Europe/Rome";
+    /**
+     * time zone set in my.ini as: default-time-zone="+02:00" 
+     * otherwise add "?serverTimezone=Europe/Rome" (or other time zone) to the URL
+     */
+    private static final String URL = "jdbc:mysql://localhost:3306/me";
     private static final String USER = "me";
     private static final String PASSWORD = "password";
 
