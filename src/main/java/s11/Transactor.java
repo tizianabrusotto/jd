@@ -11,7 +11,10 @@ import org.slf4j.LoggerFactory;
 public class Transactor {
     private static final Logger LOG = LoggerFactory.getLogger(Transactor.class);
 
-    private static final String URL = "jdbc:mysql://localhost:3306/me";
+    /** MySQL */
+//  private static final String URL = "jdbc:mysql://localhost:3306/me";
+    /** Oracle DB */
+    private static final String URL = "jdbc:oracle:thin:@127.0.0.1:1521/xe";
     private static final String USER = "me";
     private static final String PASSWORD = "password";
 
@@ -38,13 +41,17 @@ public class Transactor {
 
             try {
                 System.out.println("Inserting new coder ...");
-                stmt.executeUpdate("INSERT INTO coders VALUES(301, 'John', 'Coltrane', CURDATE(), 6000)");
+                // TODO: exercise, rewrite this code in a safer way
+                // MySQL-specific query
+//                stmt.executeUpdate("INSERT INTO coders VALUES(301, 'John', 'Coltrane', CURDATE(), 6000)");
+                // Oracle-specific query
+                stmt.executeUpdate("INSERT INTO coders VALUES(301, 'John', 'Coltrane', SYSDATE, 6000)");
+
                 selectAllAndPrint(stmt);
-
                 doSomethingDangerous();
-
                 conn.commit();
             } catch (Exception ex) {
+                LOG.error("Can't insert new coder", ex);
                 System.out.println("Rollback");
                 conn.rollback();
                 selectAllAndPrint(stmt);

@@ -16,10 +16,12 @@
 	</properties>
 
 	<dependencies>
+		<!-- <dependency> <groupId>mysql</groupId> <artifactId>mysql-connector-java</artifactId> 
+			<version>8.0.20</version> </dependency> -->
 		<dependency>
-			<groupId>mysql</groupId>
-			<artifactId>mysql-connector-java</artifactId>
-			<version>8.0.20</version>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc10</artifactId>
+			<version>19.7</version>
 		</dependency>
 		<dependency>
 			<groupId>ch.qos.logback</groupId>

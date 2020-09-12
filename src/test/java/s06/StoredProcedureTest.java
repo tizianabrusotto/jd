@@ -3,6 +3,7 @@ package s06;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.closeTo;
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.SQLException;
 
@@ -36,10 +37,30 @@ class StoredProcedureTest {
     }
 
     @Test
-    void getCoderSalaryMissing() throws SQLException {
+    void getCoderSalaryMissingMySql() throws SQLException {
+        if (!("MySQL".equals(sp.getDatabaseName()))) {
+            System.out.println("getCoderSalaryMissingMySql() skipped");
+            return;
+        }
+
         int coderId = 22070;
         double expected = 0.0;
 
         double actual = sp.getCoderSalary(coderId);
         assertThat(actual, is(expected));
-    }}
+    }
+
+    @Test
+    void getCoderSalaryMissingOracle() {
+        if (!("Oracle".equals(sp.getDatabaseName()))) {
+            System.out.println("getCoderSalaryMissingOracle() skipped");
+            return;
+        }
+
+        int coderId = 22070;
+
+        var exc = assertThrows(SQLException.class, () -> sp.getCoderSalary(coderId));
+        assertThat(exc.getErrorCode(), is(1403));
+
+    }
+}
