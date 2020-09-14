@@ -3,6 +3,8 @@
 alter session set current_schema = me;
 
 --
+create sequence coder_seq start with 201;
+
 create table coders
 as
     select employee_id as coder_id, first_name, last_name, hire_date, salary
@@ -13,7 +15,7 @@ alter table coders modify coder_id int primary key;
 alter table coders add constraint coders_name_uq unique (first_name, last_name);
 
 insert into coders (coder_id, first_name, last_name, hire_date, salary)
-values (108, 'Tim', 'Ice', sysdate, 5760);
+values (coder_seq.nextval, 'Tim', 'Ice', sysdate, 5760);
 
 commit;
 
