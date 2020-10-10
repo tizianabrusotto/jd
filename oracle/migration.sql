@@ -4,6 +4,7 @@ alter session set current_schema = me;
 
 --
 create sequence coder_seq start with 201;
+create sequence team_seq start with 10;
 
 create table coders
 as
