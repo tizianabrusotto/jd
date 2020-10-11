@@ -40,11 +40,11 @@ select log(10, 100)
 from dual;
 
 -- rounding
-select round(5.75), round(5.75, 1), round(5.75, -1)
+select round(5.75) as "No fractions", round(5.75, 1) as "No cents", round(5.75, -1) as "No units"
 from dual;
 
 -- truncating
-select trunc(5.75, 0), trunc(5.75, 1), trunc(5.75, -1)
+select trunc(5.75) as "No fractions", trunc(5.75, 1) as "No cents", trunc(5.75, -1) as "No units"
 from dual;
 
 -- check negative, zero, positive

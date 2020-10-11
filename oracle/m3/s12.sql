@@ -5,8 +5,8 @@ alter session set current_schema = hr;
 -- get employees with a salary less than 8000
 -- group them by manager id
 -- keep the groups with an average salary above 6000
--- and order the result by the the second column, descending
-select manager_id, round(avg(salary))
+-- and order the result by rounded salary, descending
+select manager_id, round(avg(salary)) as "rounded avg salary"
 from employees
 where salary < 8000
 group by manager_id

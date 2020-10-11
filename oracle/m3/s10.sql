@@ -2,7 +2,7 @@
 
 alter session set current_schema = hr;
 
--- count, count distinct
+-- count all
 select count(*), count(ROWID), count(ROWNUM)
 from employees;
 
@@ -11,7 +11,7 @@ select count(manager_id)
 from employees;
 
 -- distinct values
-select count(distinct manager_id)
+select count(distinct manager_id) as "distinct managers"
 from employees;
 
 -- max, min
@@ -24,15 +24,23 @@ from employees
 where department_id = 50;
 
 -- average
-select avg(salary)
+select round(avg(salary), 2) "Round to cent"
 from employees
 where department_id = 50;
 
--- standard deviation, variance, median
-select stddev(salary), variance(salary), median(salary)
+-- standard deviation
+select round(stddev(salary)) as "rounded sigma"
 from employees;
 
--- who has the most common salary
+-- variance
+select round(variance(salary)) as "rounded sigma^2"
+from employees;
+
+-- median
+select median(salary)
+from employees;
+
+-- who has the most common salary: requires subquery
 select first_name, last_name
 from employees
 where salary = (select median(salary) from employees);
