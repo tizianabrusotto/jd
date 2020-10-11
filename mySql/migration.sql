@@ -2,30 +2,6 @@
 
 use me;
 
--- utility procedure for dropping a foreign key - if it exists
-drop procedure if exists drop_fk_if_exists;
-
-DELIMITER //
-
-create procedure drop_fk_if_exists(
-	in my_table varchar(64),
-    in my_fk varchar(64)
-) begin
-	if exists(
-		select enforced
-        from information_schema.table_constraints
-		where table_schema = schema() and table_name = my_table and constraint_name = my_fk and constraint_type = 'FOREIGN KEY')
-	then
-		set @query = concat('ALTER TABLE ', my_table, ' DROP FOREIGN KEY ', my_fk, ';');
- 		prepare stmt from @query;
-		execute stmt;
-		deallocate prepare stmt;
- 	end if;
-end;
-
-//
-DELIMITER ;
-
 -- main tables cleanup
 drop table if exists job_history;
 call drop_fk_if_exists('departments', 'departments_manager_fk');
@@ -351,7 +327,22 @@ commit;
 drop table if exists team_coder;
 drop table if exists teams;
 drop table if exists coders;
+drop table if exists clients;
 
+--
+create table clients (
+  client_id integer primary key auto_increment,
+  name varchar(25) not null
+);
+
+insert into clients (name) values ('Alpha');
+insert into clients (name) values ('Beta');
+insert into clients (name) values ('Gamma');
+insert into clients (name) values ('Delta');
+
+commit;
+
+--
 create table coders
 as
     select employee_id as coder_id, first_name, last_name, hire_date, salary
@@ -359,10 +350,11 @@ as
     where department_id = 60;
 
 alter table coders modify coder_id int primary key auto_increment;
+alter table coders auto_increment=201;
+
 alter table coders add constraint coders_name_uq unique(first_name, last_name);
 
-insert into coders(first_name, last_name, hire_date, salary)
-values('Tim', 'Ice', curdate(), 5760);
+insert into coders (first_name, last_name, hire_date, salary) values ('Tim', 'Ice', curdate(), 5760);
 
 commit;
 
@@ -390,13 +382,15 @@ create table teams(
 	team_id integer primary key auto_increment,
 	name varchar(25),
     leader_id integer unique,
+    client_id integer not null,
 
-    constraint teams_leader_fk foreign key(leader_id) references coders(coder_id)
+    constraint teams_leader_fk foreign key(leader_id) references coders(coder_id),
+    constraint teams_client_fk foreign key(client_id) references clients(client_id)
 );
 
-insert into teams(name, leader_id) values('red', 103);
-insert into teams(name, leader_id) values('blue', 107);
-insert into teams(name, leader_id) values('green', 105);
+insert into teams (name, leader_id, client_id) values ('red', 103, 1);
+insert into teams (name, leader_id, client_id) values ('blue', 107, 1);
+insert into teams (name, leader_id, client_id) values ('green', 105, 2);
 
 commit;
 
@@ -409,14 +403,14 @@ create table team_coder(
     constraint coder_team_fk foreign key(coder_id) references coders(coder_id)
 );
 
-insert into team_coder values(1, 104);
-insert into team_coder values(1, 106);
-insert into team_coder values(1, 108);
-insert into team_coder values(2, 105);
-insert into team_coder values(2, 106);
-insert into team_coder values(2, 107);
-insert into team_coder values(3, 105);
-insert into team_coder values(3, 106);
-insert into team_coder values(3, 103);
+insert into team_coder values (1, 104);
+insert into team_coder values (1, 106);
+insert into team_coder values (1, 201);
+insert into team_coder values (2, 105);
+insert into team_coder values (2, 106);
+insert into team_coder values (2, 107);
+insert into team_coder values (3, 105);
+insert into team_coder values (3, 106);
+insert into team_coder values (3, 103);
 
 commit;

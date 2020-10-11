@@ -22,7 +22,7 @@ create sequence client_seq;
 --
 create table clients (
   client_id integer primary key,
-  name varchar(25) not null
+  name varchar2(25) not null
 );
 
 insert into clients values(client_seq.nextval, 'Alpha');
