@@ -1,0 +1,5 @@
+-- create, execute, and finally drop a function
+--
+-- get_higher_salary(
+--    param in: manager_id
+--    param out: higher salary for an employee having the specified manager in hr.employees

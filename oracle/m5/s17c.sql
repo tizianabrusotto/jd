@@ -5,4 +5,8 @@ update coders
 set salary = salary * 1.3
 where coder_id > 103;
 
-select * from coder_salaries;
+select *
+from coder_salaries;
+
+select *
+from coders;
