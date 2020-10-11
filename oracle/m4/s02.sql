@@ -2,7 +2,10 @@
 
 alter session set current_schema = me;
 
-select * from clients;
+describe clients;
+
+select *
+from clients;
 
 -- plain insert
 insert into clients (client_id, name)
@@ -16,4 +19,5 @@ values (21);
 insert into clients
 values (22, 'Rohan');
 
+-- remember to explicitly commit - or rollback
 commit;

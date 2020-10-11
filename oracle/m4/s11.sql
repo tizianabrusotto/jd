@@ -19,18 +19,31 @@ create table details (
 
 -- drop table details;
 
-select * from execs where exec_id = 412;
+select *
+from execs
+where exec_id = 412;
 
-insert into execs values(412, 'Bill', 'Mates', sysdate, 1950);
+insert into execs
+	values(412, 'Bill', 'Mates', sysdate, 1950);
 
-insert into details(detail_id, name, exec_id) values(1, 'Alpha', 412);
-insert into details(detail_id, name, exec_id) values(2, 'Alpha', 412);
-insert into details(detail_id, name, exec_id) values(3, 'Beta', 412);
-insert into details(detail_id, name) values(5, 'Alpha');
-insert into details(detail_id) values(5);
-insert into details(detail_id, status, name) values(7, 'X', 'Alpha');
+insert into details(detail_id, name, exec_id)
+	values(1, 'Alpha', 412);
+insert into details(detail_id, name, exec_id)
+	values(2, 'Alpha', 412);
+insert into details(detail_id, name, exec_id)
+	values(3, 'Beta', 412);
+insert into details(detail_id, name)
+	values(5, 'Alpha');
+insert into details(detail_id)
+	values(5);
+insert into details(detail_id, status, name)
+	values(7, 'X', 'Alpha');
 
-select * from details;
+select *
+from details;
 
-delete from execs where exec_id = 412;
+delete from execs
+where exec_id = 412;
 
+-- remember to explicitly commit or rollback
+commit;

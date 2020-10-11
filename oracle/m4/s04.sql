@@ -2,8 +2,8 @@
 
 alter session set current_schema = me;
 
--- check the current status
-select * from clients;
+select *
+from clients;
 
 -- create a test row
 insert into clients (client_id, name)
@@ -15,4 +15,7 @@ where client_id = 42;
 
 -- multiline delete - careful here!
 delete from clients
-where client_id > 10;
+where client_id > 2;
+
+-- remeber to explicity rollback - or commit
+rollback;

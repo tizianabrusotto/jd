@@ -2,12 +2,23 @@
 
 alter session set current_schema = me;
 
--- updating more rows
-update clients
-set name = 'Client ' || client_id
-where client_id > 10;
+select *
+from clients;
 
--- updating more columns
-update coders
-set first_name = 'Timmy', last_name = 'Eyes'
-where coder_id = 108;
+-- prefer updating a single row
+update clients
+set name = 'Z'
+where client_id = 1;
+
+-- it is possible to update more rows
+update clients
+set name = 'X'
+where client_id in (2, 3);
+
+-- it is possible to update more columns
+update clients
+set client_id= 42, name = 'Y'
+where client_id = 4;
+
+-- remeber to explicity rollback - or commit
+rollback;
