@@ -99,6 +99,7 @@ public class Selector {
                 PreparedStatement prepStmt = conn.prepareStatement(query)) {
             prepStmt.setDate(1, Date.valueOf(limit));
 
+            // sadly, PreparedStatement.toString() not implemented in Oracle JDBC
             LOG.debug(prepStmt.toString());
             List<Coder> results = new ArrayList<>();
 

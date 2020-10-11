@@ -30,6 +30,7 @@ public class PreparedSelector {
                 PreparedStatement prepStmt = conn.prepareStatement(CODERS_BY_SALARY)) {
             prepStmt.setDouble(1, lower);
 
+            // sadly, PreparedStatement.toString() not implemented in Oracle JDBC
             LOG.debug(prepStmt.toString());
             List<Coder> results = new ArrayList<>();
 
@@ -54,6 +55,7 @@ public class PreparedSelector {
             prepStmt.setString(1, "%" + letter + "%");
             prepStmt.setString(2, "%" + letter + "%");
 
+            // sadly, PreparedStatement.toString() not implemented in Oracle JDBC
             LOG.debug(prepStmt.toString());
             List<Coder2> results = new ArrayList<>();
 
