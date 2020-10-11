@@ -24,7 +24,7 @@ from jobs;
 select job_title, min_salary as original, min_salary salary
 from jobs;
 
-select job_title, min_salary + 2000 as "increased min salary"
+select job_title, min_salary + 2000 as "Increased min salary"
 from jobs;
 
 -- dual
@@ -32,7 +32,7 @@ select sysdate, current_date, 1+2
 from dual;
 
 -- concatenation
-select country_id || '...' || region_id || '!'
+select country_id || '...' || region_id || '!' as "Country and region"
 from countries;
 
 -- pseudo columns
