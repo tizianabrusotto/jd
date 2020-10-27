@@ -1,9 +1,14 @@
--- run this as root
+-- information on tables
 
--- drop user me cascade;
+alter session set current_schema = hr;
 
-create user me identified by password account unlock;
-grant connect, resource to me;
-grant select on hr.employees to me;
+-- tables in the current database
+select table_name
+from user_tables;
 
-alter user me quota unlimited on users;
+-- table information
+-- describe countries;
+
+select column_name, nullable, data_type, data_length, data_precision, data_scale
+from user_tab_columns
+where table_name = 'JOBS';

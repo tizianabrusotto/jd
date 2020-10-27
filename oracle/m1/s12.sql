@@ -1,16 +1,24 @@
--- null
+-- order by
 
 alter session set current_schema = hr;
 
--- check null
-select first_name, last_name
+-- sorting in natural order
+select *
 from employees
-where commission_pct is null;
+order by last_name;
 
--- null in operations
-select first_name, last_name, 12 * salary * commission_pct
-from employees;
+-- descending
+select first_name, last_name, salary
+from employees
+order by salary desc;
 
--- what if null
-select employee_id, last_name, 12 * salary * nvl(commission_pct, 0)
-from employees;
+-- strange
+select *
+from employees
+order by last_name desc, first_name asc;
+
+-- positional notation
+select first_name, last_name, salary
+from employees
+order by 2;
+

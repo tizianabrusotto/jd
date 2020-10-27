@@ -1,40 +1,55 @@
--- select
+-- comparison operators /2
 
--- ensure we are working on HR
 alter session set current_schema = hr;
 
--- a select
-select region_name
-from regions
-where region_id = 1;
+-- simple pattern matching
+select last_name
+from employees
+where last_name like '_ul%';
 
--- select all
+select last_name
+from employees
+where last_name like '____';
+
+select last_name
+from employees
+where last_name like 'Sul%';
+
+-- interval check
 select *
-from regions;
+from regions
+where region_id between 2 and 3;
 
--- select distinct
-select distinct manager_id
-from employees;
+select *
+from countries
+where country_name between 'A' and 'C';
 
--- select with change on results
-select job_title, min_salary, min_salary + 2000, min_salary * 3 + 1000
-from jobs;
+-- check if (not) in a set
+select *
+from regions
+where region_id not in (2, 4);
 
--- alias
-select job_title, min_salary as original, min_salary salary
-from jobs;
+-- beware of null
+select *
+from regions
+where region_id not in (2, 3, null);
 
-select job_title, min_salary + 2000 as "Increased min salary"
-from jobs;
+-- can't compare a 'good' value with null
+select *
+from regions
+where region_id not in (null) or region_id in (null);
 
--- dual
-select sysdate, current_date, 1+2
-from dual;
+-- this works fine
+select *
+from employees
+where commission_pct in (0.10);
 
--- concatenation
-select country_id || '...' || region_id || '!' as "Country and region"
-from countries;
+-- this does not select anything!
+select *
+from employees
+where commission_pct in (null);
 
--- pseudo columns
-select rowid, rownum
-from regions;
+-- "is null" is the only way to check it
+select *
+from employees
+where commission_pct is null;

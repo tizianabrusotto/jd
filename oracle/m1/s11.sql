@@ -1,14 +1,18 @@
--- information on tables
+-- logical operators
 
 alter session set current_schema = hr;
 
--- tables in the current database
-select table_name
-from user_tables;
+-- both conditions should hold
+select *
+from employees
+where salary < 3000 and employee_id > 195;
 
--- table information
--- describe countries;
+-- one or the other is ok
+select *
+from employees
+where salary > 20000 or last_name = 'King';
 
-select column_name, nullable, data_type, data_length, data_precision, data_scale
-from user_tab_columns
-where table_name = 'JOBS';
+-- the other way round
+select *
+from employees
+where not department_id > 20;
