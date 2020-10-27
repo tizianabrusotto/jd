@@ -1,46 +1,55 @@
--- select
+-- comparison operators /2
 use me;
 
--- a select
-select region_name
-from regions
-where region_id = 1;
+-- simple pattern matching
+select last_name
+from employees
+where last_name like '_ul%';
 
--- select all
+select last_name
+from employees
+where last_name like '____';
+
+select last_name
+from employees
+where last_name like 'sul%';
+
+-- interval check
 select *
-from regions;
+from regions
+where region_id between 2 and 3;
 
-show schemas;
+select *
+from countries
+where country_name between 'a' and 'c';
 
--- select distinct
-select distinct manager_id
-from employees;
 
--- select with change on results
-select job_title, min_salary, min_salary + 2000, min_salary * 3 + 1000
-from jobs;
+-- check if (not) in a set
+select *
+from regions
+where region_id not in (2, 4);
 
--- alias
-select job_title, min_salary as original, min_salary salary
-from jobs;
+-- beware of null
+select *
+from regions
+where region_id not in (2, 3, null);
 
-select job_title, min_salary + 2000 as "increased min salary"
-from jobs;
+-- can't compare a 'good' value with null
+select *
+from regions
+where region_id not in (null) or region_id in (null);
 
--- dual
-select current_date, 1+2
-from dual;
+-- this works fine
+select *
+from employees
+where commission_pct in (0.10);
 
-select 1+2, 3-4, 2*6, 5/2, current_date;
+-- this does not select anything!
+select *
+from employees
+where commission_pct in (null);
 
--- concatenation
-select concat(country_id, '...', region_id, "!" )
-from countries;
-
--- limit to get result set with a specified size
-select first_name, last_name
-from employees limit 10;
-
-select first_name, last_name
-from employees limit 11, 10;
-
+-- "is null" is the only way to check it
+select *
+from employees
+where commission_pct is null;

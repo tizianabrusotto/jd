@@ -1,15 +1,17 @@
--- null
+-- order by
 use me;
 
--- check null
+-- sorting in natural order
+select *
+from employees
+order by last_name;
+
+-- descending
+select first_name, last_name, salary
+from employees
+order by salary desc;
+
+-- positional notation
 select first_name, last_name
 from employees
-where commission_pct is null;
-
--- null in operations
-select first_name, last_name, 12 * salary * commission_pct
-from employees;
-
--- what if null
-select employee_id, last_name, 12 * salary * ifnull(commission_pct, 0)
-from employees;
+order by last_name;

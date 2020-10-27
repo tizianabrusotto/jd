@@ -1,9 +1,23 @@
--- run it as root
+-- information on tables
+use me;
 
-drop user if exists me;
-drop schema if exists me;
+-- tables in the current database
+show tables;
 
-create user me identified by 'password';
-create schema me;
-grant all privileges on me.* to me;
-grant alter routine on me.* to me;
+-- all tables
+select table_name
+from information_schema.tables;
+
+-- all tables for a give schema (aka database)
+select table_name
+from information_schema.tables
+where table_schema='me';
+
+-- table information
+describe countries;
+select * from information_schema.columns c
+where c.table_schema='me' and c.table_name = 'countries';
+
+-- user information
+select *
+from mysql.user;

@@ -1,23 +1,17 @@
--- information on tables
+-- logical operators
 use me;
 
--- tables in the current database
-show tables;
-
--- all tables
-select table_name
-from information_schema.tables;
-
--- all tables for a give schema (aka database)
-select table_name
-from information_schema.tables
-where table_schema='me';
-
--- table information
-describe countries;
-select * from information_schema.columns c
-where c.table_schema='me' and c.table_name = 'countries';
-
--- user information
+-- both conditions should hold
 select *
-from mysql.user;
+from employees
+where salary < 3000 and employee_id > 195;
+
+-- one or the other is ok
+select *
+from employees
+where salary > 20000 or last_name = 'King';
+
+-- the other way round
+select *
+from employees
+where not department_id > 20;
