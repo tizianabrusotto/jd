@@ -11,7 +11,7 @@ where employee_id = 107;
 -- ... list of other jobs with a compatible  min/max salary
 select j.job_title, j.min_salary, j.max_salary
 from employees e join jobs j
-on(e.salary between j.min_salary and j.max_salary and e.job_id != j.job_id)
+on e.salary between j.min_salary and j.max_salary and e.job_id != j.job_id
 where e.employee_id = 107;
 
 -- "classic" version
