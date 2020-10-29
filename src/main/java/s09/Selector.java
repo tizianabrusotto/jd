@@ -14,16 +14,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static jd.Config.*;
+
 public class Selector {
     private static final Logger LOG = LoggerFactory.getLogger(Selector.class);
-
-    /** MySQL */
-    private static final String URL = "jdbc:mysql://localhost:3306/me";
-    /** Oracle DB */
-//    private static final String URL = "jdbc:oracle:thin:@127.0.0.1:1521/xe";
-    private static final String USER = "me";
-    private static final String PASSWORD = "password";
-
     private static final String SELECT_NAMES = "SELECT first_name FROM coders ORDER BY 1";
     private static final String SELECT_CODERS = "SELECT first_name, last_name, salary FROM coders ORDER BY 1";
     private static final String SELECT_CODERS_BY_SALARY_DOUBLE = "SELECT first_name, last_name, salary FROM coders WHERE salary >= %d ORDER BY 3 DESC";

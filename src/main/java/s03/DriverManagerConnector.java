@@ -7,20 +7,10 @@ import java.sql.SQLException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static jd.Config.*;
+
 public class DriverManagerConnector {
     private static final Logger LOG = LoggerFactory.getLogger(DriverManagerConnector.class);
-
-    /**
-     * MySQL time zone set in my.ini as: default-time-zone="+02:00" otherwise add
-     * "?serverTimezone=Europe/Rome" (or other time zone) to the URL
-     */
-    private static final String URL = "jdbc:mysql://localhost:3306/me";
-
-    /** Oracle DB */
-//    private static final String URL = "jdbc:oracle:thin:@127.0.0.1:1521/xe";
-
-    private static final String USER = "me";
-    private static final String PASSWORD = "password";
 
     /**
      * The following static initializer should not be required anymore

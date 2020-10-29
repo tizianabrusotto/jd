@@ -12,17 +12,10 @@ import org.slf4j.LoggerFactory;
 
 import s09.Coder;
 import s09.Coder2;
+import static jd.Config.*;
 
 public class PreparedSelector {
     private static final Logger LOG = LoggerFactory.getLogger(PreparedSelector.class);
-
-    /** MySQL */
-    private static final String URL = "jdbc:mysql://localhost:3306/me";
-    /** Oracle DB */
-//    private static final String URL = "jdbc:oracle:thin:@127.0.0.1:1521/xe";
-    private static final String USER = "me";
-    private static final String PASSWORD = "password";
-
     private static final String CODERS_BY_SALARY = "SELECT first_name, last_name, salary FROM coders WHERE salary >= ? ORDER BY 3 DESC";
 
     public List<Coder> getCodersBySalary(double lower) throws SQLException {

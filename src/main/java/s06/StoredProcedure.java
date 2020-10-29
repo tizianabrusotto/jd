@@ -9,19 +9,10 @@ import java.sql.Types;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import s10.PreparedSelector;
+import static jd.Config.*;
 
 public class StoredProcedure {
-    private static final Logger LOG = LoggerFactory.getLogger(PreparedSelector.class);
-
-    /** MySQL */
-    private static final String URL = "jdbc:mysql://localhost:3306/me";
-    /** Oracle DB */
-//    private static final String URL = "jdbc:oracle:thin:@127.0.0.1:1521/xe";
-
-    private static final String USER = "me";
-    private static final String PASSWORD = "password";
-
+    private static final Logger LOG = LoggerFactory.getLogger(StoredProcedure.class);
     private static final String GET_CODER_SALARY = "{call get_coder_salary(?, ?)}";
 
     /**

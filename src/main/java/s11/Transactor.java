@@ -8,15 +8,10 @@ import java.sql.Statement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static jd.Config.*;
+
 public class Transactor {
     private static final Logger LOG = LoggerFactory.getLogger(Transactor.class);
-
-    /** MySQL */
-    private static final String URL = "jdbc:mysql://localhost:3306/me";
-    /** Oracle DB */
-//    private static final String URL = "jdbc:oracle:thin:@127.0.0.1:1521/xe";
-    private static final String USER = "me";
-    private static final String PASSWORD = "password";
 
     public static void selectAllAndPrint(Statement stmt) throws SQLException {
         System.out.print("[");
@@ -43,9 +38,9 @@ public class Transactor {
                 System.out.println("Inserting new coder ...");
                 // TODO: exercise, rewrite this code in a safer way
                 // MySQL-specific query
-//                stmt.executeUpdate("INSERT INTO coders VALUES(301, 'John', 'Coltrane', CURDATE(), 6000)");
+                stmt.executeUpdate("INSERT INTO coders VALUES(301, 'John', 'Coltrane', CURDATE(), 6000)");
                 // Oracle-specific query
-                stmt.executeUpdate("INSERT INTO coders VALUES(301, 'John', 'Coltrane', SYSDATE, 6000)");
+//                stmt.executeUpdate("INSERT INTO coders VALUES(301, 'John', 'Coltrane', SYSDATE, 6000)");
 
                 selectAllAndPrint(stmt);
                 doSomethingDangerous();
