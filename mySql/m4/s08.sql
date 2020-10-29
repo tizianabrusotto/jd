@@ -5,21 +5,16 @@ create table items (
     item_id integer primary key,
     status char,
     name varchar(20),
-    coder_id integer);
+    exec_id integer);
 
-select * from items;
+describe items;
 
 insert into items (item_id) values (12);
 
+select *
+from items;
+
 update items
-set status = 'x'
+set status = 'x', name = 'thing'
 where item_id = 12;
-
-savepoint sp;
-
-delete from items;
-
-rollback to sp;
-
-rollback;
 

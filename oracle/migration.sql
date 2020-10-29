@@ -22,13 +22,14 @@ create sequence client_seq;
 --
 create table clients (
   client_id integer primary key,
-  name varchar2(25) not null
+  name varchar2(25) not null,
+  nickname varchar2(10)
 );
 
-insert into clients values(client_seq.nextval, 'Alpha');
-insert into clients values(client_seq.nextval, 'Beta');
-insert into clients values(client_seq.nextval, 'Gamma');
-insert into clients values(client_seq.nextval, 'Delta');
+insert into clients values(client_seq.nextval, 'Aleph Microservices', 'Alpha');
+insert into clients values(client_seq.nextval, 'Bertha Heavy Duty Industries', 'Beta');
+insert into clients values(client_seq.nextval, 'Teragamma Consulting', 'Gamma');
+insert into clients values(client_seq.nextval, 'Delta Oscar Services', 'Delta');
 
 commit;
 

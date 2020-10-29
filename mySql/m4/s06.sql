@@ -1,13 +1,16 @@
+-- commit, rollback, savepoint
+-- autocommit is expected being off
+
 use me;
 
-insert into regions(region_id, region_name) values (11, 'Antarctica');
+select *
+from clients;
+
+insert into clients (name) values ('Kerr & Reetch Associates');
 savepoint sp;
 
-insert into regions(region_id, region_name) values (12, 'Oceania');
+insert into clients (name) values ('Oz Singleton Factories');
 
-rollback to sp; -- keep Antarctica, rollback Oceania
+rollback to sp; -- keep K&R, rollback Oz
 
-commit; -- persist Antarctica
-
-select *
-from regions;
+commit; -- persist K&R

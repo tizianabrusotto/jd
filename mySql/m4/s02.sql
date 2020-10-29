@@ -1,27 +1,28 @@
 -- insert
 use me;
 
-select * from regions;
+select *
+from clients;
 
-describe regions;
+describe clients;
 
 -- plain insert
-insert into regions (region_id, region_name)
-values (11, 'Antarctica');
+insert into clients (client_id, name, nickname)
+values (20, 'Mordor Shifty Solutions', 'Moh');
 
 -- multiline insert
-insert into regions (region_id, region_name) values
-	(21, 'Gondor'),
-	(22, 'Rohan');
+insert into clients (client_id, name, nickname) values
+	(21, 'East Gondor Real Estate', 'Gondy'),
+	(22, 'Rohan Horse Equipments', 'Ron');
 
 -- nullable column could be skipped
-insert into regions (region_id)
-values (12);
+insert into clients (client_id, name)
+values (12, 'Kerr & Reetch Associates');
 
 -- auto-incremented value for pk
-insert into regions (region_name)
-values ('Oz');
+insert into clients (name)
+values ('Multiple Oz Factories');
 
 -- insert relying on column definition on table
-insert into regions
-values (13, null);
+insert into clients
+values (13, 'Rainydays Tour Operator', null);

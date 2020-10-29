@@ -1,20 +1,16 @@
--- create table as select
+-- create table by select
+
 use me;
 
-drop table if exists team_coder;
-drop table if exists teams;
-drop table if exists details;
-drop table if exists coders;
-
-select employee_id as coder_id, first_name, last_name, hire_date, salary
-from employees
-where department_id = 60;
-
--- create table by select
-create table coders
+create table execs
 as
-    select employee_id as coder_id, first_name, last_name, hire_date, salary
+    select employee_id as exec_id, first_name, last_name, hire_date, salary
     from employees
-    where department_id = 60;
+    where department_id = 90;
+    
+describe execs;
 
-select * from coders;
+select *
+from execs;
+
+-- drop table execs;

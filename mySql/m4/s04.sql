@@ -2,15 +2,13 @@
 use me;
 
 -- check the current status
-select * from regions;
-
--- create a test row
-insert into regions (region_id, region_name) values (42, 'Z');
+select *
+from clients;
 
 -- delete a single row
-delete from regions
-where region_id = 42;
+delete from clients
+where client_id = 22;
 
--- multiline delete - be careful with it!
-delete from regions
-where region_id > 10;
+-- multiline delete - be extra careful with it!
+delete from clients
+where client_id > 10;

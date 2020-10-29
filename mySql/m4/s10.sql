@@ -9,28 +9,40 @@ alter table items drop column counter;
 
 -- add check
 alter table items add constraint items_status_ck check(status in ('A', 'B', 'X'));
+
+-- this one won't work
 insert into items values(13, 'Y', 'ciao', 13);
 
-select * from items;
+select *
+from items;
+
 insert into items (item_id, status) values(43, 'X');
+
 update items set status = '?';
+
+-- careful with this one!
 delete from items;
 
-describe coders;
+describe execs;
 
-select * from coders;
+select *
+from execs;
+
 -- add unique
-alter table coders add constraint coders_name_uq unique(first_name, last_name);
+alter table execs add constraint execs_name_uq unique (first_name, last_name);
 
-insert into coders values(1222, 'Bruce', 'Austin', '2007-05-21', 6000.00);
+insert into execs values(1222, 'Bruce', 'Austin', '2007-05-21', 6000.00);
 
 -- add pk
-alter table coders add constraint primary key(coder_id);
-alter table coders modify coder_id int primary key;
+alter table execs add constraint primary key(exec_id);
+-- alter table execs modify exec_id int primary key;
 
 -- drop pk
-alter table coders drop primary key;
+alter table execs drop primary key;
 
 -- add pk w/ autoincrement
-alter table coders modify coder_id int primary key auto_increment;
-alter table coders change coder_id coder_id int primary key auto_increment;
+alter table execs modify exec_id int primary key auto_increment;
+alter table execs change exec_id exec_id int primary key auto_increment;
+
+-- drop autoincrement from pk
+alter table execs change exec_id exec_id int;

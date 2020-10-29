@@ -14,24 +14,24 @@ create table details (
 --	name varchar(20) not null,
 	name varchar(20) unique,
 
-    coder_id integer,
+    exec_id integer,
 
---    constraint details_coder_fk foreign key(coder_id) references coders(coder_id),
+    constraint details_exec_fk foreign key(exec_id) references execs(exec_id),
 --    constraint details_coder_fk foreign key(coder_id) references coders(coder_id) on delete cascade,
-    constraint details_coder_fk foreign key(coder_id) references coders(coder_id) on delete set null,
+--    constraint details_coder_fk foreign key(coder_id) references coders(coder_id) on delete set null,
         
     constraint details_name_status_uq unique(name, status)
 );
 
-select * from coders where coder_id = 412;
+insert into execs values(412, 'Bill', 'Mates', curdate(), 1950);
 
-insert into coders values(412, 'Bill', 'Mates', curdate(), 1950);
+insert into details (exec_id) values(412);
 
-insert into details(coder_id) values(412);
-select * from details;
+select *
+from details;
+
+-- beware of orphans
+delete from execs
+where exec_id = 412;
 
 commit;
-
-delete from coders where coder_id = 412;
-
-rollback;

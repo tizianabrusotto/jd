@@ -332,13 +332,14 @@ drop table if exists clients;
 --
 create table clients (
   client_id integer primary key auto_increment,
-  name varchar(25) not null
+  name varchar(25) not null,
+  nickname varchar(10)
 );
 
-insert into clients (name) values ('Alpha');
-insert into clients (name) values ('Beta');
-insert into clients (name) values ('Gamma');
-insert into clients (name) values ('Delta');
+insert into clients (name, nickname) values('Aleph Microservices', 'Alpha');
+insert into clients (name, nickname) values('Heavy Bertha Industries', 'Beta');
+insert into clients (name, nickname) values('Teragamma Consulting', 'Gamma');
+insert into clients (name, nickname) values('Lima Delta Services', 'Delta');
 
 commit;
 

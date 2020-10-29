@@ -1,15 +1,17 @@
 -- view
 use me;
 
+select *
+from execs;
+
 -- create view
-create or replace view odd_coders_view as
-select * from coders
-where mod(coder_id, 2) = 1;
+create or replace view junior_execs_view as
+	select first_name, last_name, hire_date from execs
+	where exec_id != 100;
+
+select *
+from junior_execs_view;
+
 
 -- get rid of a view
-drop view odd_coders_view;
-
-
-select * from coders;
-
-select * from odd_coders_view;
+drop view odd_execs_view;
