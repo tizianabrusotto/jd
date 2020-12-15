@@ -9,5 +9,5 @@ select manager_id, round(avg(salary))
 from employees
 where salary < 8000
 group by manager_id
-having avg(salary) > 6000
+having round(avg(salary)) > 6000
 order by 2 desc;
