@@ -14,3 +14,6 @@ insert into clients (name) values ('Oz Singleton Factories');
 rollback to sp; -- keep K&R, rollback Oz
 
 commit; -- persist K&R
+
+-- rollback after commit is useless
+-- rollback;
