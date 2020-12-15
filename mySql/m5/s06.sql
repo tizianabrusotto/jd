@@ -9,11 +9,11 @@ delimiter //
 create procedure total_salaries_coders()
 begin
 	declare v_total decimal(8, 2);
-    
+
 	select sum(salary)
 	into v_total
 	from coders;
-    
+
 	if v_total > 0 then
 		select v_total as "total salaries";
 	else
