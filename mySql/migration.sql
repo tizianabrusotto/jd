@@ -17,10 +17,10 @@ create table regions(
 	region_name varchar(25)
 );
 
-insert into regions (region_id, region_name) values (1, 'Europe');
-insert into regions (region_id, region_name) values (2, 'Americas');
-insert into regions (region_id, region_name) values (3, 'Asia');
-insert into regions (region_id, region_name) values (4, 'Middle East and Africa');
+insert into regions (region_name) values ('Europe');
+insert into regions (region_name) values ('Americas');
+insert into regions (region_name) values ('Asia');
+insert into regions (region_name) values ('Middle East and Africa');
 
 commit;
 
