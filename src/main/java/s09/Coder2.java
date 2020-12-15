@@ -3,7 +3,7 @@ package s09;
 /**
  * Another JavaBean for the CODERS table
  * 
- * @author egall
+ * @author Emanuele Galli
  */
 public class Coder2 {
     private String firstName;
@@ -88,14 +88,4 @@ public class Coder2 {
             return false;
         return true;
     }
-
-//    @Override
-//    public int compareTo(Coder2 other) {
-//        int check = lastName.compareTo(other.lastName);
-//        if (check == 0) {
-//            check = firstName.compareTo(other.firstName);
-//        }
-//
-//        return check;
-//    }
 }

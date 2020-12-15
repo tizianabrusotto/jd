@@ -16,20 +16,6 @@ public class StoredProcedure {
     private static final String GET_CODER_SALARY = "{call get_coder_salary(?, ?)}";
 
     /**
-     * Get the database name for the connection
-     * 
-     * Useful for testing specific DBMS features
-     */
-    String getDatabaseName() {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
-            return conn.getMetaData().getDatabaseProductName();
-        } catch (SQLException e) {
-            LOG.error("Failure accessing DB", e);
-            throw new IllegalStateException("Can't get database name");
-        }
-    }
-
-    /**
      * Coder salary
      * 
      * @param id the coder id
@@ -51,13 +37,13 @@ public class StoredProcedure {
     }
 
     /*
-     * Exercise:
+     * Exercise: Implement main to run this functionality from command line.
      * 
-     * Implement main to run this functionality from command line.
+     * If args.length is 1 then use the passed parameter (integer!) as coder id
      * 
-     * if args.length is 1 then use the passed parameter (integer!) as coder id (in
-     * case of wrong call, the user should get adequate feedback) otherwise use
-     * Scanner to get a viable input
+     * (in case of wrong call, the user should get adequate feedback)
+     * 
+     * otherwise use Scanner to get a viable input
      */
     public static void main(String[] args) {
         if (args.length != 1) {
