@@ -8,7 +8,11 @@ where last_name like '_ul%';
 
 select last_name
 from employees
-where last_name like '____';
+where last_name like '___';
+
+select last_name, first_name, hire_date
+from employees
+where hire_date not like '2005%';
 
 select last_name
 from employees
@@ -23,11 +27,14 @@ select *
 from countries
 where country_name between 'a' and 'c';
 
-
 -- check if (not) in a set
 select *
 from regions
 where region_id not in (2, 4);
+
+select *
+from regions
+where region_id in (2, 4);
 
 -- beware of null
 select *
@@ -42,7 +49,7 @@ where region_id not in (null) or region_id in (null);
 -- this works fine
 select *
 from employees
-where commission_pct in (0.10);
+where commission_pct in (0.10, 0.15);
 
 -- this does not select anything!
 select *

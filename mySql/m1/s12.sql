@@ -4,7 +4,7 @@ use me;
 -- sorting in natural order
 select *
 from employees
-order by last_name;
+order by salary;
 
 -- descending
 select first_name, last_name, salary
@@ -14,4 +14,6 @@ order by salary desc;
 -- positional notation
 select first_name, last_name
 from employees
-order by last_name;
+where first_name like 'a%'
+order by 2
+limit 5;
