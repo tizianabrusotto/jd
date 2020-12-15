@@ -12,6 +12,7 @@ import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.DisabledIf;
 
 /**
  * Assuming schema me, table coders initialized via migration.sql script
@@ -89,6 +90,7 @@ class SelectorTest {
     }
 
     @Test
+    @DisabledIf(value="jd.Config#isSqLite", disabledReason="Feature not available")
     void getCodersHiredBefore2007() throws SQLException {
         LocalDate date = LocalDate.of(2007, Month.JANUARY, 1);
         String[] expectedNames = { "David", "Alexander", "Valli" };

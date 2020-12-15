@@ -34,15 +34,21 @@ public class DriverManagerConnector {
 
             String db = conn.getMetaData().getDatabaseProductName();
 
-            String schema = conn.getCatalog(); // MySQL
+            // MySQL approach
+            String schema = conn.getCatalog();
             if (schema == null) {
-                schema = conn.getSchema(); // Oracle
+                // Oracle approach
+                schema = conn.getSchema();
+                // SQLite approach
+                if (schema == null) {
+                    schema = "N/A";
+                }
             }
 
             return String.format("Connected to %s database, schema %s", db, schema);
         } catch (SQLException e) {
             LOG.error("Failure accessing DB", e);
-            throw new IllegalStateException("Can't get schema name");
+            throw new IllegalStateException("Can't get database info");
         }
     }
 }
