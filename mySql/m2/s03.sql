@@ -20,7 +20,7 @@ from countries
 where region_id = 4;
 
 -- join the two tables and see the full result in a single shot
-select region_name, country_name
+select region_name as region, country_name as country
 from regions, countries
 where regions.region_id = countries.region_id
 order by 1, 2;
