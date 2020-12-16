@@ -90,7 +90,7 @@ class SelectorTest {
     }
 
     @Test
-    @DisabledIf(value="jd.Config#isSqLite", disabledReason="Feature not available")
+    @DisabledIf(value = "jd.Config#isSqLite", disabledReason = "No date support")
     void getCodersHiredBefore2007() throws SQLException {
         LocalDate date = LocalDate.of(2007, Month.JANUARY, 1);
         String[] expectedNames = { "David", "Alexander", "Valli" };
