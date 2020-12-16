@@ -1,13 +1,11 @@
 package jd;
 
 public interface Config {
-    static Dbms active() {
-        return Dbms.SQLITE;
-    }
+    static public final Dbms active = Dbms.SQLITE;
 
     /** MySQL */
     static boolean isMySql() {
-        return active() == Dbms.MYSQL;
+        return active == Dbms.MYSQL;
     }
 
     // public static final String URL = "jdbc:mysql://localhost:3306/me";
@@ -16,14 +14,14 @@ public interface Config {
 
     /** Oracle DB */
     static boolean isOracle() {
-        return active() == Dbms.ORACLE;
+        return active == Dbms.ORACLE;
     }
 
     // public static final String URL = "jdbc:oracle:thin:@127.0.0.1:1521/xe";
 
     /** SQLite */
     static boolean isSqLite() {
-        return active() == Dbms.SQLITE;
+        return active == Dbms.SQLITE;
     }
 
     public static final String URL = "jdbc:sqlite:me.db";
