@@ -1,6 +1,7 @@
 package s03;
 
 import java.sql.Connection;
+import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
@@ -32,7 +33,10 @@ public class DriverManagerConnector {
     public static String getInfo() {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
 
-            String db = conn.getMetaData().getDatabaseProductName();
+            DatabaseMetaData dmd = conn.getMetaData();
+
+            String db = dmd.getDatabaseProductName();
+            String version = dmd.getDatabaseProductVersion();
 
             // MySQL approach
             String schema = conn.getCatalog();
@@ -45,7 +49,7 @@ public class DriverManagerConnector {
                 }
             }
 
-            return String.format("Connected to %s database, schema %s", db, schema);
+            return String.format("Connected to %s version %s, schema %s", db, version, schema);
         } catch (SQLException e) {
             LOG.error("Failure accessing DB", e);
             throw new IllegalStateException("Can't get database info");
