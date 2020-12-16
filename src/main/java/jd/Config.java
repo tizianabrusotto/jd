@@ -1,32 +1,65 @@
 package jd;
 
-public interface Config {
-    static public final Dbms active = Dbms.SQLITE;
+import java.io.InputStream;
+import java.util.Properties;
 
-    /** MySQL */
-    static boolean isMySql() {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public abstract class Config {
+    private static final Logger log = LoggerFactory.getLogger(Config.class);
+
+    public static final Dbms active;
+    public static final String URL;
+    public static final String USER;
+    public static final String PASSWORD;
+
+    static {
+        String dbmsName = "mysql";
+        String url = "jdbc:mysql://localhost:3306/me";
+        String user = "me";
+        String password = "password";
+
+        try (InputStream is = Config.class.getClassLoader().getResourceAsStream("configuration.properties")) {
+            Properties prop = new Properties();
+            prop.load(is);
+
+            dbmsName = prop.getProperty("dbms.name");
+            url = prop.getProperty("dbms.url");
+            user = prop.getProperty("dbms.user");
+            password = prop.getProperty("dbms.password");
+        } catch (Exception ex) {
+            log.error("Can't load configuration properties", ex);
+        } finally {
+            switch (dbmsName) {
+            case "oracle":
+                active = Dbms.ORACLE;
+                break;
+            case "sqlite":
+                active = Dbms.SQLITE;
+                break;
+            case "mysql":
+                // fall through
+            default:
+                active = Dbms.MYSQL;
+                break;
+            }
+
+            URL = url;
+            USER = user;
+            PASSWORD = password;
+        }
+    }
+
+    public static boolean isMySql() {
         return active == Dbms.MYSQL;
     }
 
-    // public static final String URL = "jdbc:mysql://localhost:3306/me";
-    // or, if in my.ini there is no -> default-time-zone="+02:00"
-    // public static final String URL = "jdbc:mysql://localhost:3306/me?serverTimezone=Europe/Rome";
-
-    /** Oracle DB */
-    static boolean isOracle() {
+    public static boolean isOracle() {
         return active == Dbms.ORACLE;
     }
 
-    // public static final String URL = "jdbc:oracle:thin:@127.0.0.1:1521/xe";
-
-    /** SQLite */
-    static boolean isSqLite() {
+    public static boolean isSqLite() {
         return active == Dbms.SQLITE;
     }
-
-    public static final String URL = "jdbc:sqlite:me.db";
-
-    // User access info
-    public static final String USER = "me";
-    public static final String PASSWORD = "password";
 }
