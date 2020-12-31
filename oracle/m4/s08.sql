@@ -31,4 +31,5 @@ delete from items;
 -- remeber to explicity rollback - or commit
 rollback;
 
--- extreme cleanup: drop table items;
+-- extreme cleanup
+-- drop table items;

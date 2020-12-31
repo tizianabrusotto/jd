@@ -1,6 +1,6 @@
 -- regex
 
-alter session set current_schema = hr;
+alter session set current_schema = me;
 
 -- plain LIKE
 select last_name

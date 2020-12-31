@@ -3,7 +3,7 @@
 select add_months(sysdate, 3), months_between(sysdate, '01-FEB-2019')
 from dual;
 
-select last_day(sysdate), next_day(sysdate, 'lun')
+select last_day(sysdate), next_day(sysdate, 'mon')
 from dual;
 
 select round(sysdate, 'year'), round(sysdate, 'month')

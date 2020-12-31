@@ -1,6 +1,6 @@
 -- join with subquery
 
-alter session set current_schema = hr;
+alter session set current_schema = me;
 
 -- how many countries for each region
 select region_name, c.country_count

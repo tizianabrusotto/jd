@@ -1,6 +1,6 @@
 -- multirow subquery in where
 
-alter session set current_schema = hr;
+alter session set current_schema = me;
 
 -- multirow subquery to get manager names
 select first_name, last_name

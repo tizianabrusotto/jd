@@ -1,6 +1,6 @@
 -- group by - having
 
-alter session set current_schema = hr;
+alter session set current_schema = me;
 
 -- get employees with a salary less than 8000
 -- group them by manager id

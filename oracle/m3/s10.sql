@@ -1,6 +1,6 @@
 -- aggregate functions
 
-alter session set current_schema = hr;
+alter session set current_schema = me;
 
 -- count all
 select count(*), count(ROWID), count(ROWNUM)

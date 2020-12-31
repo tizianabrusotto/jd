@@ -1,6 +1,6 @@
 -- subquery
 
-alter session set current_schema = hr;
+alter session set current_schema = me;
 
 -- a) subquery in where:
 -- Chen manager name
