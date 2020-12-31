@@ -1,7 +1,7 @@
 -- select
 
 -- ensure we are working on HR
-alter session set current_schema = hr;
+alter session set current_schema = me;
 
 -- a select
 select region_name
