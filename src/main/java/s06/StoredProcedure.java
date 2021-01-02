@@ -35,20 +35,4 @@ public class StoredProcedure {
             return callStmt.getDouble(2);
         }
     }
-
-    /*
-     * Exercise: Implement main to run this functionality from command line.
-     * 
-     * If args.length is 1 then use the passed parameter (integer!) as coder id
-     * 
-     * (in case of wrong call, the user should get adequate feedback)
-     * 
-     * otherwise use Scanner to get a viable input
-     */
-    public static void main(String[] args) {
-        if (args.length != 1) {
-            System.out.println("Usage: StoredProcedure coderId");
-            return;
-        }
-    }
 }

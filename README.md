@@ -7,5 +7,5 @@ Java - Relational database integration by JDBC
 
 JDBC on
 - MySql 8
-- Oracle DB 11
+- Oracle DB 18c
 - SQLite 3
