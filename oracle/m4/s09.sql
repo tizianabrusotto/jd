@@ -15,5 +15,3 @@ as
     where department_id = 90;
 
 select * from execs;
-
--- drop table execs;

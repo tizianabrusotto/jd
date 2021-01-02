@@ -17,31 +17,40 @@ create table details (
     constraint details_name_status_uq unique(name, status)
 );
 
--- drop table details;
-
-select *
+-- ensuring exec_id 412 not used yet
+select first_name
 from execs
 where exec_id = 412;
 
+-- inserting exec 412
 insert into execs
 	values(412, 'Bill', 'Mates', sysdate, 1950);
 
 insert into details(detail_id, name, exec_id)
 	values(1, 'Alpha', 412);
+    
+-- error: ME.DETAIL_ID_CK
 insert into details(detail_id, name, exec_id)
 	values(2, 'Alpha', 412);
+
 insert into details(detail_id, name, exec_id)
 	values(3, 'Beta', 412);
+
+-- error: ME.DETAILS_NAME_STATUS_UQ
 insert into details(detail_id, name)
 	values(5, 'Alpha');
+
+-- error: cannot insert NULL into ME.DETAILS.NAME
 insert into details(detail_id)
 	values(5);
+
 insert into details(detail_id, status, name)
 	values(7, 'X', 'Alpha');
 
 select *
 from details;
 
+-- error: integrity constraint ME.DETAILS_CODER_FK violated - child record found
 delete from execs
 where exec_id = 412;
 

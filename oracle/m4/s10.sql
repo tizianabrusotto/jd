@@ -26,9 +26,6 @@ alter table items drop constraint items_status_ck;
 -- table cleanup
 delete from items;
 
---
-select * from execs;
-
 -- add unique
 alter table execs add constraint execs_name_uq unique(first_name, last_name);
 
@@ -38,5 +35,5 @@ insert into execs values(1101, 'Neena', 'Kochhar', sysdate, 15000.00);
 -- add pk
 alter table execs modify exec_id integer primary key;
 
--- drop pk
+-- don't drop this pk, we'll use it later
 -- alter table execs drop primary key;
