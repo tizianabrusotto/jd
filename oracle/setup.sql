@@ -50,3 +50,18 @@ begin
 end;
 /
 
+create or replace procedure drop_sequence_if_exists(
+	p_sequence_name in varchar2)
+is
+    v_counter integer;    
+begin
+	select count(rownum)
+	into v_counter
+	from user_sequences
+	where sequence_name = upper(p_sequence_name);
+
+    if v_counter != 0 then
+        execute immediate 'drop sequence ' || p_sequence_name;  
+    end if;    
+end;
+/

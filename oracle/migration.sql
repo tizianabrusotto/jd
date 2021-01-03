@@ -6,19 +6,22 @@ alter session set current_schema = me;
 alter session set NLS_NUMERIC_CHARACTERS = '.,';
 
 begin
-   drop_table_if_exists('job_history');
-   drop_fk_if_exists('departments', 'departments_manager_fk');
-   drop_table_if_exists('employees');
-   drop_table_if_exists('departments');
-   drop_table_if_exists('locations');
-   drop_table_if_exists('countries');
-   drop_table_if_exists('regions');
-   drop_table_if_exists('jobs');
+    drop_table_if_exists('job_history');
+    drop_fk_if_exists('departments', 'departments_manager_fk');
+    drop_table_if_exists('employees');
+    drop_table_if_exists('departments');
+    drop_table_if_exists('locations');
+    drop_table_if_exists('countries');
+    drop_table_if_exists('regions');
+    drop_table_if_exists('jobs');
 
-   drop_table_if_exists('team_coder');
-   drop_table_if_exists('teams');
-   drop_table_if_exists('coders');
-   drop_table_if_exists('clients');
+    drop_table_if_exists('team_coder');
+    drop_table_if_exists('teams');
+    drop_table_if_exists('coders');
+    drop_table_if_exists('clients');
+
+    drop_sequence_if_exists('language_seq');
+    drop_table_if_exists('languages');
 end;
 /
 --
@@ -410,3 +413,15 @@ insert into team_coder values(3, 106);
 insert into team_coder values(3, 103);
 
 commit;
+--
+create sequence language_seq;
+
+create table languages (
+  language_id integer primary key,
+  name varchar2(25) not null
+);
+
+insert into languages values(language_seq.nextval, 'English');
+insert into languages values(language_seq.nextval, 'Italian');
+insert into languages values(language_seq.nextval, 'German');
+insert into languages values(language_seq.nextval, 'French');
