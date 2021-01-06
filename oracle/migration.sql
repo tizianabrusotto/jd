@@ -354,7 +354,9 @@ create table coders (
   first_name varchar2(20),
   last_name varchar2(25),
   hire_date date not null,
-  salary number(8, 2)
+  salary number(8, 2),
+  
+  constraint coders_name_uq unique(first_name, last_name)
 );
 
 insert into coders(coder_id, first_name, last_name, hire_date, salary)
@@ -418,10 +420,12 @@ create sequence language_seq;
 
 create table languages (
   language_id integer primary key,
-  name varchar2(25) not null
+  name varchar2(25) unique not null
 );
 
 insert into languages values(language_seq.nextval, 'English');
 insert into languages values(language_seq.nextval, 'Italian');
 insert into languages values(language_seq.nextval, 'German');
 insert into languages values(language_seq.nextval, 'French');
+
+commit;
