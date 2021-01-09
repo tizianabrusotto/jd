@@ -1,4 +1,7 @@
 -- this script should run on me
+-- pre requisite: setup.sql
+--
+-- psql -U me: \i migration.sql
 
 drop table if exists job_history;
 alter table if exists departments drop constraint if exists departments_manager_fk;
@@ -38,7 +41,7 @@ create table countries(
 	country_name varchar(40),
 	region_id integer,
 
-    constraint countries_region_fk foreign key(region_id) references regions(region_id)
+	constraint countries_region_fk foreign key(region_id) references regions(region_id)
 );
 
 start transaction;
@@ -110,7 +113,7 @@ create table locations(
 	state_province varchar(25),
 	country_id char(2),
 
-    constraint locations_country_fk foreign key(country_id) references countries(country_id)
+	constraint locations_country_fk foreign key(country_id) references countries(country_id)
 );
 
 alter sequence locations_location_id_seq restart with 1000 increment by 100;
@@ -149,7 +152,7 @@ create table departments(
 	manager_id integer,
 	location_id integer,
 
-    constraint departments_location_fk foreign key(location_id) references locations(location_id)
+	constraint departments_location_fk foreign key(location_id) references locations(location_id)
 );
 
 alter sequence departments_department_id_seq restart with 10 increment by 10;
@@ -200,8 +203,8 @@ create table employees(
 	department_id integer,
 
 	constraint emp_salary_min check (salary > 0),
-    constraint employees_job_fk foreign key(job_id) references jobs(job_id),
-    constraint employees_department_fk foreign key(department_id) references departments(department_id)
+	constraint employees_job_fk foreign key(job_id) references jobs(job_id),
+	constraint employees_department_fk foreign key(department_id) references departments(department_id)
 );
 
 alter sequence employees_employee_id_seq restart with 100;
@@ -330,9 +333,9 @@ create table job_history(
 
 	constraint jhistory_pk primary key(employee_id, start_date),
 	constraint jhistory_date_interval check (end_date > start_date),
-    constraint jhistory_employee_fk foreign key(employee_id) references employees(employee_id),
-    constraint jhistory_job_fk foreign key(job_id) references jobs(job_id),
-    constraint jhistory_department_fk foreign key(department_id) references departments(department_id)
+	constraint jhistory_employee_fk foreign key(employee_id) references employees(employee_id),
+	constraint jhistory_job_fk foreign key(job_id) references jobs(job_id),
+	constraint jhistory_department_fk foreign key(department_id) references departments(department_id)
 );
 
 start transaction;
@@ -351,9 +354,9 @@ insert into job_history (employee_id,start_date,end_date,job_id,department_id) v
 commit;
 --
 create table clients (
-  client_id serial primary key,
-  name varchar(30) not null,
-  nickname varchar(10)
+	client_id serial primary key,
+	name varchar(30) not null,
+	nickname varchar(10)
 );
 
 start transaction;
@@ -366,13 +369,13 @@ insert into clients (name, nickname) values('Delta Oscar Services', 'Delta');
 commit;
 --
 create table coders (
-  coder_id serial primary key,
-  first_name varchar(20),
-  last_name varchar(25),
-  hire_date date not null,
-  salary decimal(8, 2),
-  
-  constraint coders_name_uq unique(first_name, last_name)
+	coder_id serial primary key,
+	first_name varchar(20),
+	last_name varchar(25),
+	hire_date date not null,
+	salary decimal(8, 2),
+
+	constraint coders_name_uq unique(first_name, last_name)
 );
 
 alter sequence coders_coder_id_seq restart with 201;
@@ -380,9 +383,9 @@ alter sequence coders_coder_id_seq restart with 201;
 start transaction;
 
 insert into coders(coder_id, first_name, last_name, hire_date, salary)
-    select employee_id, first_name, last_name, hire_date, salary
-    from employees
-    where department_id = 60;
+	select employee_id, first_name, last_name, hire_date, salary
+	from employees
+	where department_id = 60;
 
 insert into coders (first_name, last_name, hire_date, salary) values ('Tim', 'Ice', current_date, 5760);
 
@@ -392,7 +395,7 @@ commit;
 
 create or replace procedure get_coder_salary(
 	p_coder_id in coders.coder_id%type,
-    p_salary inout coders.salary%type)
+	p_salary inout coders.salary%type)
 language plpgsql as $$ begin
 	select salary
 	into p_salary
@@ -403,10 +406,11 @@ end; $$;
 create table teams(
 	team_id serial primary key,
 	name varchar(25) not null,
-    leader_id integer unique not null,
-    client_id integer not null,
-    constraint teams_leader_fk foreign key(leader_id) references coders(coder_id),
-    constraint teams_client_fk foreign key(client_id) references clients(client_id)
+	leader_id integer unique not null,
+	client_id integer not null,
+
+	constraint teams_leader_fk foreign key(leader_id) references coders(coder_id),
+	constraint teams_client_fk foreign key(client_id) references clients(client_id)
 );
 
 start transaction;
@@ -419,10 +423,11 @@ commit;
 --
 create table team_coder(
 	team_id integer,
-    coder_id integer,
+	coder_id integer,
+
 	constraint team_coder_pk primary key(team_id, coder_id),
-    constraint team_coder_fk foreign key(team_id) references teams(team_id),
-    constraint coder_team_fk foreign key(coder_id) references coders(coder_id)
+	constraint team_coder_fk foreign key(team_id) references teams(team_id),
+	constraint coder_team_fk foreign key(coder_id) references coders(coder_id)
 );
 
 start transaction;
@@ -442,8 +447,8 @@ commit;
 create sequence language_seq;
 
 create table languages (
-  language_id integer primary key,
-  name varchar(25) unique not null
+	language_id integer primary key,
+	name varchar(25) unique not null
 );
  
 start transaction;
