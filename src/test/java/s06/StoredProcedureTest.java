@@ -25,7 +25,7 @@ class StoredProcedureTest {
     }
 
     @Test
-    @DisabledIf("jd.Config#isSqLite")
+    @DisabledIf("jd.Config#isStoredProcedureMissing")
     void getCoderSalaryPlain() throws SQLException {
         /*-
          * # coder_id, first_name, last_name, hire_date, salary

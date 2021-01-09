@@ -35,6 +35,9 @@ public abstract class Config {
             case "oracle":
                 active = Dbms.ORACLE;
                 break;
+            case "postgres":
+                active = Dbms.POSTGRES;
+                break;
             case "sqlite":
                 active = Dbms.SQLITE;
                 break;
@@ -59,7 +62,15 @@ public abstract class Config {
         return active == Dbms.ORACLE;
     }
 
+    public static boolean isPostgres() {
+        return active == Dbms.POSTGRES;
+    }
+
     public static boolean isSqLite() {
         return active == Dbms.SQLITE;
+    }
+
+    public static boolean isStoredProcedureMissing() {
+        return isSqLite() || isPostgres();
     }
 }
