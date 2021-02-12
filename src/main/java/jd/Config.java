@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 public abstract class Config {
     private static final Logger log = LoggerFactory.getLogger(Config.class);
 
-    public static final Dbms active;
+    public static final Dbms ACTIVE;
     public static final String URL;
     public static final String USER;
     public static final String PASSWORD;
@@ -33,18 +33,18 @@ public abstract class Config {
         } finally {
             switch (dbmsName) {
             case "oracle":
-                active = Dbms.ORACLE;
+                ACTIVE = Dbms.ORACLE;
                 break;
             case "postgres":
-                active = Dbms.POSTGRES;
+                ACTIVE = Dbms.POSTGRES;
                 break;
             case "sqlite":
-                active = Dbms.SQLITE;
+                ACTIVE = Dbms.SQLITE;
                 break;
             case "mysql":
                 // fall through
             default:
-                active = Dbms.MYSQL;
+                ACTIVE = Dbms.MYSQL;
                 break;
             }
 
@@ -55,19 +55,19 @@ public abstract class Config {
     }
 
     public static boolean isMySql() {
-        return active == Dbms.MYSQL;
+        return ACTIVE == Dbms.MYSQL;
     }
 
     public static boolean isOracle() {
-        return active == Dbms.ORACLE;
+        return ACTIVE == Dbms.ORACLE;
     }
 
     public static boolean isPostgres() {
-        return active == Dbms.POSTGRES;
+        return ACTIVE == Dbms.POSTGRES;
     }
 
     public static boolean isSqLite() {
-        return active == Dbms.SQLITE;
+        return ACTIVE == Dbms.SQLITE;
     }
 
     public static boolean isStoredProcedureMissing() {
