@@ -2,61 +2,74 @@ package s11;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import static jd.Config.*;
 
 public class Transactor {
-    private static final Logger LOG = LoggerFactory.getLogger(Transactor.class);
+    private static final Logger log = LoggerFactory.getLogger(Transactor.class);
 
-    public static void selectAllAndPrint(Statement stmt) throws SQLException {
-        System.out.print("[");
-        try (ResultSet rs = stmt.executeQuery("SELECT coder_id, first_name, last_name FROM coders")) {
+    private static final String SELECT_ALL_CODERS = "SELECT coder_id, first_name, last_name, hire_date FROM coders";
+    private static final String INSERT_CODER_PREP = "INSERT INTO coders (first_name, last_name, hire_date, salary) VALUES( ?, ?, ?, ?)";
+
+    public void logAllCoders(Statement stmt) throws SQLException {
+        StringBuilder sb = new StringBuilder("[");
+
+        try (ResultSet rs = stmt.executeQuery(SELECT_ALL_CODERS)) {
             while (rs.next()) {
-                System.out.print(String.format("(%d: %s %s)", //
-                        rs.getInt("coder_id"), // 1
-                        rs.getString("first_name"), // 2
-                        rs.getString("last_name"))); // 3
+                sb.append("(").append(rs.getInt("coder_id")).append(": "); // 1
+                sb.append(rs.getString("first_name")).append(" "); // 2
+                sb.append(rs.getString("last_name")).append(" "); // 3
+                sb.append(rs.getDate("hire_date")).append(")"); // 4
             }
         } finally {
-            System.out.println("]");
+            sb.append("]");
+            log.debug(sb.toString());
+        }
+    }
+
+    public void insertCoder(String first, String last, double salary) {
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+                PreparedStatement ps = conn.prepareStatement(INSERT_CODER_PREP)) {
+            conn.setAutoCommit(false);
+
+            ps.setString(1, first);
+            ps.setString(2, last);
+            ps.setDate(3, java.sql.Date.valueOf(LocalDate.now()));
+            ps.setDouble(4, salary);
+
+            try {
+                System.out.println("Inserting new coder ...");
+                ps.executeUpdate();
+
+                logAllCoders(ps);
+                doSomethingDangerous();
+                conn.commit();
+                System.out.println("New coder inserted");
+            } catch (Exception ex) {
+                log.error("Can't insert new coder", ex);
+                System.out.println("Rollback");
+                conn.rollback();
+                logAllCoders(ps);
+                System.out.println("No coder inserted");
+            }
+        } catch (SQLException se) {
+            log.error("DBMS error", se);
         }
     }
 
     public static void main(String[] args) {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-                Statement stmt = conn.createStatement()) {
-            System.out.print("By default, autocommit is " + conn.getAutoCommit());
-            conn.setAutoCommit(false);
-            System.out.println(". Here is set it to " + conn.getAutoCommit() + ".");
-
-            try {
-                System.out.println("Inserting new coder ...");
-                // TODO: exercise, rewrite this code in a safer way
-                // MySQL-specific query
-//                stmt.executeUpdate("INSERT INTO coders VALUES(301, 'John', 'Coltrane', CURDATE(), 6000)");
-                // Oracle-specific query
-                stmt.executeUpdate("INSERT INTO coders VALUES(301, 'John', 'Coltrane', SYSDATE, 6000)");
-
-                selectAllAndPrint(stmt);
-                doSomethingDangerous();
-                conn.commit();
-            } catch (Exception ex) {
-                LOG.error("Can't insert new coder", ex);
-                System.out.println("Rollback");
-                conn.rollback();
-                selectAllAndPrint(stmt);
-            }
-        } catch (SQLException se) {
-            LOG.error("DBMS error", se);
-        }
+        new Transactor().insertCoder("Jim", "Steward", 7000.0);
     }
 
-    private static void doSomethingDangerous() {
+    private void doSomethingDangerous() {
         throw new IllegalStateException("Something bad happened");
     }
 }
