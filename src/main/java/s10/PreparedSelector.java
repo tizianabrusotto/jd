@@ -15,7 +15,7 @@ import s09.Coder2;
 import static jd.Config.*;
 
 public class PreparedSelector {
-    private static final Logger LOG = LoggerFactory.getLogger(PreparedSelector.class);
+    private static final Logger log = LoggerFactory.getLogger(PreparedSelector.class);
     private static final String CODERS_BY_SALARY = "SELECT first_name, last_name, salary FROM coders WHERE salary >= ? ORDER BY 3 DESC";
 
     public List<Coder> getCodersBySalary(double lower) throws SQLException {
@@ -24,7 +24,7 @@ public class PreparedSelector {
             prepStmt.setDouble(1, lower);
 
             // sadly, PreparedStatement.toString() not implemented in Oracle JDBC
-            LOG.debug(prepStmt.toString());
+            log.debug(prepStmt.toString());
             List<Coder> results = new ArrayList<>();
 
             try (ResultSet rs = prepStmt.executeQuery()) {
@@ -49,7 +49,7 @@ public class PreparedSelector {
             prepStmt.setString(2, "%" + letter + "%");
 
             // sadly, PreparedStatement.toString() not implemented in Oracle JDBC
-            LOG.debug(prepStmt.toString());
+            log.debug(prepStmt.toString());
             List<Coder2> results = new ArrayList<>();
 
             try (ResultSet rs = prepStmt.executeQuery()) {

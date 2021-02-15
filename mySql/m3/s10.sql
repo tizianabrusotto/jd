@@ -15,7 +15,7 @@ from employees
 where department_id = 50;
 
 -- average
-select avg(salary)
+select round(avg(salary), 2)
 from employees
 where department_id = 50;
 

@@ -12,7 +12,7 @@ import org.slf4j.LoggerFactory;
 import static jd.Config.*;
 
 public class StoredProcedure {
-    private static final Logger LOG = LoggerFactory.getLogger(StoredProcedure.class);
+    private static final Logger log = LoggerFactory.getLogger(StoredProcedure.class);
     private static final String GET_CODER_SALARY = "{call get_coder_salary(?, ?)}";
 
     /**
@@ -28,9 +28,9 @@ public class StoredProcedure {
             callStmt.setInt(1, id);
             callStmt.registerOutParameter(2, Types.DECIMAL);
 
-            LOG.debug(callStmt.toString());
+            log.debug(callStmt.toString());
             callStmt.executeUpdate();
-            LOG.debug(callStmt.toString());
+            log.debug(callStmt.toString());
 
             return callStmt.getDouble(2);
         }

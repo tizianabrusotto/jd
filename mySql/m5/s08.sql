@@ -18,6 +18,7 @@ end;
 
 // delimiter ;
 
+
 call get_coder_salary(103, @my_salary);
 select @my_salary;
 
@@ -26,3 +27,9 @@ select @my_salary;
 -- in: employee id
 -- out: department name
 --        name of department led by in param, or '!!!'
+
+-- exercise /2
+-- create procedure get_department_name
+-- in: employee id
+-- out: department name in which the employee works
+--        name of department or '!!!'

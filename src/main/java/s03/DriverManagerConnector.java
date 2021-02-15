@@ -11,7 +11,7 @@ import org.slf4j.LoggerFactory;
 import static jd.Config.*;
 
 public class DriverManagerConnector {
-    private static final Logger LOG = LoggerFactory.getLogger(DriverManagerConnector.class);
+    private static final Logger log = LoggerFactory.getLogger(DriverManagerConnector.class);
 
     /**
      * The following static initializer should not be required anymore
@@ -51,7 +51,7 @@ public class DriverManagerConnector {
 
             return String.format("Connected to %s version %s, schema %s", db, version, schema);
         } catch (SQLException e) {
-            LOG.error("Failure accessing DB", e);
+            log.error("Failure accessing DB", e);
             throw new IllegalStateException("Can't get database info");
         }
     }

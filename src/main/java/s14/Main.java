@@ -24,6 +24,7 @@ public class Main {
             System.out.println("Update salary: " + coder);
         }, () -> {
             log.error("Unexpected! Can't get coder 501");
+            System.out.println("No coder to work with!");
         });
 
         // rename a coder

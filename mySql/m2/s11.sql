@@ -3,7 +3,7 @@ use me;
 -- non-equi join
 
 -- given an employee ...
-select first_name, last_name, salary, job_title, min_salary, max_salary
+select first_name, last_name, salary, job_title, job_id, min_salary, max_salary
 from employees e join jobs j
 using (job_id)
 where employee_id = 107;

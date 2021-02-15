@@ -10,13 +10,13 @@ import static jd.Config.*;
 
 
 public class Connector {
-    private static final Logger LOG = LoggerFactory.getLogger(Connector.class);
+    private static final Logger log = LoggerFactory.getLogger(Connector.class);
 
     public static Connection getConnection() {
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException se) {
-            LOG.error("Can't connect to database", se);
+            log.error("Can't connect to database", se);
             throw new IllegalStateException("No database connection");
         }
     }

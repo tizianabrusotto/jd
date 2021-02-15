@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 import static jd.Config.*;
 
 public class Selector {
-    private static final Logger LOG = LoggerFactory.getLogger(Selector.class);
+    private static final Logger log = LoggerFactory.getLogger(Selector.class);
     private static final String SELECT_NAMES = "SELECT first_name FROM coders ORDER BY 1";
     private static final String SELECT_CODERS = "SELECT first_name, last_name, salary FROM coders ORDER BY 1";
     private static final String SELECT_CODERS_BY_SALARY_DOUBLE = "SELECT first_name, last_name, salary FROM coders WHERE salary >= %d ORDER BY 3 DESC";
@@ -53,7 +53,7 @@ public class Selector {
 
     public List<Coder> getCodersBySalary(int lower) throws SQLException {
         String query = String.format(SELECT_CODERS_BY_SALARY_DOUBLE, lower);
-        LOG.debug(query);
+        log.debug(query);
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                 Statement stmt = conn.createStatement();
@@ -72,7 +72,7 @@ public class Selector {
      */
     public List<Coder> getCodersBySalary(String lower) throws SQLException {
         String query = String.format(SELECT_CODERS_BY_SALARY_STRING, lower);
-        LOG.debug(query);
+        log.debug(query);
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                 Statement stmt = conn.createStatement();
@@ -94,7 +94,7 @@ public class Selector {
             prepStmt.setDate(1, Date.valueOf(limit));
 
             // sadly, PreparedStatement.toString() not implemented in Oracle JDBC
-            LOG.debug(prepStmt.toString());
+            log.debug(prepStmt.toString());
             List<Coder> results = new ArrayList<>();
 
             try (ResultSet rs = prepStmt.executeQuery()) {
@@ -112,7 +112,7 @@ public class Selector {
                 "FROM coders " + //
                 "WHERE first_name LIKE '%%%c%%' or last_name LIKE '%%%c%%'";
         String query = String.format(sql, letter, letter);
-        LOG.debug(query.toString());
+        log.debug(query.toString());
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                 Statement stmt = conn.createStatement();

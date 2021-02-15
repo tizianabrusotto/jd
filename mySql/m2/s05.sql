@@ -3,7 +3,7 @@ use me;
 
 -- join is inner by default
 select region_name, country_name
-from regions join countries
+from regions inner join countries
 using (region_id)
 order by 1, 2;
 

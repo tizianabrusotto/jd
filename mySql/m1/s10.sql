@@ -2,9 +2,9 @@
 use me;
 
 -- simple pattern matching
-select last_name
+select first_name, last_name
 from employees
-where last_name like '_ul%';
+where last_name like '_ull%';
 
 select last_name
 from employees
@@ -34,7 +34,7 @@ where region_id not in (2, 4);
 
 select *
 from regions
-where region_id in (2, 4);
+where region_id in (4, 2);
 
 -- beware of null
 select *

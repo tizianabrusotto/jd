@@ -178,7 +178,7 @@ create table employees(
 	manager_id integer,
 	department_id integer,
 
-	constraint emp_salary_min check (salary > 0),
+	constraint employees_salary_min check (salary > 0),
     constraint employees_job_fk foreign key(job_id) references jobs(job_id),
     constraint employees_department_fk foreign key(department_id) references departments(department_id)
 );
