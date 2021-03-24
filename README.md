@@ -8,6 +8,7 @@ Java - Relational database integration by JDBC
 JDBC on
 - MySql 8
 - Oracle DB 18c
+- PostgreSQL 13
 - SQLite 3
 
 Database setup
