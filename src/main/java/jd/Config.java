@@ -6,13 +6,16 @@ import java.util.Properties;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public abstract class Config {
+public final class Config {
     private static final Logger log = LogManager.getLogger(Config.class);
 
     public static final Dbms ACTIVE;
     public static final String URL;
     public static final String USER;
     public static final String PASSWORD;
+
+    private Config() {
+    }
 
     static {
         String dbmsName = "mysql";
