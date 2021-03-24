@@ -7,15 +7,16 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import s09.Coder;
 import s09.Coder2;
 import static jd.Config.*;
 
 public class PreparedSelector {
-    private static final Logger log = LoggerFactory.getLogger(PreparedSelector.class);
+    private static final Logger log = LogManager.getLogger(PreparedSelector.class);
     private static final String CODERS_BY_SALARY = "SELECT first_name, last_name, salary FROM coders WHERE salary >= ? ORDER BY 3 DESC";
 
     public List<Coder> getCodersBySalary(double lower) throws SQLException {

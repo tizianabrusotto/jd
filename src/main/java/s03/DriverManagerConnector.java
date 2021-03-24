@@ -5,13 +5,13 @@ import java.sql.DatabaseMetaData;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import static jd.Config.*;
 
 public class DriverManagerConnector {
-    private static final Logger log = LoggerFactory.getLogger(DriverManagerConnector.class);
+    private static final Logger log = LogManager.getLogger(DriverManagerConnector.class);
 
     /**
      * The following static initializer should not be required anymore
@@ -27,7 +27,7 @@ public class DriverManagerConnector {
 //    }
 
     public static void main(String[] args) {
-        System.out.println(getInfo());
+        log.info(getInfo());
     }
 
     public static String getInfo() {

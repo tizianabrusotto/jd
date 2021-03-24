@@ -6,13 +6,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import static jd.Config.*;
 
 public class StoredProcedure {
-    private static final Logger log = LoggerFactory.getLogger(StoredProcedure.class);
+    private static final Logger log = LogManager.getLogger(StoredProcedure.class);
     private static final String GET_CODER_SALARY = "{call get_coder_salary(?, ?)}";
 
     /**

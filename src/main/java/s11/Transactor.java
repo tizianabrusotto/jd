@@ -8,13 +8,13 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import static jd.Config.*;
 
 public class Transactor {
-    private static final Logger log = LoggerFactory.getLogger(Transactor.class);
+    private static final Logger log = LogManager.getLogger(Transactor.class);
 
     private static final String SELECT_ALL_CODERS = "SELECT coder_id, first_name, last_name, hire_date FROM coders";
     private static final String INSERT_CODER_PREP = "INSERT INTO coders (first_name, last_name, hire_date, salary) VALUES( ?, ?, ?, ?)";

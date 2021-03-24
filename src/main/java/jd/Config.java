@@ -3,11 +3,11 @@ package jd;
 import java.io.InputStream;
 import java.util.Properties;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public abstract class Config {
-    private static final Logger log = LoggerFactory.getLogger(Config.class);
+    private static final Logger log = LogManager.getLogger(Config.class);
 
     public static final Dbms ACTIVE;
     public static final String URL;

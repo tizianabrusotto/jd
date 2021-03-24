@@ -21,25 +21,30 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>8.0.23</version>
         </dependency>
+        <!-- <dependency> -->
+        <!-- <groupId>com.oracle.database.jdbc</groupId> -->
+        <!-- <artifactId>ojdbc10</artifactId> -->
+        <!-- <version>19.9.0.0</version> -->
+        <!-- </dependency> -->
+        <!-- <dependency> -->
+        <!-- <groupId>org.postgresql</groupId> -->
+        <!-- <artifactId>postgresql</artifactId> -->
+        <!-- <version>42.2.19</version> -->
+        <!-- </dependency> -->
+        <!-- <dependency> -->
+        <!-- <groupId>org.xerial</groupId> -->
+        <!-- <artifactId>sqlite-jdbc</artifactId> -->
+        <!-- <version>3.34.0</version> -->
+        <!-- </dependency> -->
         <dependency>
-            <groupId>com.oracle.database.jdbc</groupId>
-            <artifactId>ojdbc10</artifactId>
-            <version>19.9.0.0</version>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>2.14.1</version>
         </dependency>
         <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-            <version>42.2.19</version>
-        </dependency>
-        <dependency>
-            <groupId>org.xerial</groupId>
-            <artifactId>sqlite-jdbc</artifactId>
-            <version>3.34.0</version>
-        </dependency>
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>1.2.3</version>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>2.14.1</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
