@@ -10,8 +10,12 @@ from employees;
 select count(manager_id)
 from employees;
 
--- distinct values
+-- count distinct values
 select count(distinct manager_id) as "distinct managers"
+from employees;
+
+-- explicitly count all (not null) values
+select count(all manager_id) as "employees having a manager"
 from employees;
 
 -- max, min
@@ -28,19 +32,6 @@ select round(avg(salary), 2) "Round to cent"
 from employees
 where department_id = 50;
 
--- standard deviation
-select round(stddev(salary)) as "rounded sigma"
-from employees;
-
--- variance
-select round(variance(salary)) as "rounded sigma^2"
-from employees;
-
--- median
+-- the most common salary
 select median(salary)
 from employees;
-
--- who has the most common salary: requires subquery
-select first_name, last_name
-from employees
-where salary = (select median(salary) from employees);
