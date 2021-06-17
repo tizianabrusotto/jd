@@ -1,14 +1,14 @@
 -- select
 use me;
 
--- a select
-select name
-from regions
-where region_id = 1;
-
 -- select all
 select *
 from regions;
+
+-- a plain select
+select description
+from regions
+where region_id = 1;
 
 show schemas;
 
@@ -57,4 +57,3 @@ limit 10, 10;
 select first_name, last_name
 from employees
 limit 100, 10;
-

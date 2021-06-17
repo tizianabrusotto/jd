@@ -1,26 +1,16 @@
--- inner join
+-- inner join: using / on / natural
 use me;
 
--- name of a region and name of countries for that region
-select region_name
-from regions
-where region_id = 1;
+-- join-using, handier
+select description, name
+from regions join countries
+using (region_id);
 
-select country_name
-from countries
-where region_id = 1;
+-- join-on, more flexible
+select description, name
+from regions r join countries c
+on r.region_id = c.region_id;
 
--- ...
-select region_name
-from regions
-where region_id = 4;
-
-select country_name
-from countries
-where region_id = 4;
-
--- join the two tables and see the full result in a single shot
-select region_name as region, country_name as country
-from regions, countries
-where regions.region_id = countries.region_id
-order by 1, 2;
+-- natural join
+select description, name
+from regions natural join countries;

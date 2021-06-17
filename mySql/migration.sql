@@ -14,10 +14,10 @@ drop table if exists jobs;
 
 create table regions(
 	region_id integer primary key auto_increment,
-	name varchar(25)
+	description varchar(25)
 );
 
-insert into regions (name) values ('Europe'), ('Americas'), ('Asia'), ('Middle East and Africa');
+insert into regions (description) values ('Europe'), ('Americas'), ('Asia'), ('Middle East and Africa');
 commit;
 
 create table countries(
@@ -324,8 +324,8 @@ DELIMITER ;
 
 create table teams(
 	team_id integer primary key auto_increment,
-	name varchar(25),
-    leader_id integer unique,
+	name varchar(25) unique not null,
+    leader_id integer unique not null,
     client_id integer not null,
 
     constraint teams_leader_fk foreign key(leader_id) references coders(coder_id),
