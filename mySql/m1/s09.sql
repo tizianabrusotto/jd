@@ -11,6 +11,11 @@ select *
 from regions
 where region_id != 2;
 
+-- the other ones, alternative notation
+select *
+from regions
+where region_id <> 2;
+
 -- strictly less than
 select *
 from regions

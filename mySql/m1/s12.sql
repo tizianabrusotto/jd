@@ -3,7 +3,7 @@ use me;
 
 select *
 from employees
-order by last_name desc, first_name;
+order by last_name, first_name;
 
 -- sorting in natural order
 select *
@@ -13,11 +13,18 @@ order by salary;
 -- descending
 select first_name, last_name, salary
 from employees
-order by salary desc;
+order by salary desc
+limit 3;
 
 -- positional notation
-select first_name, last_name
+select first_name, last_name, salary
 from employees
 where first_name like 'a%'
-order by 1, 2 desc;
--- limit 5;
+order by 3 desc
+limit 5;
+
+select first_name, last_name, hire_date
+from employees
+where first_name like 'a%'
+order by 3 desc
+limit 5;
