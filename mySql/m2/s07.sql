@@ -1,25 +1,21 @@
--- join (on, using, natural, classic) where
-use me;
+-- union example
 
--- join on
-select region_name, country_name
-from regions r join countries c
-on r.region_id = c.region_id
-where r.region_id = 1;
+-- two queries on two different tables...
+select first_name, last_name, 'coder' as role
+from coders
+where first_name like 'Tim%';
 
--- join using
-select region_name, country_name
-from regions join countries
-using (region_id)
-where region_id = 1;
+select first_name, last_name, 'employee'
+from employees
+where first_name like 'Tim%';
 
--- natural join
-select region_name, country_name
-from regions natural join countries
-where region_id = 1;
+-- ... could give a combined result set
+	select first_name, last_name, 'coder' as role
+	from coders
+	where first_name like 'Tim%'
+union
+	select first_name, last_name, 'employee'
+	from employees
+	where first_name like 'Tim%'
+order by last_name;
 
--- "classic" join
-select region_name, country_name
-from regions r, countries c
-where r.region_id = c.region_id
-and r.region_id = 1;
