@@ -1,9 +1,14 @@
+-- cross join
 use me;
 
--- "modern" cartesian product
-select region_name, country_name
-from regions cross join countries;
+-- cartesian product - non SQL/92 compliant!
+select description, name
+from regions join teams;
+
+-- cartesian product - right SQL/92 syntax
+select description, name
+from regions cross join teams;
 
 -- "classic" cartesian product
-select region_name, country_name
-from regions, countries;
+select description, name
+from regions, teams;
