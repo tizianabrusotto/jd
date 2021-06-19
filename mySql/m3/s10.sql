@@ -1,24 +1,19 @@
--- aggregate functions
+-- group by
 use me;
 
--- count, count distinct
-select count(*), count(manager_id), count(distinct manager_id)
-from employees;
-
--- max, min
-select max(salary), min(salary)
-from employees;
-
--- sum
-select sum(salary)
+-- average salary for each department
+select department_id, round(avg(salary), 2) as 'avg salary'
 from employees
-where department_id = 50;
+group by department_id
+order by 2 desc;
 
--- average
-select round(avg(salary), 2)
+select round(avg(salary), 2) as 'avg salary'
 from employees
-where department_id = 50;
+order by 1 desc;
 
--- standard deviation, variance
-select stddev(salary), variance(salary)
-from employees;
+
+select department_id, truncate(avg(salary), 0) as 'avg salary'
+from employees
+where department_id is not null
+group by department_id
+order by 2 desc;

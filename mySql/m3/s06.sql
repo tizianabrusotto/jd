@@ -2,7 +2,7 @@
 use me;
 
 -- current date (and time)
-select curdate(), now();
+select curdate(), current_date(), current_date, now();
 
 -- day of week name, month name for the current locale
 select dayname(curdate()), monthname(curdate());

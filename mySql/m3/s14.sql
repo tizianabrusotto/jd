@@ -1,9 +1,10 @@
 use me;
 
--- join with a subquery
--- how many countries for each region
-select region_name, c.country_count
-from regions natural join (
-    select region_id, count(*) country_count
-    from countries
-    group by region_id) c;
+-- multirow subquery to get manager names
+select first_name, last_name
+from employees
+where employee_id in (
+    select distinct manager_id
+    from employees
+    where manager_id is not null)
+order by 2;
