@@ -1,19 +1,18 @@
 -- commit, rollback, savepoint
--- autocommit is expected being off
-
+-- autocommit is expected to be off
 use me;
 
 select *
 from clients;
 
-insert into clients (name) values ('Kerr & Reetch Associates');
-savepoint sp;
+insert into clients (name) values ('Example 1');
+savepoint first_step;
 
-insert into clients (name) values ('Oz Singleton Factories');
+insert into clients (name) values ('Example 2');
 
-rollback to sp; -- keep K&R, rollback Oz
+rollback to first_step; -- keep Example 1, rollback Example 2
 
-commit; -- persist K&R
+commit; -- persist Example 1
 
 -- rollback after commit is useless
 -- rollback;

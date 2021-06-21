@@ -1,19 +1,18 @@
 -- insert
 use me;
 
-select *
-from clients;
-
+-- check the current table status
 describe clients;
+select * from clients;
 
 -- plain insert
 insert into clients (client_id, name, nickname)
-values (20, 'Mordor Shifty Solutions', 'Moh');
+values (20, 'Mirdir Shifty Solutions', 'MiSS');
 
 -- multiline insert
 insert into clients (client_id, name, nickname) values
-	(21, 'East Gondor Real Estate', 'Gondy'),
-	(22, 'Rohan Horse Equipments', 'Ron');
+	(21, 'Old Gondor Real Estate', 'OGRE'),
+	(22, 'Rohan Horse Equipments', 'RHEq');
 
 -- nullable column could be skipped
 insert into clients (client_id, name)
