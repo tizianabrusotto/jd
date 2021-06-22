@@ -1,11 +1,12 @@
--- truncate / drop table
+-- index
 use me;
 
--- get rid of all rows (DML)
-delete from details;
+-- index on a column
+create index execs_last_name_ix on execs(last_name);
 
--- get rid of all rows (DDL)
-truncate table details;
+-- index on more columns
+create index execs_name_ix on execs(first_name, last_name);
 
--- get rid of the table (DDL)
-drop table details;
+-- get rid of indices
+drop index execs_last_name_ix on execs;
+drop index execs_name_ix on execs;

@@ -1,12 +1,18 @@
--- index
+-- view
 use me;
 
--- index on a column
-create index execs_last_name_ix on execs(last_name);
+-- check existing table
+describe execs;
+select * from execs;
 
--- index on more columns
-create index execs_name_ix on execs(first_name, last_name);
+-- create view
+create or replace view junior_execs_view as
+	select exec_id, first_name, last_name, hire_date from execs
+	where exec_id != 100;
 
--- get rid of indices
-drop index execs_last_name_ix on execs;
-drop index execs_name_ix on execs;
+-- check the derived view
+describe junior_execs_view;
+select * from junior_execs_view;
+
+-- get rid of a view
+drop view junior_execs_view;
