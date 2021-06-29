@@ -38,7 +38,7 @@ public class DriverManagerConnector {
             String db = dmd.getDatabaseProductName();
             String version = dmd.getDatabaseProductVersion();
 
-            // MySQL approach
+            // MySQL, PostgreSQL approach
             String schema = conn.getCatalog();
             if (schema == null) {
                 // Oracle approach

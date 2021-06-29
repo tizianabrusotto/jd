@@ -1,5 +1,9 @@
 package s11;
 
+import static jd.Config.PASSWORD;
+import static jd.Config.URL;
+import static jd.Config.USER;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -11,18 +15,17 @@ import java.time.LocalDate;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static jd.Config.*;
-
 public class Transactor {
     private static final Logger log = LogManager.getLogger(Transactor.class);
 
     private static final String SELECT_ALL_CODERS = "SELECT coder_id, first_name, last_name, hire_date FROM coders";
     private static final String INSERT_CODER_PREP = "INSERT INTO coders (first_name, last_name, hire_date, salary) VALUES( ?, ?, ?, ?)";
 
-    public void logAllCoders(Statement stmt) throws SQLException {
+    public void logAllCoders(Connection conn) throws SQLException {
         StringBuilder sb = new StringBuilder("[");
 
-        try (ResultSet rs = stmt.executeQuery(SELECT_ALL_CODERS)) {
+        try (Statement stmt = conn.createStatement(); //
+                ResultSet rs = stmt.executeQuery(SELECT_ALL_CODERS)) {
             while (rs.next()) {
                 sb.append("(").append(rs.getInt("coder_id")).append(": "); // 1
                 sb.append(rs.getString("first_name")).append(" "); // 2
@@ -49,7 +52,7 @@ public class Transactor {
                 System.out.println("Inserting new coder ...");
                 ps.executeUpdate();
 
-                logAllCoders(ps);
+                logAllCoders(conn);
                 doSomethingDangerous();
                 conn.commit();
                 System.out.println("New coder inserted");
@@ -57,7 +60,7 @@ public class Transactor {
                 log.error("Can't insert new coder", ex);
                 System.out.println("Rollback");
                 conn.rollback();
-                logAllCoders(ps);
+                logAllCoders(conn);
                 System.out.println("No coder inserted");
             }
         } catch (SQLException se) {

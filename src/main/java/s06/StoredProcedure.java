@@ -1,5 +1,9 @@
 package s06;
 
+import static jd.Config.PASSWORD;
+import static jd.Config.URL;
+import static jd.Config.USER;
+
 import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,8 +12,6 @@ import java.sql.Types;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
-import static jd.Config.*;
 
 public class StoredProcedure {
     private static final Logger log = LogManager.getLogger(StoredProcedure.class);
@@ -24,15 +26,15 @@ public class StoredProcedure {
      */
     public double getCoderSalary(int id) throws SQLException {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-                CallableStatement callStmt = conn.prepareCall(GET_CODER_SALARY)) {
-            callStmt.setInt(1, id);
-            callStmt.registerOutParameter(2, Types.DECIMAL);
+                CallableStatement cs = conn.prepareCall(GET_CODER_SALARY)) {
+            cs.setInt(1, id);
+            cs.registerOutParameter(2, Types.DECIMAL);
 
-            log.debug(callStmt.toString());
-            callStmt.executeUpdate();
-            log.debug(callStmt.toString());
+            log.debug(cs.toString());
+            cs.executeUpdate();
+            log.debug(cs.toString());
 
-            return callStmt.getDouble(2);
+            return cs.getDouble(2);
         }
     }
 }
