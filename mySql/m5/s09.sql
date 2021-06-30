@@ -1,5 +1,4 @@
 -- function
-
 use me;
 
 drop function if exists get_salary;
@@ -14,6 +13,8 @@ delimiter //
  * or specify that the function is
  *
  * 		deterministic
+ *
+ * (plus SUPER privileges)
  */
 create function get_salary(
 	p_coder_id integer
@@ -31,4 +32,4 @@ end;
 
 // delimiter ;
 
-select get_salary(104) as salary;
+select get_salary(107) as salary;
