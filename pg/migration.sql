@@ -24,21 +24,21 @@ drop table if exists regions;
 
 create table regions(
 	region_id serial primary key,
-	region_name varchar(25)
+	description varchar(25)
 );
 
 start transaction;
 
-insert into regions (region_name) values ('Europe');
-insert into regions (region_name) values ('Americas');
-insert into regions (region_name) values ('Asia');
-insert into regions (region_name) values ('Middle East and Africa');
+insert into regions (description) values ('Europe');
+insert into regions (description) values ('Americas');
+insert into regions (description) values ('Asia');
+insert into regions (description) values ('Middle East and Africa');
 
 commit;
 --
 create table countries(
 	country_id char(2) primary key,
-	country_name varchar(40),
+	name varchar(40),
 	region_id integer,
 
 	constraint countries_region_fk foreign key(region_id) references regions(region_id)
@@ -46,62 +46,62 @@ create table countries(
 
 start transaction;
 
-insert into countries (country_id, country_name, region_id) values ('AR', 'Argentina', 2);
-insert into countries (country_id, country_name, region_id) values ('AU', 'Australia', 3);
-insert into countries (country_id, country_name, region_id) values ('BE', 'Belgium', 1);
-insert into countries (country_id, country_name, region_id) values ('BR', 'Brazil', 2);
-insert into countries (country_id, country_name, region_id) values ('CA', 'Canada', 2);
-insert into countries (country_id, country_name, region_id) values ('CH', 'Switzerland', 1);
-insert into countries (country_id, country_name, region_id) values ('CN', 'China', 3);
-insert into countries (country_id, country_name, region_id) values ('DE', 'Germany', 1);
-insert into countries (country_id, country_name, region_id) values ('DK', 'Denmark', 1);
-insert into countries (country_id, country_name, region_id) values ('EG', 'Egypt', 4);
-insert into countries (country_id, country_name, region_id) values ('FR', 'France', 1);
-insert into countries (country_id, country_name, region_id) values ('IL', 'Israel', 4);
-insert into countries (country_id, country_name, region_id) values ('IN', 'India', 3);
-insert into countries (country_id, country_name, region_id) values ('IT', 'Italy', 1);
-insert into countries (country_id, country_name, region_id) values ('JP', 'Japan', 3);
-insert into countries (country_id, country_name, region_id) values ('KW', 'Kuwait', 4);
-insert into countries (country_id, country_name, region_id) values ('ML', 'Malaysia', 3);
-insert into countries (country_id, country_name, region_id) values ('MX', 'Mexico', 2);
-insert into countries (country_id, country_name, region_id) values ('NG', 'Nigeria', 4);
-insert into countries (country_id, country_name, region_id) values ('NL', 'Netherlands', 1);
-insert into countries (country_id, country_name, region_id) values ('SG', 'Singapore', 3);
-insert into countries (country_id, country_name, region_id) values ('UK', 'United Kingdom', 1);
-insert into countries (country_id, country_name, region_id) values ('US', 'United States of America', 2);
-insert into countries (country_id, country_name, region_id) values ('ZM', 'Zambia', 4);
-insert into countries (country_id, country_name, region_id) values ('ZW', 'Zimbabwe', 4);
+insert into countries (country_id, name, region_id) values ('AR', 'Argentina', 2);
+insert into countries (country_id, name, region_id) values ('AU', 'Australia', 3);
+insert into countries (country_id, name, region_id) values ('BE', 'Belgium', 1);
+insert into countries (country_id, name, region_id) values ('BR', 'Brazil', 2);
+insert into countries (country_id, name, region_id) values ('CA', 'Canada', 2);
+insert into countries (country_id, name, region_id) values ('CH', 'Switzerland', 1);
+insert into countries (country_id, name, region_id) values ('CN', 'China', 3);
+insert into countries (country_id, name, region_id) values ('DE', 'Germany', 1);
+insert into countries (country_id, name, region_id) values ('DK', 'Denmark', 1);
+insert into countries (country_id, name, region_id) values ('EG', 'Egypt', 4);
+insert into countries (country_id, name, region_id) values ('FR', 'France', 1);
+insert into countries (country_id, name, region_id) values ('IL', 'Israel', 4);
+insert into countries (country_id, name, region_id) values ('IN', 'India', 3);
+insert into countries (country_id, name, region_id) values ('IT', 'Italy', 1);
+insert into countries (country_id, name, region_id) values ('JP', 'Japan', 3);
+insert into countries (country_id, name, region_id) values ('KW', 'Kuwait', 4);
+insert into countries (country_id, name, region_id) values ('ML', 'Malaysia', 3);
+insert into countries (country_id, name, region_id) values ('MX', 'Mexico', 2);
+insert into countries (country_id, name, region_id) values ('NG', 'Nigeria', 4);
+insert into countries (country_id, name, region_id) values ('NL', 'Netherlands', 1);
+insert into countries (country_id, name, region_id) values ('SG', 'Singapore', 3);
+insert into countries (country_id, name, region_id) values ('UK', 'United Kingdom', 1);
+insert into countries (country_id, name, region_id) values ('US', 'United States of America', 2);
+insert into countries (country_id, name, region_id) values ('ZM', 'Zambia', 4);
+insert into countries (country_id, name, region_id) values ('ZW', 'Zimbabwe', 4);
 
 commit;
 --
 create table jobs(
 	job_id varchar(10) primary key,
-	job_title varchar(35) not null,
+	title varchar(35) not null,
 	min_salary integer,
 	max_salary integer
 );
 
 start transaction;
 
-insert into jobs (job_id, job_title, min_salary, max_salary) values ('AD_PRES', 'President', 20080, 40000);
-insert into jobs (job_id, job_title, min_salary, max_salary) values ('AD_VP', 'Administration Vice President', 15000, 30000);
-insert into jobs (job_id, job_title, min_salary, max_salary) values ('AD_ASST', 'Administration Assistant', 3000, 6000);
-insert into jobs (job_id, job_title, min_salary, max_salary) values ('FI_MGR', 'Finance Manager', 8200, 16000);
-insert into jobs (job_id, job_title, min_salary, max_salary) values ('FI_ACCOUNT', 'Accountant', 4200, 9000);
-insert into jobs (job_id, job_title, min_salary, max_salary) values ('AC_MGR', 'Accounting Manager', 8200, 16000);
-insert into jobs (job_id, job_title, min_salary, max_salary) values ('AC_ACCOUNT', 'Public Accountant', 4200, 9000);
-insert into jobs (job_id, job_title, min_salary, max_salary) values ('SA_MAN', 'Sales Manager', 10000, 20080);
-insert into jobs (job_id, job_title, min_salary, max_salary) values ('SA_REP', 'Sales Representative', 6000, 12008);
-insert into jobs (job_id, job_title, min_salary, max_salary) values ('PU_MAN', 'Purchasing Manager', 8000, 15000);
-insert into jobs (job_id, job_title, min_salary, max_salary) values ('PU_CLERK', 'Purchasing Clerk', 2500, 5500);
-insert into jobs (job_id, job_title, min_salary, max_salary) values ('ST_MAN', 'Stock Manager', 5500, 8500);
-insert into jobs (job_id, job_title, min_salary, max_salary) values ('ST_CLERK', 'Stock Clerk', 2008, 5000);
-insert into jobs (job_id, job_title, min_salary, max_salary) values ('SH_CLERK', 'Shipping Clerk', 2500, 5500);
-insert into jobs (job_id, job_title, min_salary, max_salary) values ('IT_PROG', 'Programmer', 4000, 10000);
-insert into jobs (job_id, job_title, min_salary, max_salary) values ('MK_MAN', 'Marketing Manager', 9000, 15000);
-insert into jobs (job_id, job_title, min_salary, max_salary) values ('MK_REP', 'Marketing Representative', 4000, 9000);
-insert into jobs (job_id, job_title, min_salary, max_salary) values ('HR_REP', 'Human Resources Representative', 4000, 9000);
-insert into jobs (job_id, job_title, min_salary, max_salary) values ('PR_REP', 'Public Relations Representative', 4500, 10500);
+insert into jobs (job_id, title, min_salary, max_salary) values ('AD_PRES', 'President', 20080, 40000);
+insert into jobs (job_id, title, min_salary, max_salary) values ('AD_VP', 'Administration Vice President', 15000, 30000);
+insert into jobs (job_id, title, min_salary, max_salary) values ('AD_ASST', 'Administration Assistant', 3000, 6000);
+insert into jobs (job_id, title, min_salary, max_salary) values ('FI_MGR', 'Finance Manager', 8200, 16000);
+insert into jobs (job_id, title, min_salary, max_salary) values ('FI_ACCOUNT', 'Accountant', 4200, 9000);
+insert into jobs (job_id, title, min_salary, max_salary) values ('AC_MGR', 'Accounting Manager', 8200, 16000);
+insert into jobs (job_id, title, min_salary, max_salary) values ('AC_ACCOUNT', 'Public Accountant', 4200, 9000);
+insert into jobs (job_id, title, min_salary, max_salary) values ('SA_MAN', 'Sales Manager', 10000, 20080);
+insert into jobs (job_id, title, min_salary, max_salary) values ('SA_REP', 'Sales Representative', 6000, 12008);
+insert into jobs (job_id, title, min_salary, max_salary) values ('PU_MAN', 'Purchasing Manager', 8000, 15000);
+insert into jobs (job_id, title, min_salary, max_salary) values ('PU_CLERK', 'Purchasing Clerk', 2500, 5500);
+insert into jobs (job_id, title, min_salary, max_salary) values ('ST_MAN', 'Stock Manager', 5500, 8500);
+insert into jobs (job_id, title, min_salary, max_salary) values ('ST_CLERK', 'Stock Clerk', 2008, 5000);
+insert into jobs (job_id, title, min_salary, max_salary) values ('SH_CLERK', 'Shipping Clerk', 2500, 5500);
+insert into jobs (job_id, title, min_salary, max_salary) values ('IT_PROG', 'Programmer', 4000, 10000);
+insert into jobs (job_id, title, min_salary, max_salary) values ('MK_MAN', 'Marketing Manager', 9000, 15000);
+insert into jobs (job_id, title, min_salary, max_salary) values ('MK_REP', 'Marketing Representative', 4000, 9000);
+insert into jobs (job_id, title, min_salary, max_salary) values ('HR_REP', 'Human Resources Representative', 4000, 9000);
+insert into jobs (job_id, title, min_salary, max_salary) values ('PR_REP', 'Public Relations Representative', 4500, 10500);
 
 commit;
 --
@@ -148,7 +148,7 @@ commit;
 --
 create table departments(
 	department_id serial primary key,
-	department_name varchar(30) not null,
+	name varchar(30) not null,
 	manager_id integer,
 	location_id integer,
 
@@ -159,33 +159,33 @@ alter sequence departments_department_id_seq restart with 10 increment by 10;
 
 start transaction;
 
-insert into departments (department_name, manager_id, location_id) values ('Administration', 200, 1700);
-insert into departments (department_name, manager_id, location_id) values ('Marketing', 201, 1800);
-insert into departments (department_name, manager_id, location_id) values ('Purchasing', 114, 1700);
-insert into departments (department_name, manager_id, location_id) values ('Human Resources', 203, 2400);
-insert into departments (department_name, manager_id, location_id) values ('Shipping', 121, 1500);
-insert into departments (department_name, manager_id, location_id) values ('IT', 103, 1400);
-insert into departments (department_name, manager_id, location_id) values ('Public Relations', 204, 2700);
-insert into departments (department_name, manager_id, location_id) values ('Sales', 145, 2500);
-insert into departments (department_name, manager_id, location_id) values ('Executive', 100, 1700);
-insert into departments (department_name, manager_id, location_id) values ('Finance', 108, 1700);
-insert into departments (department_name, manager_id, location_id) values ('Accounting', 205, 1700);
-insert into departments (department_name, manager_id, location_id) values ('Treasury', null, 1700);
-insert into departments (department_name, manager_id, location_id) values ('Corporate Tax', null, 1700);
-insert into departments (department_name, manager_id, location_id) values ('Control And Credit', null, 1700);
-insert into departments (department_name, manager_id, location_id) values ('Shareholder Services', null, 1700);
-insert into departments (department_name, manager_id, location_id) values ('Benefits', null, 1700);
-insert into departments (department_name, manager_id, location_id) values ('Manufacturing', null, 1700);
-insert into departments (department_name, manager_id, location_id) values ('Construction', null, 1700);
-insert into departments (department_name, manager_id, location_id) values ('Contracting', null, 1700);
-insert into departments (department_name, manager_id, location_id) values ('Operations', null, 1700);
-insert into departments (department_name, manager_id, location_id) values ('IT Support', null, 1700);
-insert into departments (department_name, manager_id, location_id) values ('NOC', null, 1700);
-insert into departments (department_name, manager_id, location_id) values ('IT Helpdesk', null, 1700);
-insert into departments (department_name, manager_id, location_id) values ('Government Sales', null, 1700);
-insert into departments (department_name, manager_id, location_id) values ('Retail Sales', null, 1700);
-insert into departments (department_name, manager_id, location_id) values ('Recruiting', null, 1700);
-insert into departments (department_name, manager_id, location_id) values ('Payroll', null, 1700);
+insert into departments (name, manager_id, location_id) values ('Administration', 200, 1700);
+insert into departments (name, manager_id, location_id) values ('Marketing', 201, 1800);
+insert into departments (name, manager_id, location_id) values ('Purchasing', 114, 1700);
+insert into departments (name, manager_id, location_id) values ('Human Resources', 203, 2400);
+insert into departments (name, manager_id, location_id) values ('Shipping', 121, 1500);
+insert into departments (name, manager_id, location_id) values ('IT', 103, 1400);
+insert into departments (name, manager_id, location_id) values ('Public Relations', 204, 2700);
+insert into departments (name, manager_id, location_id) values ('Sales', 145, 2500);
+insert into departments (name, manager_id, location_id) values ('Executive', 100, 1700);
+insert into departments (name, manager_id, location_id) values ('Finance', 108, 1700);
+insert into departments (name, manager_id, location_id) values ('Accounting', 205, 1700);
+insert into departments (name, manager_id, location_id) values ('Treasury', null, 1700);
+insert into departments (name, manager_id, location_id) values ('Corporate Tax', null, 1700);
+insert into departments (name, manager_id, location_id) values ('Control And Credit', null, 1700);
+insert into departments (name, manager_id, location_id) values ('Shareholder Services', null, 1700);
+insert into departments (name, manager_id, location_id) values ('Benefits', null, 1700);
+insert into departments (name, manager_id, location_id) values ('Manufacturing', null, 1700);
+insert into departments (name, manager_id, location_id) values ('Construction', null, 1700);
+insert into departments (name, manager_id, location_id) values ('Contracting', null, 1700);
+insert into departments (name, manager_id, location_id) values ('Operations', null, 1700);
+insert into departments (name, manager_id, location_id) values ('IT Support', null, 1700);
+insert into departments (name, manager_id, location_id) values ('NOC', null, 1700);
+insert into departments (name, manager_id, location_id) values ('IT Helpdesk', null, 1700);
+insert into departments (name, manager_id, location_id) values ('Government Sales', null, 1700);
+insert into departments (name, manager_id, location_id) values ('Retail Sales', null, 1700);
+insert into departments (name, manager_id, location_id) values ('Recruiting', null, 1700);
+insert into departments (name, manager_id, location_id) values ('Payroll', null, 1700);
 
 commit;
 
