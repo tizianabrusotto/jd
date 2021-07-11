@@ -1,24 +1,26 @@
--- Simplified emulation of full outer join by union
+-- using UNION to emulate an inner join
 
--- Left join for department 12 + 'Grant' -> Treasury is missing
-select first_name, last_name, name, department_id
-from employees left outer join departments
-using (department_id)
-where department_id = 12 or last_name = 'Grant';
+select region_id, description
+from regions;
 
--- Right join for department 12 + 'Grant' -> Kimberely is missing
-select first_name, last_name, name, department_id
-from employees right outer join departments
-using (department_id)
-where department_id = 12 or last_name = 'Grant';
+-- 1|Europe
+-- 2|Americas
+-- 3|Asia
+-- 4|Middle East and Africa
 
--- (Soft) emulation of a FULL OUTER JOIN
-	select first_name, last_name, name, department_id
-	from employees left outer join departments
-	using (department_id)
-	where department_id = 12 or last_name = 'Grant'
+	select region_id as r_id, 'Europe' as "region name", country_id, name as country
+	from countries
+	where region_id = 1
 union
-	select first_name, last_name, name, department_id
-	from employees right outer join departments
-	using (department_id)
-	where department_id = 12 or last_name = 'Grant';
+	select region_id as r_id, 'Americas', country_id, name
+	from countries
+	where region_id = 2
+union
+	select region_id as r_id, 'Asia', country_id, name
+	from countries
+	where region_id = 3
+union
+	select region_id as r_id, 'Middle East and Africa', country_id, name as country
+	from countries
+	where region_id = 4
+order by 1, 4;
