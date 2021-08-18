@@ -42,6 +42,21 @@ select first_name, last_name
 from employees
 where first_name ~ 'l.?$';
 
+-- an 'i', at least an 's', an 'o'
+select first_name, last_name
+from employees
+where last_name ~ 'is+o';
+
+-- an 'i', possibily one or more 's', an 'o'
+select first_name, last_name
+from employees
+where last_name ~ 'is*o';
+
+-- an 'i', one or no 's', an 'o'
+select first_name, last_name
+from employees
+where last_name ~ 'is?o';
+
 -- whichever among f,w,z
 select first_name, last_name
 from employees
