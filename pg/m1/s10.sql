@@ -1,29 +1,16 @@
--- order by
+-- logical operators
 
+-- both conditions should hold
 select *
 from employees
-order by last_name, first_name;
+where salary < 3000 and employee_id > 195;
 
--- sorting in natural order
+-- one or the other is ok
 select *
 from employees
-order by salary;
+where salary < 2200 or last_name = 'King';
 
--- descending
-select first_name, last_name, salary
+-- the other way round
+select *
 from employees
-order by salary desc
-limit 3;
-
--- positional notation
-select first_name, last_name, salary
-from employees
-where first_name like 'A%'
-order by 3 desc
-limit 5;
-
-select first_name, last_name, hire_date
-from employees
-where first_name like 'A%'
-order by 3 desc
-limit 5;
+where not department_id > 20;
