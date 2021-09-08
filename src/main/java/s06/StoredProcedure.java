@@ -23,7 +23,7 @@ public class StoredProcedure {
      * 
      * @param id the coder id
      * @return coder salary, 0 if the specified coder id is not available
-     * @throws SQLException
+     * @throws SQLException in case of problems
      */
     public double getCoderSalary(int id) throws SQLException {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -31,9 +31,9 @@ public class StoredProcedure {
             cs.setInt(1, id);
             cs.registerOutParameter(2, Types.DECIMAL);
 
-            log.debug("Before execute: " + cs.toString());
+            log.debug("Before execute: " + cs);
             cs.executeUpdate();
-            log.debug("After execute: " + cs.toString());
+            log.debug("After execute: " + cs);
 
             return cs.getDouble(2);
         }
@@ -44,7 +44,7 @@ public class StoredProcedure {
      *
      * @param id the coder id
      * @return coder salary, 0 if the specified coder id is not available
-     * @throws SQLException
+     * @throws SQLException in case of problems
      */
     public double getSalaryByFunction(int id) throws SQLException {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
@@ -54,18 +54,11 @@ public class StoredProcedure {
             cs.registerOutParameter(1, Types.NUMERIC);
             cs.setInt(2, id);
 
-            log.debug("Before execute: " + cs.toString());
+            log.debug("Before execute: " + cs);
             cs.executeUpdate();
-            log.debug("After execute: " + cs.toString());
+            log.debug("After execute: " + cs);
 
             return cs.getBigDecimal(1).doubleValue();
         }
-    }
-
-    public static void main(String[] args) throws SQLException {
-        StoredProcedure sp = new StoredProcedure();
-
-        double salary = sp.getSalaryByFunction(107);
-        System.out.println(salary);
     }
 }
