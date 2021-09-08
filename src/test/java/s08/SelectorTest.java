@@ -1,4 +1,4 @@
-package s09;
+package s08;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -90,29 +90,14 @@ class SelectorTest {
     }
 
     @Test
-    @DisabledIf(value = "jd.Config#isSqLite", disabledReason = "No date support")
-    void getCodersHiredBefore2007() throws SQLException {
-        LocalDate date = LocalDate.of(2007, Month.JANUARY, 1);
-        String[] expectedNames = { "David", "Alexander", "Valli" };
-
-        List<Coder> actual = Selector.getCodersHiredBefore(date);
-
-        assertThat(actual.size(), is(expectedNames.length));
-        for (int i = 0; i < actual.size(); i++) {
-            Coder current = actual.get(i);
-            assertThat(current.getFirstName(), is(expectedNames[i]));
-        }
-    }
-
-    @Test
     void getCodersWithLetterInQ() throws SQLException {
         char letter = 'u';
-        List<Coder2> expected = new ArrayList<>(3);
-        expected.add(new Coder2("Alexander", "Hunold", 9000.0));
-        expected.add(new Coder2("Bruce", "Ernst", 6000.0));
-        expected.add(new Coder2("David", "Austin", 4800.0));
+        List<Coder> expected = new ArrayList<>(3);
+        expected.add(new Coder("Alexander", "Hunold", 9000));
+        expected.add(new Coder("Bruce", "Ernst", 6000));
+        expected.add(new Coder("David", "Austin", 4800));
 
-        List<Coder2> actual = selector.getCodersWithLetterIn(letter);
+        List<Coder> actual = selector.getCodersWithLetterIn(letter);
         assertThat(actual, is(expected));
     }
 }
