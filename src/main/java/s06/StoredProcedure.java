@@ -16,6 +16,7 @@ import org.apache.logging.log4j.Logger;
 public class StoredProcedure {
     private static final Logger log = LogManager.getLogger(StoredProcedure.class);
     private static final String GET_CODER_SALARY = "{call get_coder_salary(?, ?)}";
+    private static final String CODER_SALARY_FUNCTION = "{? = call get_salary(?)}";
 
     /**
      * Coder salary
@@ -30,11 +31,41 @@ public class StoredProcedure {
             cs.setInt(1, id);
             cs.registerOutParameter(2, Types.DECIMAL);
 
-            log.debug(cs.toString());
+            log.debug("Before execute: " + cs.toString());
             cs.executeUpdate();
-            log.debug(cs.toString());
+            log.debug("After execute: " + cs.toString());
 
             return cs.getDouble(2);
         }
+    }
+
+    /**
+     * Coder salary
+     *
+     * @param id the coder id
+     * @return coder salary, 0 if the specified coder id is not available
+     * @throws SQLException
+     */
+    public double getSalaryByFunction(int id) throws SQLException {
+        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+             CallableStatement cs = conn.prepareCall(CODER_SALARY_FUNCTION)) {
+            log.debug("Prepared: " + cs.toString());
+
+            cs.registerOutParameter(1, Types.NUMERIC);
+            cs.setInt(2, id);
+
+            log.debug("Before execute: " + cs.toString());
+            cs.executeUpdate();
+            log.debug("After execute: " + cs.toString());
+
+            return cs.getBigDecimal(1).doubleValue();
+        }
+    }
+
+    public static void main(String[] args) throws SQLException {
+        StoredProcedure sp = new StoredProcedure();
+
+        double salary = sp.getSalaryByFunction(107);
+        System.out.println(salary);
     }
 }

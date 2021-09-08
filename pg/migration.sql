@@ -391,7 +391,7 @@ insert into coders (first_name, last_name, hire_date, salary) values ('Tim', 'Ic
 
 commit;
 
--- a procedure on coders
+-- a procedure and a function on coders
 
 create or replace procedure get_coder_salary(
 	p_coder_id in coders.coder_id%type,

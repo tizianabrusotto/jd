@@ -39,6 +39,20 @@ class StoredProcedureTest {
     }
 
     @Test
+    @EnabledIf("jd.Config#isPostgres")
+    void getCoderSalaryFunctionPlain() throws SQLException {
+        /*-
+         * # coder_id, first_name, last_name, hire_date, salary
+         * 107, Diana, Lorentz, 2007-02-07, 4200.00
+         */
+        int coderId = 107;
+        double expected = 4200.0;
+
+        double actual = sp.getSalaryByFunction(coderId);
+        assertThat(actual, closeTo(expected, 0.0001));
+    }
+
+    @Test
     @EnabledIf("jd.Config#isMySql")
     void getCoderSalaryMissingMySql() throws SQLException {
         int coderId = 22070;
