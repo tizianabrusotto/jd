@@ -16,8 +16,7 @@ public class Connector {
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException se) {
-            log.error("Can't connect to database", se);
-            throw new IllegalStateException("No database connection");
+            throw new IllegalStateException("No database connection", se);
         }
     }
 }

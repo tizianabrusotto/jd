@@ -2,12 +2,11 @@ package s14;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import s14.dao.Coder;
 import s14.dao.CoderDao;
 
 public class Main {
-    private static Logger log = LogManager.getLogger(Main.class);
+    private static final Logger log = LogManager.getLogger(Main.class);
 
     public static void main(String[] args) {
         CoderDao cd = new CoderDao();
@@ -32,22 +31,23 @@ public class Main {
         cd.update(tom);
         System.out.println("Update renamed: " + tom);
 
-        cd.get(501).ifPresentOrElse(coder -> {
-            System.out.println("Get: " + coder);
-        }, () -> {
+        cd.get(501).ifPresentOrElse(coder -> System.out.println("Get: " + coder),
+                () -> log.error("Unexpected! Can't get coder 501"));
+
+        Coder coder501 = cd.legacyGet(501);
+        if (coder501 != null) {
+            System.out.println("Legacy get: " + coder501);
+        } else {
             log.error("Unexpected! Can't get coder 501");
-        });
+        }
 
         // delete a coder
         cd.delete(501);
 
-        cd.get(501).ifPresentOrElse(coder -> {
-            log.error("Unexpected! Coder 501 still alive: " + coder);
-        }, () -> {
-            System.out.println("Coder 501 is no more");
-        });
+        cd.get(501).ifPresentOrElse(coder -> log.error("Unexpected! Coder 501 still alive: " + coder),
+                () -> System.out.println("Coder 501 is no more"));
 
         System.out.println("All coders");
-        cd.getAll().stream().forEach(System.out::println);
+        cd.getAll().forEach(System.out::println);
     }
 }

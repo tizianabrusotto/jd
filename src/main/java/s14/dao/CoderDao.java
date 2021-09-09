@@ -1,18 +1,13 @@
 package s14.dao;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class CoderDao implements Dao<Coder> {
     private static final Logger log = LogManager.getLogger(CoderDao.class);
@@ -28,11 +23,11 @@ public class CoderDao implements Dao<Coder> {
         List<Coder> results = new ArrayList<>();
 
         try (Connection conn = Connector.getConnection();
-                Statement stmt = conn.createStatement();
-                ResultSet rs = stmt.executeQuery(GET_ALL)) {
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(GET_ALL)) {
             while (rs.next()) {
-                LocalDate hireDate = rs.getDate(4).toLocalDate();
-                Coder coder = new Coder(rs.getLong(1), rs.getString(2), rs.getString(3), hireDate, rs.getDouble(5));
+                Coder coder = new Coder(rs.getLong(1), rs.getString(2), rs.getString(3),
+                        rs.getObject(4, LocalDate.class), rs.getDouble(5));
                 results.add(coder);
             }
         } catch (SQLException se) {
@@ -44,13 +39,13 @@ public class CoderDao implements Dao<Coder> {
 
     @Override
     public Optional<Coder> get(long id) {
-        try (Connection conn = Connector.getConnection(); //
-                PreparedStatement ps = conn.prepareStatement(GET_BY_PK)) {
+        try (Connection conn = Connector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(GET_BY_PK)) {
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    LocalDate hireDate = rs.getDate(4).toLocalDate();
-                    Coder my = new Coder(rs.getLong(1), rs.getString(2), rs.getString(3), hireDate, rs.getDouble(5));
+                    Coder my = new Coder(rs.getLong(1), rs.getString(2), rs.getString(3),
+                            rs.getObject(4, LocalDate.class), rs.getDouble(5));
                     return Optional.of(my);
                 }
             }
@@ -62,13 +57,13 @@ public class CoderDao implements Dao<Coder> {
     }
 
     public Coder legacyGet(long id) {
-        try (Connection conn = Connector.getConnection(); //
-                PreparedStatement ps = conn.prepareStatement(GET_BY_PK)) {
+        try (Connection conn = Connector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(GET_BY_PK)) {
             ps.setLong(1, id);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    LocalDate hireDate = rs.getDate(4).toLocalDate();
-                    return new Coder(rs.getLong(1), rs.getString(2), rs.getString(3), hireDate, rs.getDouble(5));
+                    return new Coder(rs.getLong(1), rs.getString(2), rs.getString(3),
+                            rs.getObject(4, LocalDate.class), rs.getDouble(5));
                 }
             }
         } catch (SQLException se) {
@@ -80,12 +75,12 @@ public class CoderDao implements Dao<Coder> {
 
     @Override
     public void save(Coder coder) {
-        try (Connection conn = Connector.getConnection(); //
-                PreparedStatement ps = conn.prepareStatement(INSERT)) {
+        try (Connection conn = Connector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(INSERT)) {
             ps.setLong(1, coder.getId());
             ps.setString(2, coder.getFirstName());
             ps.setString(3, coder.getLastName());
-            ps.setDate(4, Date.valueOf(coder.getHireDate()));
+            ps.setObject(4, coder.getHireDate());
             ps.setDouble(5, coder.getSalary());
             ps.executeUpdate();
         } catch (SQLException se) {
@@ -95,11 +90,11 @@ public class CoderDao implements Dao<Coder> {
 
     @Override
     public void update(Coder coder) {
-        try (Connection conn = Connector.getConnection(); //
-                PreparedStatement ps = conn.prepareStatement(UPDATE)) {
+        try (Connection conn = Connector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(UPDATE)) {
             ps.setString(1, coder.getFirstName());
             ps.setString(2, coder.getLastName());
-            ps.setDate(3, Date.valueOf(coder.getHireDate()));
+            ps.setObject(3, coder.getHireDate());
             ps.setDouble(4, coder.getSalary());
             ps.setLong(5, coder.getId());
             int count = ps.executeUpdate();
@@ -113,8 +108,8 @@ public class CoderDao implements Dao<Coder> {
 
     @Override
     public void delete(long id) {
-        try (Connection conn = Connector.getConnection(); //
-                PreparedStatement ps = conn.prepareStatement(DELETE)) {
+        try (Connection conn = Connector.getConnection();
+             PreparedStatement ps = conn.prepareStatement(DELETE)) {
             ps.setLong(1, id);
             int count = ps.executeUpdate();
             if (count != 1) {
