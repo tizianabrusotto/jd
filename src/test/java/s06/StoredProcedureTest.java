@@ -1,8 +1,7 @@
 package s06;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.closeTo;
-import static org.hamcrest.Matchers.is;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.withPrecision;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import java.sql.SQLException;
@@ -35,7 +34,7 @@ class StoredProcedureTest {
         double expected = 4200.0;
 
         double actual = sp.getCoderSalary(coderId);
-        assertThat(actual, closeTo(expected, 0.0001));
+        assertThat(actual).isCloseTo(expected, withPrecision(0.0001));
     }
 
     @Test
@@ -49,7 +48,7 @@ class StoredProcedureTest {
         double expected = 4200.0;
 
         double actual = sp.getSalaryByFunction(coderId);
-        assertThat(actual, closeTo(expected, 0.0001));
+        assertThat(actual).isCloseTo(expected, withPrecision(0.0001));
     }
 
     @Test
@@ -59,7 +58,7 @@ class StoredProcedureTest {
         double expected = 0.0;
 
         double actual = sp.getCoderSalary(coderId);
-        assertThat(actual, is(expected));
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -68,6 +67,6 @@ class StoredProcedureTest {
         int coderId = 22070;
 
         var exc = assertThrows(SQLException.class, () -> sp.getCoderSalary(coderId));
-        assertThat(exc.getErrorCode(), is(1403));
+        assertThat(exc.getErrorCode()).isEqualTo(1403);
     }
 }

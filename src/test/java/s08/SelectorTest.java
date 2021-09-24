@@ -1,18 +1,14 @@
 package s08;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
+import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.SQLException;
-import java.time.LocalDate;
-import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.condition.DisabledIf;
 
 /**
  * Assuming schema me, table coders initialized via migration.sql script
@@ -32,7 +28,7 @@ class SelectorTest {
 
         List<String> actual = selector.getCoderNames();
 
-        assertThat(actual, is(expected));
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
@@ -41,9 +37,9 @@ class SelectorTest {
 
         List<Coder> actual = selector.getCoders();
 
-        assertThat(actual.size(), is(expectedNames.length));
+        assertThat(actual.size()).isEqualTo(expectedNames.length);
         for (int i = 0; i < actual.size(); i++) {
-            assertThat(actual.get(i).getFirstName(), is(expectedNames[i]));
+            assertThat(actual.get(i).getFirstName()).isEqualTo(expectedNames[i]);
         }
     }
 
@@ -55,11 +51,11 @@ class SelectorTest {
 
         List<Coder> actual = selector.getCodersBySalary(minSalary);
 
-        assertThat(actual.size(), is(expectedNames.length));
+        assertThat(actual.size()).isEqualTo(expectedNames.length);
         for (int i = 0; i < actual.size(); i++) {
             Coder current = actual.get(i);
-            assertThat(current.getFirstName(), is(expectedNames[i]));
-            assertThat(current.getSalary(), is(expectedSalaries[i]));
+            assertThat(current.getFirstName()).isEqualTo(expectedNames[i]);
+            assertThat(current.getSalary()).isEqualTo(expectedSalaries[i]);
         }
     }
 
@@ -71,11 +67,11 @@ class SelectorTest {
 
         List<Coder> actual = selector.getCodersBySalary(minSalary);
 
-        assertThat(actual.size(), is(expectedNames.length));
+        assertThat(actual.size()).isEqualTo(expectedNames.length);
         for (int i = 0; i < actual.size(); i++) {
             Coder current = actual.get(i);
-            assertThat(current.getFirstName(), is(expectedNames[i]));
-            assertThat(current.getSalary(), is(expectedSalaries[i]));
+            assertThat(current.getFirstName()).isEqualTo(expectedNames[i]);
+            assertThat(current.getSalary()).isEqualTo(expectedSalaries[i]);
         }
     }
 
@@ -86,7 +82,7 @@ class SelectorTest {
         int allCodersNumber = 6;
 
         List<Coder> actual = selector.getCodersBySalary(minSalary);
-        assertThat(actual.size(), is(allCodersNumber));
+        assertThat(actual.size()).isEqualTo(allCodersNumber);
     }
 
     @Test
@@ -98,6 +94,6 @@ class SelectorTest {
         expected.add(new Coder("David", "Austin", 4800));
 
         List<Coder> actual = selector.getCodersWithLetterIn(letter);
-        assertThat(actual, is(expected));
+        assertThat(actual).isEqualTo(expected);
     }
 }
