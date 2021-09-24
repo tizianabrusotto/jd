@@ -1,35 +1,30 @@
--- null
+-- order by
 use me;
 
--- check null
-select employee_id, first_name, last_name, commission_pct
+select *
 from employees
-where commission_pct is null
-and last_name = 'King';
+order by last_name, first_name;
 
-select employee_id, first_name, last_name, commission_pct
+-- sorting in natural order
+select *
 from employees
-where commission_pct is not null
-and last_name = 'King';
+order by salary;
 
--- !!! WRONG !!! check null
-select employee_id, first_name, last_name, commission_pct
+-- descending
+select first_name, last_name, salary
 from employees
-where commission_pct = null
-and last_name = 'King';
+order by salary desc
+limit 3;
 
--- !!! WRONG !!!
-select employee_id, first_name, last_name, commission_pct
+-- positional notation
+select first_name, last_name, salary
 from employees
-where commission_pct != null
-and last_name = 'King';
+where first_name like 'a%'
+order by 3 desc
+limit 5;
 
--- null in operations
-select first_name, last_name, salary * commission_pct
+select first_name, last_name, hire_date
 from employees
-where last_name = 'King';
-
--- what if the commission is null?
-select employee_id, last_name, salary * ifnull(commission_pct, 0)
-from employees
-where last_name = 'King';
+where first_name like 'a%'
+order by 3 desc
+limit 5;

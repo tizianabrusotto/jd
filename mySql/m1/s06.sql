@@ -1,59 +1,97 @@
--- select
+-- comparison operators /2
 use me;
 
--- select all
+-- simple pattern matching
+select first_name, last_name
+from employees
+where last_name like '_ull%';
+
+select first_name, last_name
+from employees
+where last_name like 'B%';
+
+
+select first_name, last_name
+from employees
+where last_name like '__ll%';
+
+select first_name, last_name
+from employees
+where last_name like '%ull_';
+
+select last_name
+from employees
+where last_name like '___';
+
+select last_name, first_name, hire_date
+from employees
+where hire_date not like '2005%';
+
+select last_name, first_name, hire_date
+from employees
+where hire_date like '____-05-%';
+
+select last_name
+from employees
+where last_name like 'sul%';
+
+-- interval check
 select *
-from regions;
-
--- a plain select
-select description
 from regions
-where region_id = 1;
+where region_id between 1 and 3;
 
-show schemas;
+select *
+from countries
+where name between 'a' and 'c';
 
--- select distinct
-select distinct manager_id
-from employees;
+select *
+from countries
+where name between 'c' and 'china';
 
-select manager_id
-from employees;
+-- check if (not) in a set
+select *
+from regions
+where region_id not in (2, 4);
 
--- select with change on results
-select title, min_salary, min_salary + 2000 as "option 1", min_salary * 3 + 1000 as "option 2"
-from jobs;
+select *
+from regions
+where region_id in (4, 2);
 
-select title as "Job Title", min_salary + 2000 as "Salary option 1"
-from jobs;
+-- beware of null
+select *
+from regions
+where region_id not in (2, 3, null);
 
--- alias
-select title, min_salary as "original", min_salary as salary
-from jobs;
+select *
+from regions
+where description not in ('Europe', null);
 
-select title, min_salary + 2000 as "increased min salary"
-from jobs;
+-- can't compare a 'good' value with null
+select *
+from regions
+where description not in (null) or description in (null);
 
--- dual
-select current_date;
--- from dual;
+-- this one works as expected
+select *
+from regions
+where description is not null or description is null;
 
-select sqrt(25);
+-- this one is wrong
+select *
+from regions
+where description != null or description = null;
 
-select 1+2, 3-4, 2*6, 5/2, current_date;
-
--- concatenation
-select concat(region_id, ": " ,country_id) as "the countries"
-from countries;
-
--- limit to get result set with a specified size
-select first_name, last_name
+-- this one works fine
+select *
 from employees
-limit 10;
+where commission_pct in (0.10, 0.15);
 
-select first_name, last_name
+-- this one does not select anything!
+select *
 from employees
-limit 10, 10;
+where commission_pct in (null);
 
-select first_name, last_name
+-- "is null" is the only way to check it
+select *
 from employees
-limit 100, 10;
+where commission_pct is not null;
