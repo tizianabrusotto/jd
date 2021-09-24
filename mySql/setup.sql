@@ -1,14 +1,16 @@
--- run it as root
+-- run it on MySQL as root
 
 drop user if exists me;
 drop schema if exists me;
 
+-- !!! don't choose such a lousy password in real life! !!!
 create user me identified by 'password';
 create schema me;
+
 grant all privileges on me.* to me;
 grant alter routine on me.* to me;
 
-use me;
+use me
 
 DELIMITER //
 

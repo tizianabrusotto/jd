@@ -1,8 +1,9 @@
--- source this script from MySQL
+-- source this script on MySQL as me
+-- it assumes the me schema has already been created, see setup.sql
 
 use me;
 
--- main tables cleanup
+-- cleanup
 drop table if exists job_history;
 call drop_fk_if_exists('departments', 'departments_manager_fk');
 drop table if exists employees;
@@ -12,6 +13,15 @@ drop table if exists countries;
 drop table if exists regions;
 drop table if exists jobs;
 
+drop table if exists team_coder;
+drop table if exists teams;
+drop table if exists coders;
+drop table if exists clients;
+
+drop procedure if exists get_coder_salary;
+
+--
+--
 create table regions(
 	region_id integer primary key auto_increment,
 	description varchar(25)
@@ -20,6 +30,8 @@ create table regions(
 insert into regions (description) values ('Europe'), ('Americas'), ('Asia'), ('Middle East and Africa');
 commit;
 
+--
+--
 create table countries(
 	country_id char(2) primary key,
 	name varchar(40),
@@ -37,6 +49,8 @@ insert into countries (country_id, name, region_id) values
 
 commit;
 
+--
+--
 create table jobs(
 	job_id varchar(10) primary key,
 	title varchar(35) not null,
@@ -58,6 +72,8 @@ insert into jobs (job_id, title, min_salary, max_salary) values
 
 commit;
 
+--
+--
 create table locations(
 	location_id integer primary key auto_increment,
 	street_address varchar(40),
@@ -85,6 +101,8 @@ insert into locations (street_address, postal_code, city, state_province, countr
 
 commit;
 
+--
+--
 create table departments(
 	department_id integer primary key auto_increment,
 	name varchar(30) not null,
@@ -104,6 +122,8 @@ insert into departments (name, manager_id, location_id) values
 
 commit;
 
+--
+--
 create table employees(
 	employee_id integer primary key auto_increment,
 	first_name varchar(20),
@@ -238,6 +258,8 @@ commit;
 alter table departments add constraint departments_manager_fk foreign key(manager_id) references employees(employee_id);
 alter table employees add constraint employees_manager_fk foreign key(manager_id) references employees(employee_id);
 
+--
+--
 create table job_history(
 	employee_id integer not null,
 	start_date date not null,
@@ -266,12 +288,7 @@ insert into job_history (employee_id,start_date,end_date,job_id,department_id) v
 
 commit;
 
--- extra playground
-drop table if exists team_coder;
-drop table if exists teams;
-drop table if exists coders;
-drop table if exists clients;
-
+--
 --
 create table clients (
   client_id integer primary key auto_increment,
@@ -287,11 +304,13 @@ insert into clients (name, nickname) values('Lima Delta Services', 'Delta');
 commit;
 
 --
+--
 create table coders
 as
     select employee_id as coder_id, first_name, last_name, hire_date, salary
-    from employees
-    where department_id = 6;
+    from employees join departments
+	using(department_id)
+    where name = 'IT';
 
 alter table coders modify coder_id int primary key auto_increment;
 alter table coders auto_increment = 201;
@@ -302,10 +321,8 @@ insert into coders (first_name, last_name, hire_date, salary) values ('Tim', 'Ic
 
 commit;
 
--- a procedure on coders
-
-drop procedure if exists get_coder_salary;
-
+--
+--
 DELIMITER //
 
 CREATE PROCEDURE get_coder_salary(
@@ -322,6 +339,8 @@ end;
 //
 DELIMITER ;
 
+--
+--
 create table teams(
 	team_id integer primary key auto_increment,
 	name varchar(25) unique not null,
@@ -338,6 +357,8 @@ insert into teams (name, leader_id, client_id) values ('green', 105, 2);
 
 commit;
 
+--
+--
 create table team_coder(
 	team_id integer,
     coder_id integer,
