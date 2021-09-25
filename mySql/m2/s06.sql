@@ -1,8 +1,8 @@
 -- left/right outer join - from "many" perspective
 use me;
 
--- Kimberely is an employee
-select first_name, last_name
+-- Kimberely is an employee not associated to a department
+select first_name, last_name, department_id
 from employees
 where last_name like 'Gr%';
 
@@ -12,7 +12,7 @@ from employees join departments
 using (department_id)
 where last_name like 'Gr%';
 
--- left outer join
+-- left outer join preserves Kimberely, giving NULL for the department columns
 select first_name, last_name, name
 from employees left outer join departments
 using (department_id)

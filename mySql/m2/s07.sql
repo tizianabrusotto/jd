@@ -18,4 +18,3 @@ union
 	from employees
 	where first_name like 'Tim%'
 order by last_name;
-

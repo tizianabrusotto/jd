@@ -24,7 +24,7 @@ select regions.region_id as r_id, description, country_id, name
 from regions, countries
 where regions.region_id = countries.region_id;
 
--- table alias
+-- using table (and column) aliases
 select r.region_id as r_id, description as "Region Name", name as Country
 from regions r, countries c
 where r.region_id = c.region_id;
