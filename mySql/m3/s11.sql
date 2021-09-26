@@ -29,6 +29,12 @@ where employee_id = (
 	from departments
 	where name = 'IT');
 
+-- just to check the result of the update above
+select first_name, last_name, salary
+from employees e join departments d
+on e.employee_id = d.manager_id
+where d.name = 'IT';
+
 -- subquery in select - from
 -- get the top salary from the ones specified in the subquery
 select max(e.salary)

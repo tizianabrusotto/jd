@@ -2,8 +2,11 @@
 
 use me;
 
--- char cast
+-- explicit cast to char
 select cast(12345.67 as char);
 
--- date cast
-select cast('2019-05-01' as date);
+-- explicit cast to date
+select cast('2021-10-01' as date);
+
+-- bad format -> NULL
+select cast('01-10-2021' as date);

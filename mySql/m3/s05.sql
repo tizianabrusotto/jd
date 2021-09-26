@@ -20,7 +20,7 @@ select pow(2, 1), pow(2, 3);
 -- e raised to the power of
 select exp(1);
 
--- square root
+-- square root, argument should be positive
 select sqrt(25), sqrt(5), sqrt(-2);
 
 -- natural logarithm, or for a given base
@@ -38,5 +38,5 @@ select sign(-2.3), sign(0), sign(42);
 -- 3.14
 select pi();
 
--- sine(), cosine(), tangent(), ...
+-- sine, cosine, tangent, ...
 select sin(pi()/2), cos(0), tan(pi()/4);

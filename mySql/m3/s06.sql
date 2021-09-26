@@ -23,7 +23,7 @@ select date_sub(curdate(), interval 7 day);
 select extract(day from curdate()), extract(year from now());
 
 -- distance in days between two dates
-select datediff('2020-12-31', now());
+select datediff('2021-12-31', now());
 
 -- last day for the current month
 select last_day(now());

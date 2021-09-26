@@ -16,9 +16,9 @@ from employees;
 -- sum
 select sum(salary)
 from employees
-where department_id = 50;
+where department_id = 5;
 
 -- average
 select round(avg(salary), 2)
 from employees
-where department_id = 50;
+where department_id = 5;
