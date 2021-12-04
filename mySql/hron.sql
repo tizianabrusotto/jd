@@ -131,7 +131,9 @@ create table job(
 	job_id integer primary key auto_increment,
 	title varchar(35) not null,
 	min_salary decimal(6,0),
-	max_salary decimal(6,0)
+	max_salary decimal(6,0),
+
+    check (min_salary < max_salary)
 );
 
 insert into job (title, min_salary, max_salary) values
@@ -160,7 +162,7 @@ commit;
 create table department(
 	department_id integer primary key auto_increment,
 	name varchar(30) not null,
-	manager_id integer,
+	manager_id integer unique,
 	location_id integer,
 
     foreign key (location_id) references location (location_id)
@@ -586,7 +588,9 @@ create table car_service(
 	checkout timestamp,
 
 	check (checkin < checkout),
-	primary key (car_id, service_id, checkin)
+	primary key (car_id, service_id, checkin),
+	foreign key (car_id) references car (car_id),
+	foreign key (service_id) references service (service_id)
 );
 
 insert into car_service (car_id, service_id, checkin, checkout) values

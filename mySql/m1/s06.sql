@@ -1,97 +1,138 @@
--- comparison operators /2
-use me;
+-- examples on comparison operators
+use hron;
+
+-- equality
+select *
+from region
+where region_id = 1;
+
+-- difference
+select *
+from region
+where region_id != 2;
+
+-- difference, alternative notation
+select *
+from region
+where region_id <> 2;
+
+-- strictly less than
+select *
+from region
+where region_id < 3;
+
+-- less or equal to
+select *
+from region
+where region_id <= 3;
+
+-- strictly bigger than
+select *
+from region
+where region_id > 3;
+
+-- greater or equal to
+select *
+from region
+where region_id >= 3;
 
 -- simple pattern matching
+-- "like" a string starting with one char, then "ull", then 0, 1 or more chars
 select first_name, last_name
-from employees
+from employee
 where last_name like '_ull%';
 
-select first_name, last_name
-from employees
-where last_name like 'B%';
+-- "like" a string having an "m" anywhere
+select name
+from region
+where name like '%m%';
 
+-- "like" a string having a lowercase "m" anywhere
+select name
+from region
+where name like binary '%m%';
 
+-- starting with "a"
 select first_name, last_name
-from employees
+from employee
+where last_name like 'A%';
+
+-- ...
+select first_name, last_name
+from employee
 where last_name like '__ll%';
 
-select first_name, last_name
-from employees
-where last_name like '%ull_';
-
+-- ...
 select last_name
-from employees
+from employee
 where last_name like '___';
 
-select last_name, first_name, hire_date
-from employees
-where hire_date not like '2005%';
+-- implicit cast to string before checking the pattern
+select last_name, first_name, hired
+from employee
+where hired like '2015%';
 
-select last_name, first_name, hire_date
-from employees
-where hire_date like '____-05-%';
+select last_name, first_name, hired
+from employee
+where hired like '%-05-%';
 
-select last_name
-from employees
-where last_name like 'sul%';
-
--- interval check
+-- interval check with "between ... and ..."
 select *
-from regions
+from region
 where region_id between 1 and 3;
 
+-- "between" strings
 select *
-from countries
-where name between 'a' and 'c';
+from country
+where name between 'belgium' and 'china';
 
+-- ...
 select *
 from countries
-where name between 'c' and 'china';
+where name between 'i' and 'j';
+
+-- "between" dates
+select last_name, first_name, hired
+from employee
+where hired between '2015-01-01' and '2015-12-31';
+
+-- check if "in" a set
+select *
+from region
+where region_id in (4, 2, 1);
+
+-- "not like"
+-- not an "a" anywhere
+select name
+from region
+where name not like '%a%';
 
 -- check if (not) in a set
 select *
-from regions
+from region
 where region_id not in (2, 4);
-
-select *
-from regions
-where region_id in (4, 2);
 
 -- beware of null
 select *
-from regions
-where region_id not in (2, 3, null);
+from employee
+where commission not in (.30, null);
 
+-- "is (not) null" is the only way to check it
 select *
-from regions
-where description not in ('Europe', null);
-
--- can't compare a 'good' value with null
-select *
-from regions
-where description not in (null) or description in (null);
-
--- this one works as expected
-select *
-from regions
-where description is not null or description is null;
-
--- this one is wrong
-select *
-from regions
-where description != null or description = null;
+from employee
+where commission is not null;
 
 -- this one works fine
 select *
-from employees
-where commission_pct in (0.10, 0.15);
+from employee
+where commission in (0.10, 0.15);
 
--- this one does not select anything!
+-- can't compare a 'good' value with null
 select *
-from employees
-where commission_pct in (null);
+from region
+where name not in (null) or name in (null);
 
--- "is null" is the only way to check it
+-- this one works as expected
 select *
-from employees
-where commission_pct is not null;
+from region
+where name is not null or name is null;

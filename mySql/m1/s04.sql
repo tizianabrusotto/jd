@@ -1,35 +1,17 @@
--- null
-use me;
+-- examples on logical operators
+use hron;
 
--- check null
-select employee_id, first_name, last_name, commission_pct
-from employees
-where commission_pct is null
-and last_name = 'King';
+-- use "not" if it is the other way round
+select *
+from employee
+where not department_id > 2;
 
-select employee_id, first_name, last_name, commission_pct
-from employees
-where commission_pct is not null
-and last_name = 'King';
+-- use "and" if both conditions should hold
+select *
+from employee
+where salary < 3000 and employee_id > 160;
 
--- !!! WRONG !!! check null
-select employee_id, first_name, last_name, commission_pct
-from employees
-where commission_pct = null
-and last_name = 'King';
-
--- !!! WRONG !!!
-select employee_id, first_name, last_name, commission_pct
-from employees
-where commission_pct != null
-and last_name = 'King';
-
--- null in operations
-select first_name, last_name, salary * commission_pct
-from employees
-where last_name = 'King';
-
--- what if the commission is null?
-select employee_id, last_name, salary * ifnull(commission_pct, 0)
-from employees
-where last_name = 'King';
+-- use "or" if one or the other should holds
+select *
+from employee
+where salary < 2200 or last_name = 'King';

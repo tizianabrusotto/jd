@@ -1,17 +1,33 @@
--- logical operators
-use me;
+-- examples on sorting
+use hron;
 
--- both conditions should hold
-select *
-from employees
-where salary < 3000 and employee_id > 195;
+select last_name, first_name
+from employee
+order by last_name, first_name;
 
--- one or the other is ok
+-- sorting in natural order
 select *
-from employees
-where salary < 2200 or last_name = 'King';
+from employee
+order by salary;
 
--- the other way round
-select *
-from employees
-where not department_id > 2;
+-- descending and limited
+select first_name, last_name, salary
+from employee
+order by salary desc
+limit 6;
+
+-- ...
+select first_name, last_name
+from employee
+where first_name like 'b%'
+order by salary desc;
+
+-- positional notation
+select first_name, last_name
+from employee order by 1, 2;
+
+-- ...
+select first_name, last_name, hired
+from employee
+where first_name like 'c%'
+order by 3 asc;

@@ -1,27 +1,35 @@
--- comparison operators /1
-use me;
+-- examples on null
+use hron;
 
--- that one
-select *
-from regions
-where region_id = 1;
+-- check null
+select employee_id, first_name, last_name, commission
+from employee
+where last_name = 'King' and commission is null;
 
--- the other ones
-select *
-from regions
-where region_id != 2;
+-- !!! WRONG - no row is returned !!!
+select employee_id, first_name, last_name, commission
+from employee
+where last_name = 'King' and commission = null; -- !!! WRONG !!!
 
--- the other ones, alternative notation
-select *
-from regions
-where region_id <> 2;
+-- check not null
+select employee_id, first_name, last_name, commission
+from employee
+where last_name = 'King' and commission is not null;
 
--- strictly less than
-select *
-from regions
-where region_id < 3;
+-- !!! WRONG  - no row is returned !!!
+select employee_id, first_name, last_name, commission
+from employee
+where last_name = 'King' and commission != null;
 
--- less or equal to
-select *
-from regions
-where region_id <= 3;
+-- null in operations, null is returned
+select first_name, last_name, salary * commission
+from employee
+where last_name = 'King';
+
+-- using ifnull() to get rid of null
+select employee_id, first_name, last_name, salary * ifnull(commission, 0) as 'monthly commission'
+from employee
+where last_name = 'King';
+
+-- compare ifnull() to coalesce()
+select ifnull(null, 42), coalesce(null, null, 42);
