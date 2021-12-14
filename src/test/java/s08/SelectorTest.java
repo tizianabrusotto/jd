@@ -24,7 +24,7 @@ class SelectorTest {
 
     @Test
     void getCoderNames() throws SQLException {
-        List<String> expected = Arrays.asList("Alexander", "Bruce", "David", "Diana", "Tim", "Valli");
+        List<String> expected = Arrays.asList("Alexander", "Bruce", "David", "Diana", "Valli");
 
         List<String> actual = selector.getCoderNames();
 
@@ -32,8 +32,8 @@ class SelectorTest {
     }
 
     @Test
-    void testGetCoders() throws SQLException {
-        String[] expectedNames = { "Alexander", "Bruce", "David", "Diana", "Tim", "Valli" };
+    void getCoders() throws SQLException {
+        String[] expectedNames = { "Alexander", "Bruce", "David", "Diana", "Valli" };
 
         List<Coder> actual = selector.getCoders();
 
@@ -79,14 +79,14 @@ class SelectorTest {
     void getCodersBySalaryStringInjection() throws SQLException {
         // !!! SQL Injection !!!
         String minSalary = "6000 OR 0 = 0";
-        int allCodersNumber = 6;
+        int allEmployees = 107;
 
         List<Coder> actual = selector.getCodersBySalary(minSalary);
-        assertThat(actual.size()).isEqualTo(allCodersNumber);
+        assertThat(actual.size()).isEqualTo(allEmployees);
     }
 
     @Test
-    void getCodersWithLetterInQ() throws SQLException {
+    void getCodersWithLetterInU() throws SQLException {
         char letter = 'u';
         List<Coder> expected = new ArrayList<>(3);
         expected.add(new Coder("Alexander", "Hunold", 9000));

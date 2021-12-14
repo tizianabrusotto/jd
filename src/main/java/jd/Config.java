@@ -19,8 +19,8 @@ public final class Config {
 
     static {
         String dbmsName = "mysql";
-        String url = "jdbc:mysql://localhost:3306/me";
-        String user = "me";
+        String url = "jdbc:mysql://localhost:3306/hron";
+        String user = "hron";
         String password = "password";
 
         try (InputStream is = Config.class.getClassLoader().getResourceAsStream("configuration.properties")) {

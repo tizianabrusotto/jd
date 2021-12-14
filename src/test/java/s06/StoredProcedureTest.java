@@ -25,7 +25,7 @@ class StoredProcedureTest {
 
     @Test
     @DisabledIf("jd.Config#isStoredProcedureMissing")
-    void getCoderSalaryPlain() throws SQLException {
+    void getCarPlain() throws SQLException {
         /*-
          * # coder_id, first_name, last_name, hire_date, salary
          * 107, Diana, Lorentz, 2007-02-07, 4200.00
@@ -33,7 +33,7 @@ class StoredProcedureTest {
         int coderId = 107;
         double expected = 4200.0;
 
-        double actual = sp.getCoderSalary(coderId);
+        double actual = sp.getEmployeeSalary(coderId);
         assertThat(actual).isCloseTo(expected, withPrecision(0.0001));
     }
 
@@ -57,7 +57,7 @@ class StoredProcedureTest {
         int coderId = 22070;
         double expected = 0.0;
 
-        double actual = sp.getCoderSalary(coderId);
+        double actual = sp.getEmployeeSalary(coderId);
         assertThat(actual).isEqualTo(expected);
     }
 
@@ -66,7 +66,7 @@ class StoredProcedureTest {
     void getCoderSalaryMissingOracle() {
         int coderId = 22070;
 
-        var exc = assertThrows(SQLException.class, () -> sp.getCoderSalary(coderId));
+        var exc = assertThrows(SQLException.class, () -> sp.getEmployeeSalary(coderId));
         assertThat(exc.getErrorCode()).isEqualTo(1403);
     }
 }

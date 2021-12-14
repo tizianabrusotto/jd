@@ -3,7 +3,7 @@ package s08;
 import java.util.Objects;
 
 /**
- * A JavaBean for the CODERS table
+ * A JavaBean for coders
  * <p>
  * Notice that, intentionally, salary here is int, even if the column is a DECIMAL(8,2)
  *
