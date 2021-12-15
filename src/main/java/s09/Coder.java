@@ -4,30 +4,30 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 /**
- * Another JavaBean for the CODERS table
+ * Another JavaBean for coders from the EMPLOYEE table
  *
  * @author Emanuele Galli
  */
 public class Coder {
     private String firstName;
     private String lastName;
-    private LocalDate hireDate;
+    private LocalDate hired;
     private double salary;
 
     public Coder() {
     }
 
-    public Coder(String firstName, String lastName, LocalDate hireDate, double salary) {
+    public Coder(String firstName, String lastName, LocalDate hired, double salary) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.hireDate = hireDate;
+        this.hired = hired;
         this.salary = salary;
     }
 
     public Coder(String firstName, String lastName, double salary) {
         this.firstName = firstName;
         this.lastName = lastName;
-        this.hireDate = LocalDate.now();
+        this.hired = LocalDate.now();
         this.salary = salary;
     }
 
@@ -47,12 +47,12 @@ public class Coder {
         this.lastName = lastName;
     }
 
-    public LocalDate getHireDate() {
-        return hireDate;
+    public LocalDate getHired() {
+        return hired;
     }
 
-    public void setHireDate(LocalDate hireDate) {
-        this.hireDate = hireDate;
+    public void setHired(LocalDate hired) {
+        this.hired = hired;
     }
 
     public double getSalary() {
@@ -64,16 +64,6 @@ public class Coder {
     }
 
     @Override
-    public String toString() {
-        return "Coder{" +
-                "firstName='" + firstName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", hireDate=" + hireDate +
-                ", salary=" + salary +
-                '}';
-    }
-
-    @Override
     public boolean equals(Object o) {
         if (this == o) {
             return true;
@@ -82,11 +72,18 @@ public class Coder {
             return false;
         }
         Coder that = (Coder) o;
-        return Double.compare(that.salary, salary) == 0 && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName) && Objects.equals(hireDate, that.hireDate);
+        return Double.compare(that.salary, salary) == 0 && Objects.equals(firstName, that.firstName)
+                && Objects.equals(lastName, that.lastName) && Objects.equals(hired, that.hired);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(firstName, lastName, hireDate, salary);
+        return Objects.hash(firstName, lastName, hired, salary);
+    }
+
+    @Override
+    public String toString() {
+        return "Coder [firstName=" + firstName + ", lastName=" + lastName + ", hired=" + hired + ", salary=" + salary
+                + "]";
     }
 }
