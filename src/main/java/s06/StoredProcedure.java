@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 
 public class StoredProcedure {
     private static final Logger log = LogManager.getLogger(StoredProcedure.class);
-    private static final String GET_CODER_SALARY = "{call get_coder_salary(?, ?)}";
+    private static final String GET_EMPLOYEE_SALARY = "{call get_employee_salary(?, ?)}";
     private static final String GET_SALARY_FUNCTION = "{? = call get_salary(?)}";
 
     /**
@@ -27,7 +27,7 @@ public class StoredProcedure {
      */
     public double getEmployeeSalary(int id) throws SQLException {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-                CallableStatement cs = conn.prepareCall(GET_CODER_SALARY)) {
+                CallableStatement cs = conn.prepareCall(GET_EMPLOYEE_SALARY)) {
             cs.setInt(1, id);
             cs.registerOutParameter(2, Types.DECIMAL);
 
