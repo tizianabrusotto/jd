@@ -6,25 +6,23 @@ public class Coder {
     private long id;
     private String firstName;
     private String lastName;
-    private LocalDate hireDate;
+    private int phone;
+    private LocalDate hired;
     private double salary;
 
     public Coder() {
     }
 
-    public Coder(String firstName, String lastName, double salary) {
-        this(0, firstName, lastName, null, salary);
+    public Coder(long id, String firstName, String lastName, int phone, double salary) {
+        this(id, firstName, lastName, phone, LocalDate.now(), salary);
     }
 
-    public Coder(long id, String firstName, String lastName, double salary) {
-        this(id, firstName, lastName, LocalDate.now(), salary);
-    }
-
-    public Coder(long id, String firstName, String lastName, LocalDate hireDate, double salary) {
+    public Coder(long id, String firstName, String lastName, int phone, LocalDate hired, double salary) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.hireDate = hireDate;
+        this.phone = phone;
+        this.hired = hired;
         this.salary = salary;
     }
 
@@ -52,12 +50,12 @@ public class Coder {
         this.lastName = lastName;
     }
 
-    public LocalDate getHireDate() {
-        return hireDate;
+    public LocalDate getHired() {
+        return hired;
     }
 
-    public void setHireDate(LocalDate hireDate) {
-        this.hireDate = hireDate;
+    public void setHired(LocalDate hired) {
+        this.hired = hired;
     }
 
     public double getSalary() {
@@ -68,9 +66,17 @@ public class Coder {
         this.salary = salary;
     }
 
+    public int getPhone() {
+        return phone;
+    }
+
+    public void setPhone(int phone) {
+        this.phone = phone;
+    }
+
     @Override
     public String toString() {
-        return "Coder [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", hireDate=" + hireDate
-                + ", salary=" + salary + "]";
+        return "Coder [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", phone=" + phone
+                + ", hired=" + hired + ", salary=" + salary + "]";
     }
 }

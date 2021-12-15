@@ -12,7 +12,7 @@ public class Main {
         CoderDao cd = new CoderDao();
 
         // create a new coder
-        Coder tom = new Coder(501, "Tom", "Jones", 2000);
+        Coder tom = new Coder(501, "Tom", "Jones", 99_999, 2_000);
         cd.save(tom);
         System.out.println("Save: " + tom);
 
@@ -27,7 +27,7 @@ public class Main {
         });
 
         // rename a coder
-        tom.setLastName("Bombadil");
+        tom.setLastName("Hollz");
         cd.update(tom);
         System.out.println("Update renamed: " + tom);
 
