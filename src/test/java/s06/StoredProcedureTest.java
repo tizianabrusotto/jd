@@ -12,7 +12,7 @@ import org.junit.jupiter.api.condition.DisabledIf;
 import org.junit.jupiter.api.condition.EnabledIf;
 
 /**
- * Assuming schema me, table coders initialized via migration.sql script
+ * Assuming schema me, table coders initialized via setup.sql script
  * 
  */
 class StoredProcedureTest {
@@ -25,7 +25,7 @@ class StoredProcedureTest {
 
     @Test
     @DisabledIf("jd.Config#isStoredProcedureMissing")
-    void getCarPlain() throws SQLException {
+    void getEmployeeSalary() throws SQLException {
         /*-
          * # coder_id, first_name, last_name, hire_date, salary
          * 107, Diana, Lorentz, 2007-02-07, 4200.00
