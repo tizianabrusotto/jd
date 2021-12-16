@@ -3,16 +3,16 @@
 - Java SE 17
 - JUnit 5 + AssertJ 3
 
-### JDBC on
+## JDBC on
 - MySQL 8
-- Oracle DB 18c
+- Oracle DB 21c
 - PostgreSQL 14
 - SQLite 3
 
-### Database setup
+## Database setup
 - SQLite
-  - Run migration.sql to (re)set data
+  - Run setup.sql to (re)set data
 
 - MySQL, Oracle, PostgreSQL
-  - Run once setup.sql as dba to create user/schema "me"
-  - Run migration.sql as "me" to (re)set data
+  - Run once once.sql as dba to create user/schema "hron"
+  - Run setup.sql as "hron" to (re)set data
