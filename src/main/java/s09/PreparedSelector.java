@@ -25,7 +25,8 @@ public class PreparedSelector {
     private static final String GET_CODERS_BY_LETTER = """
             SELECT e.first_name, e.last_name, e.hired, e.salary
             FROM employee e JOIN department d USING (department_id)
-            WHERE d.name = 'IT' AND (first_name LIKE ? OR last_name LIKE ?)""";
+            WHERE d.name = 'IT' AND (first_name LIKE ? OR last_name LIKE ?)
+            ORDER BY salary DESC""";
 
     public static List<Coder> getCodersHiredBefore(LocalDate limit) throws SQLException {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
