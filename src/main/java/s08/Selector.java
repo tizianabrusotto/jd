@@ -37,7 +37,8 @@ public class Selector {
             SELECT first_name, last_name, salary
             FROM employee e JOIN department d
             USING (department_id)
-            WHERE d.name = 'IT' AND (first_name LIKE '%%%c%%' or last_name LIKE '%%%c%%')""";
+            WHERE d.name = 'IT' AND (first_name LIKE '%%%c%%' or last_name LIKE '%%%c%%')
+            ORDER BY salary DESC""";
 
     public List<String> getCoderNames() throws SQLException {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
