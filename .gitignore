@@ -3,6 +3,6 @@
 /.classpath
 /.project
 /bin/
-/me.db
+/*.db
 /.idea/
 /jd.iml
