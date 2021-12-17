@@ -20,6 +20,7 @@ class PreparedSelectorTest {
     }
 
     @Test
+    @DisabledIf(value = "jd.Config#isSqLite", disabledReason = "No date support")
     void getCodersBySalary6000() throws SQLException {
         int minSalary = 6000;
         String[] expectedNames = { "Alexander", "Bruce" };
@@ -51,6 +52,7 @@ class PreparedSelectorTest {
     }
 
     @Test
+    @DisabledIf(value = "jd.Config#isSqLite", disabledReason = "No date support")
     void getCodersWithLetterInU() throws SQLException {
         char letter = 'u';
         List<Coder> expected = List.of(new Coder("Alexander", "Hunold", LocalDate.of(2019, Month.JANUARY, 6), 9000.0),
