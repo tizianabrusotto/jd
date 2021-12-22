@@ -6,3 +6,5 @@
 /*.db
 /.idea/
 /jd.iml
+/.vscode/
+/.factorypath
