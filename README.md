@@ -10,9 +10,4 @@
 - SQLite 3
 
 ## Database setup
-- SQLite
-  - Run setup.sql to (re)set data
-
-- MySQL, Oracle, PostgreSQL
-  - Run once once.sql as dba to create user/schema "hron"
-  - Run setup.sql as "hron" to (re)set data
+- See hron
