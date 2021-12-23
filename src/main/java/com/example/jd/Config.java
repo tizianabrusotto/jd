@@ -34,12 +34,12 @@ public final class Config {
         } catch (Exception ex) {
             log.error("Can't load configuration properties", ex);
         } finally {
-            switch (dbmsName) {
-                case "oracle" -> ACTIVE = Dbms.ORACLE;
-                case "postgres" -> ACTIVE = Dbms.POSTGRES;
-                case "sqlite" -> ACTIVE = Dbms.SQLITE;
-                default -> ACTIVE = Dbms.MYSQL;
-            }
+            ACTIVE = switch (dbmsName) {
+                case "oracle" -> Dbms.ORACLE;
+                case "postgres" -> Dbms.POSTGRES;
+                case "sqlite" -> Dbms.SQLITE;
+                default -> Dbms.MYSQL;
+            };
 
             URL = url;
             USER = user;
