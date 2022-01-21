@@ -39,7 +39,7 @@ public final class Config {
             case "oracle" -> Dbms.ORACLE;
             case "postgres" -> Dbms.POSTGRES;
             case "sqlite" -> Dbms.SQLITE;
-            default -> Dbms.MYSQL;
+            default -> Dbms.H2;
             };
 
             URL = url;
@@ -62,6 +62,10 @@ public final class Config {
 
     public static boolean isPostgres() {
         return ACTIVE == Dbms.POSTGRES;
+    }
+
+    public static boolean isPostgresLike() {
+        return ACTIVE == Dbms.POSTGRES || ACTIVE == Dbms.H2;
     }
 
     public static boolean isSqLite() {

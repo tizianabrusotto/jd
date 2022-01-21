@@ -38,7 +38,7 @@ class StoredProcedureTest {
     }
 
     @Test
-    @EnabledIf("com.example.jd.Config#isPostgres")
+    @EnabledIf("com.example.jd.Config#isPostgresLike")
     void getCoderSalaryFunctionPlain() throws SQLException {
         /*-
          * # coder_id, first_name, last_name, hire_date, salary
