@@ -13,7 +13,8 @@ public class DriverManagerConnector {
      */
 //    static {
 //        try {
-//            Class.forName("com.mysql.cj.jdbc.Driver");
+//            Class.forName("org.h2.Driver");
+//            // Class.forName("com.mysql.cj.jdbc.Driver");
 //            // Class.forName("oracle.jdbc.OracleDriver");
 //            // Class.forName("org.postgresql.Driver);
 //        } catch (ClassNotFoundException cnfe) {
@@ -21,6 +22,7 @@ public class DriverManagerConnector {
 //            throw new IllegalStateException("Can't load JDBC driver " + cnfe.getMessage());
 //        }
 //    }
+
     public static void main(String[] args) {
         System.out.println(getInfo());
     }

@@ -1,5 +1,5 @@
 package com.example.jd;
 
 public enum Dbms {
-    MYSQL, ORACLE, POSTGRES, SQLITE
+    H2, MYSQL, ORACLE, POSTGRES, SQLITE
 }

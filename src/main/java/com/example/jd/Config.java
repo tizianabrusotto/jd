@@ -18,8 +18,8 @@ public final class Config {
     }
 
     static {
-        String dbmsName = "mysql";
-        String url = "jdbc:mysql://localhost:3306/hron";
+        String dbmsName = "h2";
+        String url = "jdbc:h2:./hron";
         String user = "hron";
         String password = "password";
 
@@ -35,16 +35,21 @@ public final class Config {
             log.error("Can't load configuration properties", ex);
         } finally {
             ACTIVE = switch (dbmsName) {
-                case "oracle" -> Dbms.ORACLE;
-                case "postgres" -> Dbms.POSTGRES;
-                case "sqlite" -> Dbms.SQLITE;
-                default -> Dbms.MYSQL;
+            case "mysql" -> Dbms.MYSQL;
+            case "oracle" -> Dbms.ORACLE;
+            case "postgres" -> Dbms.POSTGRES;
+            case "sqlite" -> Dbms.SQLITE;
+            default -> Dbms.MYSQL;
             };
 
             URL = url;
             USER = user;
             PASSWORD = password;
         }
+    }
+
+    public static boolean isH2() {
+        return ACTIVE == Dbms.H2;
     }
 
     public static boolean isMySql() {
@@ -64,6 +69,6 @@ public final class Config {
     }
 
     public static boolean isStoredProcedureMissing() {
-        return isSqLite() || isPostgres();
+        return isSqLite() || isPostgres() || isH2();
     }
 }
