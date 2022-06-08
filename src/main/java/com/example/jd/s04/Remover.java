@@ -11,9 +11,12 @@ public class Remover {
     private static final String DELETE_SERVICE_BY_NAME = "DELETE FROM service WHERE name = '%s'";
 
     public static void main(String[] args) {
-        // this info should come from user
-        String name = "Smith";
+        if (args.length == 0) {
+            System.out.println("Pass me a service name!");
+            return;
+        }
 
+        String name = args[0];
         System.out.printf("Deleting service named %s, if exists%n", name);
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
