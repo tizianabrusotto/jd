@@ -34,18 +34,10 @@ public class DriverManagerConnector {
             String db = dmd.getDatabaseProductName();
             String version = dmd.getDatabaseProductVersion();
 
-            // MySQL, PostgreSQL approach
-            String schema = conn.getCatalog();
-            if (schema == null) {
-                // Oracle approach
-                schema = conn.getSchema();
-                // SQLite approach
-                if (schema == null) {
-                    schema = "N/A";
-                }
-            }
+            String catalog = conn.getCatalog();
+            String schema = conn.getSchema();
 
-            return String.format("Connected to %s version %s, schema %s", db, version, schema);
+            return String.format("Connected to %s version %s, catalog %s, schema %s", db, version, catalog, schema);
         } catch (SQLException e) {
             throw new IllegalStateException("Can't get database info", e);
         }
