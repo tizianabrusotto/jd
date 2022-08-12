@@ -12,6 +12,7 @@ import static com.example.jd.Config.*;
 
 public class PreparedSelector {
     private static final Logger log = LogManager.getLogger(PreparedSelector.class);
+
     private static final String GET_CODERS_BY_SALARY = """
             SELECT e.first_name, e.last_name, e.hired, e.salary
             FROM employee e JOIN department d USING (department_id)
@@ -34,7 +35,7 @@ public class PreparedSelector {
             prepStmt.setObject(1, limit);
 
             // not supported by Oracle JDBC
-            log.debug("PreparedStatement: " + prepStmt);
+            log.debug("PreparedStatement: {}", prepStmt);
 
             List<Coder> result = new ArrayList<>();
             try (ResultSet rs = prepStmt.executeQuery()) {
@@ -56,7 +57,7 @@ public class PreparedSelector {
             prepStmt.setDouble(1, lower);
 
             // not supported by Oracle JDBC
-            log.debug("PreparedStatement: " + prepStmt);
+            log.debug("PreparedStatement: {}", prepStmt);
 
             List<Coder> result = new ArrayList<>();
             try (ResultSet rs = prepStmt.executeQuery()) {

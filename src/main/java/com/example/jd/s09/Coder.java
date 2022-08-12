@@ -5,8 +5,6 @@ import java.util.Objects;
 
 /**
  * Another JavaBean for coders from the EMPLOYEE table
- *
- * @author Emanuele Galli
  */
 public class Coder {
     private String firstName;

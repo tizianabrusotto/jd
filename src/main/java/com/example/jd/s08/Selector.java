@@ -11,6 +11,7 @@ import static com.example.jd.Config.*;
 
 public class Selector {
     private static final Logger log = LogManager.getLogger(Selector.class);
+
     private static final String GET_CODER_NAMES = """
             SELECT first_name
             FROM employee e JOIN department d

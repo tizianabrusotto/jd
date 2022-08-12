@@ -3,11 +3,9 @@ package com.example.jd.s08;
 import java.util.Objects;
 
 /**
- * A JavaBean for coders
+ * A JavaBean for coders from the EMPLOYEE table
  * <p>
  * Notice that, intentionally, salary here is int, even if the column is a DECIMAL(8,2)
- *
- * @author egall
  */
 public class Coder {
     private String firstName;
@@ -56,7 +54,8 @@ public class Coder {
             return false;
         }
         Coder that = (Coder) o;
-        return salary == that.salary && Objects.equals(firstName, that.firstName) && Objects.equals(lastName, that.lastName);
+        return salary == that.salary && Objects.equals(firstName, that.firstName)
+                && Objects.equals(lastName, that.lastName);
     }
 
     @Override
