@@ -5,9 +5,14 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import static com.example.jd.Config.*;
 
 public class InserterExercise {
+    private static final Logger log = LogManager.getLogger(InserterExercise.class);
+
     // TODO: SQL code for insert
 //    private static final String INSERT_SERVICE_BY_NAME_AND_LOCATION = "";
 
@@ -21,7 +26,7 @@ public class InserterExercise {
                 Statement stmt = conn.createStatement()) {
             // TODO: execute statement
         } catch (SQLException se) {
-            throw new IllegalStateException(se);
+            log.error("Can't remove", se);
         }
     }
 }

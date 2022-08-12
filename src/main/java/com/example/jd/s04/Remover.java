@@ -1,13 +1,19 @@
 package com.example.jd.s04;
 
+import static com.example.jd.Config.PASSWORD;
+import static com.example.jd.Config.URL;
+import static com.example.jd.Config.USER;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import static com.example.jd.Config.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class Remover {
+    private static final Logger log = LogManager.getLogger(Remover.class);
     private static final String DELETE_SERVICE_BY_NAME = "DELETE FROM service WHERE name = '%s'";
 
     public static void main(String[] args) {
@@ -16,17 +22,16 @@ public class Remover {
             return;
         }
 
-        String name = args[0];
-        System.out.printf("Deleting service named %s, if exists%n", name);
+        log.info("Deleting service named {}, if exists", args[0]);
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                 Statement stmt = conn.createStatement()) {
             // !!! DANGER - POSSIBLE SQL INJECTION ATTACK !!!
-            String sql = String.format(DELETE_SERVICE_BY_NAME, name);
+            String sql = String.format(DELETE_SERVICE_BY_NAME, args[0]);
             int lines = stmt.executeUpdate(sql);
             System.out.printf("Delete executed, %d lines affected%n", lines);
         } catch (SQLException se) {
-            throw new IllegalStateException(se);
+            log.error("Can't remove", se);
         }
     }
 }
