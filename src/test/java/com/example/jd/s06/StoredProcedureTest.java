@@ -12,7 +12,7 @@ import org.junit.jupiter.api.condition.DisabledIf;
 import org.junit.jupiter.api.condition.EnabledIf;
 
 /**
- * Assuming schema me, table coders initialized via setup.sql script
+ * Assuming schema hron, table coders initialized via setup.sql script
  * 
  */
 class StoredProcedureTest {

@@ -31,11 +31,14 @@ public class StoredProcedure {
             cs.setInt(1, id);
             cs.registerOutParameter(2, Types.DECIMAL);
 
-            log.debug("Before execute: " + cs);
+            log.debug("Before execute: {}", cs);
             cs.executeUpdate();
-            log.debug("After execute: " + cs);
+            log.debug("After execute: {}", cs);
 
-            return cs.getDouble(2);
+            double result = cs.getDouble(2);
+            log.debug("Result is: {}", cs);
+
+            return result;
         }
     }
 
@@ -48,17 +51,20 @@ public class StoredProcedure {
      */
     public double getSalaryByFunction(int id) throws SQLException {
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-             CallableStatement cs = conn.prepareCall(GET_SALARY_FUNCTION)) {
+                CallableStatement cs = conn.prepareCall(GET_SALARY_FUNCTION)) {
             log.debug("Prepared: " + cs.toString());
 
-            cs.registerOutParameter(1, Types.NUMERIC);
+            cs.registerOutParameter(1, Types.DECIMAL);
             cs.setInt(2, id);
 
-            log.debug("Before execute: " + cs);
+            log.debug("Before execute: {}", cs);
             cs.executeUpdate();
-            log.debug("After execute: " + cs);
+            log.debug("After execute: {}", cs);
 
-            return cs.getBigDecimal(1).doubleValue();
+            double result = cs.getBigDecimal(1).doubleValue();
+            log.debug("Result is: {}", result);
+
+            return result;
         }
     }
 }
