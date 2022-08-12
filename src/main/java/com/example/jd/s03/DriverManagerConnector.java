@@ -9,14 +9,14 @@ import static com.example.jd.Config.*;
 
 public class DriverManagerConnector {
     /**
-     * The following static initializer should not be required anymore
+     * The following static initializer should not be required here
      */
 //    static {
 //        try {
-//            Class.forName("org.h2.Driver");
+//            // Class.forName("org.h2.Driver");
 //            // Class.forName("com.mysql.cj.jdbc.Driver");
 //            // Class.forName("oracle.jdbc.OracleDriver");
-//            // Class.forName("org.postgresql.Driver);
+//            Class.forName("org.postgresql.Driver);
 //        } catch (ClassNotFoundException cnfe) {
 //            cnfe.printStackTrace();
 //            throw new IllegalStateException("Can't load JDBC driver " + cnfe.getMessage());
@@ -24,6 +24,7 @@ public class DriverManagerConnector {
 //    }
 
     public static void main(String[] args) {
+        System.out.println("Connecting to " + URL + " as user " + USER);
         System.out.println(getInfo());
     }
 

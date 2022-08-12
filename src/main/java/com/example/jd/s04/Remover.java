@@ -21,6 +21,7 @@ public class Remover {
 
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
                 Statement stmt = conn.createStatement()) {
+            // !!! DANGER - POSSIBLE SQL INJECTION ATTACK !!!
             String sql = String.format(DELETE_SERVICE_BY_NAME, name);
             int lines = stmt.executeUpdate(sql);
             System.out.printf("Delete executed, %d lines affected%n", lines);
