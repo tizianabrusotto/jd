@@ -3,12 +3,14 @@ package com.example.jd.s09;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.example.jd.Config;
+
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.jd.Config.*;
+import javax.sql.DataSource;
 
 public class PreparedSelector {
     private static final Logger log = LogManager.getLogger(PreparedSelector.class);
@@ -29,8 +31,14 @@ public class PreparedSelector {
             WHERE d.name = 'IT' AND (first_name LIKE ? OR last_name LIKE ?)
             ORDER BY salary DESC""";
 
-    public static List<Coder> getCodersHiredBefore(LocalDate limit) throws SQLException {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+    private DataSource ds;
+
+    public PreparedSelector() {
+        this.ds = Config.getDataSource();
+    }
+
+    public List<Coder> getCodersHiredBefore(LocalDate limit) throws SQLException {
+        try (Connection conn = ds.getConnection();
                 PreparedStatement prepStmt = conn.prepareStatement(GET_CODERS_HIRED_BEFORE)) {
             prepStmt.setObject(1, limit);
 
@@ -52,7 +60,7 @@ public class PreparedSelector {
     }
 
     public List<Coder> getCodersBySalary(double lower) throws SQLException {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection conn = ds.getConnection();
                 PreparedStatement prepStmt = conn.prepareStatement(GET_CODERS_BY_SALARY)) {
             prepStmt.setDouble(1, lower);
 
@@ -74,7 +82,7 @@ public class PreparedSelector {
     }
 
     public List<Coder> getCodersWithLetterIn(char letter) throws SQLException {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection conn = ds.getConnection();
                 PreparedStatement prepStmt = conn.prepareStatement(GET_CODERS_BY_LETTER)) {
 
             // quotation in string is managed by PreparedStatement

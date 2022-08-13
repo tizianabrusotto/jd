@@ -1,14 +1,15 @@
 package com.example.jd.s04;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+
+import javax.sql.DataSource;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import static com.example.jd.Config.*;
+import com.example.jd.Config;
 
 public class InserterExercise {
     private static final Logger log = LogManager.getLogger(InserterExercise.class);
@@ -22,11 +23,11 @@ public class InserterExercise {
             return;
         }
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
-                Statement stmt = conn.createStatement()) {
+        DataSource ds = Config.getDataSource();
+        try (Connection conn = ds.getConnection(); Statement stmt = conn.createStatement()) {
             // TODO: execute statement
         } catch (SQLException se) {
-            log.error("Can't remove", se);
+            log.fatal("Can't remove", se);
         }
     }
 }

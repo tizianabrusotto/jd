@@ -3,11 +3,13 @@ package com.example.jd.s08;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.example.jd.Config;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.jd.Config.*;
+import javax.sql.DataSource;
 
 public class Selector {
     private static final Logger log = LogManager.getLogger(Selector.class);
@@ -41,8 +43,14 @@ public class Selector {
             WHERE d.name = 'IT' AND (first_name LIKE '%%%c%%' or last_name LIKE '%%%c%%')
             ORDER BY salary DESC""";
 
+    private DataSource ds;
+
+    public Selector() {
+        this.ds = Config.getDataSource();
+    }
+
     public List<String> getCoderNames() throws SQLException {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection conn = ds.getConnection();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(GET_CODER_NAMES)) {
             List<String> results = new ArrayList<>();
@@ -56,7 +64,7 @@ public class Selector {
     }
 
     public List<Coder> getCoders() throws SQLException {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection conn = ds.getConnection();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(GET_CODERS)) {
             List<Coder> results = new ArrayList<>();
@@ -73,7 +81,7 @@ public class Selector {
         String query = String.format(GET_CODERS_BY_SALARY_INT, lower);
         log.debug("Formatted query: " + query);
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection conn = ds.getConnection();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
             List<Coder> results = new ArrayList<>();
@@ -92,7 +100,7 @@ public class Selector {
         String query = String.format(GET_CODERS_BY_SALARY_STRING, lower);
         log.debug("Formatted query: " + query);
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection conn = ds.getConnection();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
             List<Coder> results = new ArrayList<>();
@@ -108,7 +116,7 @@ public class Selector {
         String query = String.format(GET_CODERS_BY_LETTER, letter, letter);
         log.debug("Formatted query: " + query);
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        try (Connection conn = ds.getConnection();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(query)) {
 

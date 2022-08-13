@@ -42,7 +42,7 @@ class PreparedSelectorTest {
         LocalDate date = LocalDate.of(2020, Month.JANUARY, 1);
         String[] expectedNames = { "David", "Alexander", "Valli" };
 
-        List<Coder> actual = PreparedSelector.getCodersHiredBefore(date);
+        List<Coder> actual = ps.getCodersHiredBefore(date);
 
         assertThat(actual.size()).isEqualTo(expectedNames.length);
         for (int i = 0; i < actual.size(); i++) {

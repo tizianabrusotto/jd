@@ -3,10 +3,12 @@ package com.example.jd.s10;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.example.jd.Config;
+
 import java.sql.*;
 import java.time.LocalDate;
 
-import static com.example.jd.Config.*;
+import javax.sql.DataSource;
 
 public class Transactor {
     private static final Logger log = LogManager.getLogger(Transactor.class);
@@ -23,6 +25,12 @@ public class Transactor {
             SET first_name = ?
             WHERE first_name = ? AND last_name = ?""";
 
+    private DataSource ds;
+
+    public Transactor() {
+        this.ds = Config.getDataSource();
+    }
+
     public static void main(String[] args) {
         Transactor transactor = new Transactor();
 
@@ -30,7 +38,7 @@ public class Transactor {
         transactor.insertUpdateCoder("John", "Watson", 9998, 6500.0);
         transactor.sloppyUpdate("Valli", "Pataballa");
 
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = transactor.ds.getConnection()) {
             transactor.logAllCoders(connection);
         } catch (Exception se) {
             log.error("DBMS error", se);
@@ -56,7 +64,8 @@ public class Transactor {
     }
 
     public void insertCoder(String first, String last, int phone, double salary) {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        DataSource ds = Config.getDataSource();
+        try (Connection conn = ds.getConnection()) {
             conn.setAutoCommit(false);
 
             try {
@@ -79,7 +88,7 @@ public class Transactor {
     }
 
     public void insertUpdateCoder(String first, String last, int phone, double salary) {
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = ds.getConnection()) {
             connection.setAutoCommit(false);
 
             System.out.println("Inserting new coder ...");
@@ -112,7 +121,7 @@ public class Transactor {
     }
 
     public void sloppyUpdate(String first, String last) {
-        try (Connection connection = DriverManager.getConnection(URL, USER, PASSWORD)) {
+        try (Connection connection = ds.getConnection()) {
             connection.setAutoCommit(false);
 
             System.out.println("Updating coder ...");

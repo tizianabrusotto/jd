@@ -1,16 +1,15 @@
 package com.example.jd.s05;
 
-import static com.example.jd.Config.PASSWORD;
-import static com.example.jd.Config.URL;
-import static com.example.jd.Config.USER;
-
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.example.jd.Config;
 
 public class PreparedRemover {
     private static final Logger log = LogManager.getLogger(PreparedRemover.class);
@@ -30,14 +29,15 @@ public class PreparedRemover {
 
         log.info("Deleting service named <{}>, location <{}>, if exists", name, location);
 
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        DataSource ds = Config.getDataSource();
+        try (Connection conn = ds.getConnection();
                 PreparedStatement stmt = conn.prepareStatement(DELETE_SERVICE_BY_NAME)) {
             stmt.setString(1, name);
             stmt.setInt(2, location);
             int lines = stmt.executeUpdate();
             System.out.printf("Delete executed, %d lines affected%n", lines);
         } catch (SQLException se) {
-            log.error("Can't remove", se);
+            log.fatal("Can't remove", se);
         }
     }
 }

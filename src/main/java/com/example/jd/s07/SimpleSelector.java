@@ -1,17 +1,16 @@
 package com.example.jd.s07;
 
-import static com.example.jd.Config.PASSWORD;
-import static com.example.jd.Config.URL;
-import static com.example.jd.Config.USER;
-
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.sql.DataSource;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import com.example.jd.Config;
 
 public class SimpleSelector {
     private static final Logger log = LogManager.getLogger(SimpleSelector.class);
@@ -23,7 +22,9 @@ public class SimpleSelector {
             WHERE d.name = 'IT'""";
 
     public static void main(String[] args) {
-        try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);
+        DataSource ds = Config.getDataSource();
+
+        try (Connection conn = ds.getConnection();
                 Statement stmt = conn.createStatement();
                 ResultSet rs = stmt.executeQuery(GET_CODERS)) {
             log.debug("Looping on the result set");

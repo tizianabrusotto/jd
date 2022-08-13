@@ -1,17 +1,18 @@
 package com.example.jd.s14.dao;
 
-import static com.example.jd.Config.PASSWORD;
-import static com.example.jd.Config.URL;
-import static com.example.jd.Config.USER;
-
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 
+import javax.sql.DataSource;
+
+import com.example.jd.Config;
+
 public class Connector {
+    private static DataSource ds = Config.getDataSource();
+
     public static Connection getConnection() {
         try {
-            return DriverManager.getConnection(URL, USER, PASSWORD);
+            return ds.getConnection();
         } catch (SQLException se) {
             throw new IllegalStateException("No database connection", se);
         }
