@@ -1,10 +1,20 @@
 package com.example.jd;
 
 import java.io.InputStream;
+import java.sql.SQLException;
 import java.util.Properties;
+
+import javax.sql.DataSource;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.h2.jdbcx.JdbcDataSource;
+import org.postgresql.ds.PGSimpleDataSource;
+import org.sqlite.SQLiteDataSource;
+
+import com.mysql.cj.jdbc.MysqlDataSource;
+
+import oracle.jdbc.pool.OracleDataSource;
 
 public final class Config {
     private static final Logger log = LogManager.getLogger(Config.class);
@@ -46,6 +56,56 @@ public final class Config {
             USER = user;
             PASSWORD = password;
         }
+    }
+
+    static public DataSource getDataSource() {
+        DataSource ds = switch (ACTIVE) {
+        case POSTGRES -> {
+            PGSimpleDataSource pgds = new PGSimpleDataSource();
+            pgds.setURL(URL);
+            pgds.setUser(USER);
+            pgds.setPassword(PASSWORD);
+
+            yield pgds;
+        }
+        case ORACLE -> {
+            try {
+                OracleDataSource ods = new OracleDataSource();
+                ods.setURL(URL);
+                ods.setUser(USER);
+                ods.setPassword(PASSWORD);
+
+                yield ods;
+            } catch (SQLException se) {
+                throw new IllegalStateException("Can't set Oracle Data Source");
+            }
+        }
+        case MYSQL -> {
+            MysqlDataSource mds = new MysqlDataSource();
+            mds.setURL(URL);
+            mds.setUser(USER);
+            mds.setPassword(PASSWORD);
+
+            yield mds;
+        }
+        case H2 -> {
+            JdbcDataSource hds = new JdbcDataSource();
+            hds.setURL(URL);
+            hds.setUser(USER);
+            hds.setPassword(PASSWORD);
+
+            yield hds;
+        }
+        case SQLITE -> {
+            SQLiteDataSource pgds = new SQLiteDataSource();
+            pgds.setUrl(URL);
+
+            yield pgds;
+        }
+
+        };
+
+        return ds;
     }
 
     public static boolean isH2() {
