@@ -19,23 +19,25 @@ public class Selector {
             FROM employee e JOIN department d
             USING (department_id)
             WHERE d.name = 'IT'
-            ORDER BY 1""";
+            ORDER BY first_name""";
     private static final String GET_CODERS = """
             SELECT first_name, last_name, salary
             FROM employee e JOIN department d
             USING (department_id)
             WHERE d.name = 'IT'
-            ORDER BY 1""";
+            ORDER BY first_name""";
     private static final String GET_CODERS_BY_SALARY_INT = """
             SELECT first_name, last_name, salary
             FROM employee e JOIN department d
             USING (department_id)
-            WHERE d.name = 'IT' AND salary >= %d ORDER BY 3 DESC""";
+            WHERE d.name = 'IT' AND salary >= %d
+            ORDER BY salary DESC""";
     private static final String GET_CODERS_BY_SALARY_STRING = """
             SELECT first_name, last_name, salary
             FROM employee e LEFT OUTER JOIN department d
             USING (department_id)
-            WHERE d.name = 'IT' AND salary >= %s ORDER BY 3 DESC""";
+            WHERE d.name = 'IT' AND salary >= %s
+            ORDER BY salary DESC""";
     private static final String GET_CODERS_BY_LETTER = """
             SELECT first_name, last_name, salary
             FROM employee e JOIN department d
