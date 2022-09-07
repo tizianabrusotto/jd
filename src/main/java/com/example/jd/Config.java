@@ -1,6 +1,8 @@
 package com.example.jd;
 
 import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 
@@ -19,10 +21,28 @@ import oracle.jdbc.pool.OracleDataSource;
 public final class Config {
     private static final Logger log = LogManager.getLogger(Config.class);
 
-    public static final Dbms ACTIVE;
+    /**
+     * The following static initializer should not be required
+     */
+//    static {
+//        try {
+//            // Class.forName("org.h2.Driver");
+//            // Class.forName("com.mysql.cj.jdbc.Driver");
+//            // Class.forName("oracle.jdbc.OracleDriver");
+//            Class.forName("org.postgresql.Driver");
+//        } catch (ClassNotFoundException cnfe) {
+//            cnfe.printStackTrace();
+//            throw new IllegalStateException("Can't load JDBC driver " + cnfe.getMessage());
+//        }
+//    }
+
+    // public constants required for connection by DriverManager
     public static final String URL;
     public static final String USER;
     public static final String PASSWORD;
+
+    private static final Dbms ACTIVE;
+    private static final DataSource DS;
 
     private Config() {
     }
@@ -56,10 +76,8 @@ public final class Config {
             USER = user;
             PASSWORD = password;
         }
-    }
 
-    static public DataSource getDataSource() {
-        DataSource ds = switch (ACTIVE) {
+        DS = switch (ACTIVE) {
         case POSTGRES -> {
             PGSimpleDataSource pgds = new PGSimpleDataSource();
             pgds.setURL(URL);
@@ -104,8 +122,14 @@ public final class Config {
         }
 
         };
+    }
 
-        return ds;
+    static public Connection getLegacyConnection() throws SQLException {
+        return DriverManager.getConnection(URL, USER, PASSWORD);
+    }
+
+    static public DataSource getDataSource() {
+        return DS;
     }
 
     public static boolean isH2() {
