@@ -24,10 +24,11 @@ public class InserterExercise {
         }
 
         DataSource ds = Config.getDataSource();
-        try (Connection conn = ds.getConnection(); Statement stmt = conn.createStatement()) {
+        try (Connection conn = ds.getConnection(); //
+                Statement stmt = conn.createStatement()) {
             // TODO: execute statement
         } catch (SQLException se) {
-            log.fatal("Can't remove", se);
+            log.fatal("Can't insert", se);
         }
     }
 }
