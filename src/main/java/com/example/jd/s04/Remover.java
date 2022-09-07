@@ -13,7 +13,9 @@ import com.example.jd.Config;
 
 public class Remover {
     private static final Logger log = LogManager.getLogger(Remover.class);
-    private static final String DELETE_SERVICE_BY_NAME = "DELETE FROM service WHERE name = '%s'";
+    private static final String DELETE_SERVICE_BY_NAME = """
+            DELETE FROM service
+            WHERE name = '%s'""";
 
     public static void main(String[] args) {
         if (args.length == 0) {
@@ -27,6 +29,7 @@ public class Remover {
         try (Connection conn = ds.getConnection(); //
                 Statement stmt = conn.createStatement()) {
             // !!! DANGER - POSSIBLE SQL INJECTION ATTACK !!!
+            // ex: arg -> "Tom' OR name like 'A%"
             String sql = String.format(DELETE_SERVICE_BY_NAME, args[0]);
             int lines = stmt.executeUpdate(sql);
             System.out.printf("Delete executed, %d lines affected%n", lines);
