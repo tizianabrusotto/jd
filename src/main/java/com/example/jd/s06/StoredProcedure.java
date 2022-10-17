@@ -25,10 +25,10 @@ public class StoredProcedure {
     }
 
     /**
-     * Coder salary
+     * Employee salary
      * 
-     * @param id the coder id
-     * @return coder salary, 0 if the specified coder id is not available
+     * @param id the employee id
+     * @return employee salary, 0 if the specified employee id is not available
      * @throws SQLException in case of problems
      */
     public double getEmployeeSalary(int id) throws SQLException {
@@ -49,10 +49,10 @@ public class StoredProcedure {
     }
 
     /**
-     * Coder salary
+     * Employee salary
      *
-     * @param id the coder id
-     * @return coder salary, 0 if the specified coder id is not available
+     * @param id the employee id
+     * @return employee salary, 0 if the specified employee id is not available
      * @throws SQLException in case of problems
      */
     public double getSalaryByFunction(int id) throws SQLException {
