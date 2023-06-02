@@ -1,3 +1,8 @@
+/*
+ * Java / RDBMS integration by JDBC
+ * 
+ * https://github.com/egalli64/jd
+ */
 package com.example.jd.s04;
 
 import java.sql.Connection;
@@ -11,6 +16,9 @@ import org.apache.logging.log4j.Logger;
 
 import com.example.jd.Config;
 
+/**
+ * A raw hron service inserter
+ */
 public class InserterExercise {
     private static final Logger log = LogManager.getLogger(InserterExercise.class);
 

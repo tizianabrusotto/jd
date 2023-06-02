@@ -1,3 +1,8 @@
+/*
+ * Java / RDBMS integration by JDBC
+ * 
+ * https://github.com/egalli64/jd
+ */
 package com.example.jd.s04;
 
 import java.sql.Connection;
@@ -11,12 +16,20 @@ import org.apache.logging.log4j.Logger;
 
 import com.example.jd.Config;
 
+/**
+ * A raw hron service remover
+ */
 public class Remover {
     private static final Logger log = LogManager.getLogger(Remover.class);
     private static final String DELETE_SERVICE_BY_NAME = """
             DELETE FROM service
             WHERE name = '%s'""";
 
+    /**
+     * Remove the service whose name is passed by the user
+     * 
+     * @param args the service to be removed should be the first passed argument
+     */
     public static void main(String[] args) {
         if (args.length == 0) {
             System.out.println("Pass me a service name!");
