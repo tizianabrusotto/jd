@@ -1,3 +1,8 @@
+/*
+ * Java / RDBMS integration by JDBC
+ * 
+ * https://github.com/egalli64/jd
+ */
 package com.example.jd.s10;
 
 import org.apache.logging.log4j.LogManager;
@@ -10,6 +15,9 @@ import java.time.LocalDate;
 
 import javax.sql.DataSource;
 
+/**
+ * Commit, rollback, savepoint
+ */
 public class Transactor {
     private static final Logger log = LogManager.getLogger(Transactor.class);
 

@@ -1,3 +1,8 @@
+/*
+ * Java / RDBMS integration by JDBC
+ * 
+ * https://github.com/egalli64/jd
+ */
 package com.example.jd.s14;
 
 import java.util.List;
@@ -8,6 +13,9 @@ import org.apache.logging.log4j.Logger;
 import com.example.jd.s14.dao.Coder;
 import com.example.jd.s14.dao.CoderDao;
 
+/**
+ * Sample application using DAO
+ */
 public class ClassicMain {
     private static final Logger log = LogManager.getLogger(ClassicMain.class);
 

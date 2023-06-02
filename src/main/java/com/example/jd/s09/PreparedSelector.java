@@ -1,3 +1,8 @@
+/*
+ * Java / RDBMS integration by JDBC
+ * 
+ * https://github.com/egalli64/jd
+ */
 package com.example.jd.s09;
 
 import org.apache.logging.log4j.LogManager;
@@ -12,6 +17,9 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+/**
+ * From PreparedStatement to ResultSet to List of JavaBean
+ */
 public class PreparedSelector {
     private static final Logger log = LogManager.getLogger(PreparedSelector.class);
 

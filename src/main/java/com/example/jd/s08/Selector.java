@@ -1,3 +1,8 @@
+/*
+ * Java / RDBMS integration by JDBC
+ * 
+ * https://github.com/egalli64/jd
+ */
 package com.example.jd.s08;
 
 import org.apache.logging.log4j.LogManager;
@@ -11,6 +16,9 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
+/**
+ * ResultSet to list of JavaBean
+ */
 public class Selector {
     private static final Logger log = LogManager.getLogger(Selector.class);
 

@@ -1,3 +1,8 @@
+/*
+ * Java / RDBMS integration by JDBC
+ * 
+ * https://github.com/egalli64/jd
+ */
 package com.example.jd.s07;
 
 import java.sql.Connection;
@@ -12,6 +17,9 @@ import org.apache.logging.log4j.Logger;
 
 import com.example.jd.Config;
 
+/**
+ * ResultSet example
+ */
 public class SimpleSelector {
     private static final Logger log = LogManager.getLogger(SimpleSelector.class);
 
@@ -21,6 +29,11 @@ public class SimpleSelector {
             USING (department_id)
             WHERE d.name = 'IT'""";
 
+    /**
+     * Run the query, print the data in the received result set
+     * 
+     * @param args not used
+     */
     public static void main(String[] args) {
         DataSource ds = Config.getDataSource();
 
