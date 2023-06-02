@@ -1,3 +1,8 @@
+/*
+ * Java / RDBMS integration by JDBC
+ * 
+ * https://github.com/egalli64/jd
+ */
 package com.example.jd.s06;
 
 import java.sql.CallableStatement;
@@ -12,6 +17,9 @@ import org.apache.logging.log4j.Logger;
 
 import com.example.jd.Config;
 
+/**
+ * CallableStatement example
+ */
 public class StoredProcedure {
     private static final Logger log = LogManager.getLogger(StoredProcedure.class);
 

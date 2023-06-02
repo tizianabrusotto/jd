@@ -1,3 +1,8 @@
+/*
+ * Java / RDBMS integration by JDBC
+ * 
+ * https://github.com/egalli64/jd
+ */
 package com.example.jd.s05;
 
 import java.sql.Connection;
@@ -11,12 +16,20 @@ import org.apache.logging.log4j.Logger;
 
 import com.example.jd.Config;
 
+/**
+ * PreparedStatement example
+ */
 public class PreparedRemover {
     private static final Logger log = LogManager.getLogger(PreparedRemover.class);
     private static final String DELETE_SERVICE_BY_NAME = """
             DELETE FROM service
             WHERE name = ? and location_id = ?""";
 
+    /**
+     * Remove the service whose name and location is passed by the user
+     * 
+     * @param args the required info
+     */
     public static void main(String[] args) {
         if (args.length != 2) {
             System.out.println("Pass me a service name and its location!");

@@ -1,5 +1,13 @@
+/*
+ * Java / RDBMS integration by JDBC
+ * 
+ * https://github.com/egalli64/jd
+ */
 package com.example.jd.s06;
 
+/**
+ * CallableStatement exercise
+ */
 public class Exercise {
     /*
      * Exercise: Implement main to run StoreProcedure.getEmployeeSalary() from command line.
@@ -16,6 +24,7 @@ public class Exercise {
             return;
         }
 
+        // TODO: your solution
         System.out.println("Here goes your code");
     }
 }
