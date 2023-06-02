@@ -1,3 +1,8 @@
+/*
+ * Java / RDBMS integration by JDBC
+ * 
+ * https://github.com/egalli64/jd
+ */
 package com.example.jd;
 
 import java.io.InputStream;
@@ -18,6 +23,9 @@ import com.mysql.cj.jdbc.MysqlDataSource;
 
 import oracle.jdbc.pool.OracleDataSource;
 
+/**
+ * JDBC Configuration
+ */
 public final class Config {
     private static final Logger log = LogManager.getLogger(Config.class);
 

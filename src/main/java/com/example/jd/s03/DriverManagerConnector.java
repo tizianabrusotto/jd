@@ -1,3 +1,8 @@
+/*
+ * Java / RDBMS integration by JDBC
+ * 
+ * https://github.com/egalli64/jd
+ */
 package com.example.jd.s03;
 
 import static com.example.jd.Config.PASSWORD;
@@ -12,9 +17,17 @@ import java.sql.SQLException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;;
 
+/**
+ * A Hello JDBC by driver manager
+ */
 public class DriverManagerConnector {
     private static final Logger log = LogManager.getLogger(DriverManagerConnector.class);
 
+    /**
+     * Connect by driver manager, get and log DB info then terminate
+     * 
+     * @param args not used
+     */
     public static void main(String[] args) {
         log.trace("Connecting ... (legacy)");
         try (Connection conn = DriverManager.getConnection(URL, USER, PASSWORD);) {

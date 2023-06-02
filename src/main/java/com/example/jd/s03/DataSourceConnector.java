@@ -1,3 +1,8 @@
+/*
+ * Java / RDBMS integration by JDBC
+ * 
+ * https://github.com/egalli64/jd
+ */
 package com.example.jd.s03;
 
 import java.sql.Connection;
@@ -11,9 +16,17 @@ import org.apache.logging.log4j.Logger;
 
 import com.example.jd.Config;
 
+/**
+ * A Hello JDBC by data source
+ */
 public class DataSourceConnector {
     private static final Logger log = LogManager.getLogger(DataSourceConnector.class);
 
+    /**
+     * Connect to the current data source, get and log DB info then terminate
+     * 
+     * @param args not used
+     */
     public static void main(String[] args) {
         log.trace("Connecting ...");
         DataSource ds = Config.getDataSource();
