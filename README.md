@@ -11,4 +11,4 @@
 - SQLite 3
 
 ## Database setup
-- See hron
+- See [hron](https://github.com/egalli64/hron)
