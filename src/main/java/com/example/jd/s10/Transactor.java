@@ -27,7 +27,7 @@ public class Transactor {
             WHERE d.name = 'IT'""";
     private static final String INSERT_CODER = """
             INSERT INTO employee (first_name, last_name, phone, hired, job_id, salary, manager_id, department_id) VALUES
-                (?, ?, ?, ?, 15, ?, 103, 6)""";
+                (?, ?, ?, ?, 15, ?, 103, 6)"""; 
     private static final String UPDATE_EMPLOYEE_NAME = """
             UPDATE employee
             SET first_name = ?

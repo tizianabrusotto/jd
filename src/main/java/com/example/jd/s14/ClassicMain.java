@@ -20,6 +20,7 @@ public class ClassicMain {
     private static final Logger log = LogManager.getLogger(ClassicMain.class);
 
     public static void main(String[] args) {
+    	// il dao interagisce col coder
         CoderDao cd = new CoderDao();
 
         // create a new coder ...

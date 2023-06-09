@@ -22,8 +22,8 @@ import com.example.jd.Config;
 public class InserterExercise {
     private static final Logger log = LogManager.getLogger(InserterExercise.class);
 
-    // TODO: SQL code for insert
-//    private static final String INSERT_SERVICE_BY_NAME_AND_LOCATION = "";
+     private static final String INSERT_SERVICE_BY_NAME_AND_LOCATION = //
+     		"insert into service (name, location_id) values ('%S',%s)" ;
 
     public static void main(String[] args) {
         if (args.length != 2) {
@@ -34,7 +34,9 @@ public class InserterExercise {
         DataSource ds = Config.getDataSource();
         try (Connection conn = ds.getConnection(); //
                 Statement stmt = conn.createStatement()) {
-            // TODO: execute statement
+        	String sql = String.format(INSERT_SERVICE_BY_NAME_AND_LOCATION, args[0], args[1]);
+            int lines = stmt.executeUpdate(sql); //comandi sql
+            System.out.printf("Insert executed, %d lines affected%n", lines);
         } catch (SQLException se) {
             log.fatal("Can't insert", se);
         }

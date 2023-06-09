@@ -28,10 +28,10 @@ public class DataSourceConnector {
      * @param args not used
      */
     public static void main(String[] args) {
-        log.trace("Connecting ...");
-        DataSource ds = Config.getDataSource();
+        log.trace("Connecting ..."); 
+        DataSource ds = Config.getDataSource(); //lo vado a prendere dal config
 
-        try (Connection conn = ds.getConnection()) {
+        try (Connection conn = ds.getConnection()) { //crea una connessione che ti da il datasource invocando il metodo getConnection
             DatabaseMetaData dmd = conn.getMetaData();
 
             String db = dmd.getDatabaseProductName();

@@ -106,7 +106,7 @@ public class PreparedSelector {
                 while (rs.next()) {
                     Coder coder = new Coder(rs.getString(1), rs.getString(2), rs.getObject(3, LocalDate.class),
                             rs.getDouble(4));
-                    results.add(coder);
+                    results.add(coder); //javabin
                 }
             }
 

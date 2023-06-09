@@ -69,15 +69,15 @@ public final class Config {
             url = prop.getProperty("dbms.url");
             user = prop.getProperty("dbms.user");
             password = prop.getProperty("dbms.password");
-        } catch (Exception ex) {
+        } catch (Exception ex) { //il catch mi fa un log, non termino e vado avanti
             log.error("Can't load configuration properties", ex);
-        } finally {
-            ACTIVE = switch (dbmsName) {
+        } finally { //c'è il finally perchè io voglio che in ogni caso venga inizializzato il mio db. xciò guardo o i dati da riga 59 o altro.
+            ACTIVE = switch (dbmsName) { //switch moderno, in active c'è l'enumerator che rappresenta il mio database sul quale sto lavorando
             case "mysql" -> Dbms.MYSQL;
             case "oracle" -> Dbms.ORACLE;
             case "postgres" -> Dbms.POSTGRES;
             case "sqlite" -> Dbms.SQLITE;
-            default -> Dbms.H2;
+            default -> Dbms.H2; //se non funziona, mi connetto di default ad h2
             };
 
             URL = url;
@@ -85,9 +85,9 @@ public final class Config {
             PASSWORD = password;
         }
 
-        DS = switch (ACTIVE) {
+        DS = switch (ACTIVE) { 
         case POSTGRES -> {
-            PGSimpleDataSource pgds = new PGSimpleDataSource();
+            PGSimpleDataSource pgds = new PGSimpleDataSource(); //pgds è un reference ad un oggetto che segue le specifiche pgdbs e contiene le info per la connessione
             pgds.setURL(URL);
             pgds.setUser(USER);
             pgds.setPassword(PASSWORD);
